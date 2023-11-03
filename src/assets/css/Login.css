@@ -1,0 +1,30 @@
+.login-main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20% 20%;
+}
+
+.login-left {
+    width: 60%;
+    background-color: red;
+}
+
+.login-head {
+}
+
+.login-name {
+}
+
+.login-pass {
+}
+
+.login-btn {
+}
+
+.login-right {
+    width: 40%;
+    background-color: rebeccapurple;
+}
