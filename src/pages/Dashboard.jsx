@@ -1,0 +1,48 @@
+import React from "react";
+import "../assets/css/Dashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHospital,
+  faHeartPulse,
+  faSyringe,
+  faNewspaper
+} from "@fortawesome/free-solid-svg-icons";
+
+function Dashboard() {
+  return (
+    <div className="dash-main-con">
+      <div className="dash-type-con">
+        <div className="dash-type gcc">
+          <div className="dash-type-top gcc-top"></div>
+          <div className="dash-type-img gcc-img">
+            <FontAwesomeIcon icon={faHospital} />
+          </div>
+          <div className="dash-type-bot gcc-bot">GCC Medicals</div>
+        </div>
+        <div className="dash-type ngcc">
+          <div className="dash-type-top ngcc-top"></div>
+          <div className="dash-type-img ngcc-img">
+            <FontAwesomeIcon icon={faHeartPulse} />
+          </div>
+          <div className="dash-type-bot ngcc-bot">Non GCC Medicals</div>
+        </div>
+        <div className="dash-type opd">
+          <div className="dash-type-top opd-top"></div>
+          <div className="dash-type-img opd-img">
+            <FontAwesomeIcon icon={faSyringe} />
+          </div>
+          <div className="dash-type-bot opd-bot">OPD Test</div>
+        </div>
+        <div className="dash-type rpt">
+          <div className="dash-type-top rpt-top"></div>
+          <div className="dash-type-img rpt-img">
+            <FontAwesomeIcon icon={faNewspaper} />
+          </div>
+          <div className="dash-type-bot rpt-bot">Repeat Medicals</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Dashboard;
