@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom"; // Import Outlet from react-router-dom
+import { Outlet } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
 
 function home() {
@@ -7,7 +7,7 @@ function home() {
     <div>
       <div style={{ display: "flex", width: "100%" }} className="hello">
         <Sidebar />
-        <Outlet /> {/* Render nested routes inside Home */}
+        <Outlet /> 
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 .home-container {
     display: flex;
+    margin-top: 70  px;
     height: calc(100vh - 70px);
   }
   
