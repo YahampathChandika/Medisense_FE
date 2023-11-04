@@ -30,7 +30,7 @@ function SidebarComp() {
             >
               <FontAwesomeIcon icon={collapsed ? faBars : faBars} />
             </button>
-            <Link to="/dashboard" className="sidebar-link">
+            <Link to="dashboard" className="sidebar-link">
               <MenuItem
                 className={
                   selectedMenuItem === "Items" ? "selected-menu-item" : ""
@@ -41,7 +41,7 @@ function SidebarComp() {
                 Dashboard
               </MenuItem>
             </Link>
-            <Link to="/reception" className="sidebar-link">
+            <Link to="reception" className="sidebar-link">
               <MenuItem
                 className={
                   selectedMenuItem === "allPatients" ? "selected-menu-item" : ""
@@ -52,13 +52,13 @@ function SidebarComp() {
                 Reception
               </MenuItem>
             </Link>
-            <Link to="/cashier" className="sidebar-link">
+            <Link to="cashier" className="sidebar-link">
               <MenuItem
                 className={
-                  selectedMenuItem === "Items" ? "selected-menu-item" : ""
+                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
                 }
                 icon={<FontAwesomeIcon icon={faLayerGroup} />}
-                onClick={() => handleMenuItemClick("Items")}
+                onClick={() => handleMenuItemClick("cashier")}
               >
                 Cashier
               </MenuItem>
