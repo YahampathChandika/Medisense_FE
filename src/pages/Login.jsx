@@ -30,7 +30,7 @@ function Login() {
         icon: "success",
         title: "Signed in successfully",
       });
-      navigate("/")
+      navigate("/home/dashboard")
     } else {
       Swal.fire({
         icon: "error",
