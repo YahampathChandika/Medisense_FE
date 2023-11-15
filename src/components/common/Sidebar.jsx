@@ -28,21 +28,20 @@ function SidebarComp() {
 
   return (
     <>
-      <div className="home-container">
         <Sidebar
           collapsed={collapsed}
-          width="220px"
+          width="206px"
           collapsedWidth="70px"
           transitionDuration={500}
-          backgroundColor="#ffffff"
+          className="sidebar"
         >
           <Menu>
-            <button
+            {/* <button
               className="login-right-btn btn btn-dark collapse-btn"
               onClick={() => setCollapsed(!collapsed)}
-            >
-              <FontAwesomeIcon icon={collapsed ? faBars : faBars}/>
-            </button>
+            > */}
+              <FontAwesomeIcon icon={collapsed ? faBars : faBars} className="collapse-btn" onClick={() => setCollapsed(!collapsed)}/>
+            {/* </button> */}
             <h6 className="sidebar-ctgry" style={{marginTop:'20px'}}>Menu</h6>
             <Link to="dashboard" className="sidebar-link">
               <MenuItem
@@ -168,7 +167,6 @@ function SidebarComp() {
             </Link>
           </Menu>
         </Sidebar>
-      </div>
     </>
   );
 }
