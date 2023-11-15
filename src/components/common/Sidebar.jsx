@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBed, faBars, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faHouse,
+  faSyringe,
+  faGlobe,
+  faUser,
+  faBookOpen,
+  faCashRegister,
+  faMoneyCheckDollar,
+  faXRay,
+  faFlaskVial,
+  faFlask,
+  faUserDoctor,
+} from "@fortawesome/free-solid-svg-icons";
 import "../../assets/css/Sidebar.css";
 import { Link } from "react-router-dom";
 
@@ -18,8 +31,8 @@ function SidebarComp() {
       <div className="home-container">
         <Sidebar
           collapsed={collapsed}
-          width="250px"
-          collapsedWidth="80px"
+          width="220px"
+          collapsedWidth="70px"
           transitionDuration={500}
           backgroundColor="#ffffff"
         >
@@ -28,14 +41,15 @@ function SidebarComp() {
               className="login-right-btn btn btn-dark collapse-btn"
               onClick={() => setCollapsed(!collapsed)}
             >
-              <FontAwesomeIcon icon={collapsed ? faBars : faBars} />
+              <FontAwesomeIcon icon={collapsed ? faBars : faBars}/>
             </button>
+            <h6 className="sidebar-ctgry">Menu</h6>
             <Link to="dashboard" className="sidebar-link">
               <MenuItem
                 className={
                   selectedMenuItem === "Items" ? "selected-menu-item" : ""
                 }
-                icon={<FontAwesomeIcon icon={faLayerGroup} />}
+                icon={<FontAwesomeIcon icon={faHouse} />}
                 onClick={() => handleMenuItemClick("Items")}
               >
                 Dashboard
@@ -46,10 +60,10 @@ function SidebarComp() {
                 className={
                   selectedMenuItem === "allPatients" ? "selected-menu-item" : ""
                 }
-                icon={<FontAwesomeIcon icon={faBed} />}
+                icon={<FontAwesomeIcon icon={faSyringe} />}
                 onClick={() => handleMenuItemClick("allPatients")}
               >
-                Reception
+                Tests / Packages
               </MenuItem>
             </Link>
             <Link to="cashier" className="sidebar-link">
@@ -57,10 +71,99 @@ function SidebarComp() {
                 className={
                   selectedMenuItem === "cashier" ? "selected-menu-item" : ""
                 }
-                icon={<FontAwesomeIcon icon={faLayerGroup} />}
+                icon={<FontAwesomeIcon icon={faGlobe} />}
                 onClick={() => handleMenuItemClick("cashier")}
               >
+                Agency
+              </MenuItem>
+            </Link>
+            <Link to="cashier" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faUser} />}
+                onClick={() => handleMenuItemClick("cashier")}
+              >
+                Users
+              </MenuItem>
+            </Link>
+            <h6 className="sidebar-ctgry" style={{marginTop:'20px'}}>Roles</h6>
+            <Link to="dashboard" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "Items" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faBookOpen} />}
+                onClick={() => handleMenuItemClick("Items")}
+              >
+                Reception
+              </MenuItem>
+            </Link>
+            <Link to="reception" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "allPatients" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faCashRegister} />}
+                onClick={() => handleMenuItemClick("allPatients")}
+              >
                 Cashier
+              </MenuItem>
+            </Link>
+            <Link to="cashier" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faMoneyCheckDollar} />}
+                onClick={() => handleMenuItemClick("cashier")}
+              >
+                Accounts
+              </MenuItem>
+            </Link>
+            <Link to="cashier" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faXRay} />}
+                onClick={() => handleMenuItemClick("cashier")}
+              >
+                X-Ray
+              </MenuItem>
+            </Link>
+            <Link to="cashier" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faFlaskVial} />}
+                onClick={() => handleMenuItemClick("cashier")}
+              >
+                Lab
+              </MenuItem>
+            </Link>
+            <Link to="cashier" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faFlask} />}
+                onClick={() => handleMenuItemClick("cashier")}
+              >
+                Mini-lab
+              </MenuItem>
+            </Link>
+            <Link to="cashier" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faUserDoctor} />}
+                onClick={() => handleMenuItemClick("cashier")}
+              >
+                Doctor
               </MenuItem>
             </Link>
           </Menu>
