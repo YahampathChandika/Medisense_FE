@@ -66,13 +66,13 @@ function SidebarComp() {
                 Tests / Packages
               </MenuItem>
             </Link>
-            <Link to="cashier" className="sidebar-link">
+            <Link to="opdTest" className="sidebar-link">
               <MenuItem
                 className={
-                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                  selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
                 }
                 icon={<FontAwesomeIcon icon={faGlobe} />}
-                onClick={() => handleMenuItemClick("cashier")}
+                onClick={() => handleMenuItemClick("opdTest")}
               >
                 Agency
               </MenuItem>

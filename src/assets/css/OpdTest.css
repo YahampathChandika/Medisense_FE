@@ -5,20 +5,19 @@
 }
 
 .opdtest-header {
-    font-size: 50px;
+    font-size: 30px;
     font-weight: 600;
     margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .opdtest-main-con {
-    margin: 50px 10% 100px 10%;
+    margin: 50px 5% 100px 5%;
     width: 100%;
 
-}
-
-.opdtest-input {
-    display: flex;
-    flex-direction: column;
 }
 
 .opdtest-input-con-two {
@@ -29,20 +28,66 @@
 }
 
 .opdtest-input{
-    width:42%;
-    margin-bottom: 30px;
+    width:45%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.opdtest-input-single {
+    width:100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.opdtest-pro-pic {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d6d6d6;
+    border-radius: 50%;
+    margin-left: 20%;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .opdtest-pro-pic:hover {
+    background-color: #919191 !important; 
+  }
+
+
+.opdtest-input-con {
+    display: flex;
+    justify-content: space-between;
+}
+
+.opdtest-input-con-left {
+    width: 100%;
+}
+
+.opdtest-input-con-right {
+    width: 82%;
 }
 
 .opdtest-input input {
     height: 40px;
     border-radius: 5px;
     padding-left: 10px;
-    border: 0.5px solid #bbbbbb;
 }
 
+.opdtest-input-single input {
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+
 .opdtest-input-grp {
-    width:42%;
-    margin-bottom: 30px;
+    width:50%;
+    margin-bottom: 10px;
     
 }
 
@@ -50,12 +95,9 @@
     height: 40px;
     border-radius: 5px;
     padding-left: 10px;
-    border: 0.5px solid #bbbbbb;
 }
 
-.opdtest-input label {
-    margin-bottom: 10px;
-}
+
 
 .opdtest-line {
 margin-bottom: 30px;

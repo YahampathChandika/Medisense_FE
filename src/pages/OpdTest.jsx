@@ -1,114 +1,136 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../src/assets/css/OpdTest.css";
-import { InputGroup } from "rsuite";
-import { Uploader, Message, Loader, useToaster } from "rsuite";
-import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
+import { Divider, InputGroup } from "rsuite";
+import { Input, DatePicker, SelectPicker } from "rsuite";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
 
-function previewFile(file, callback) {
-  const reader = new FileReader();
-  reader.onloadend = () => {
-    callback(reader.result);
-  };
-  reader.readAsDataURL(file);
-}
-
 function OpdTest() {
-  const toaster = useToaster();
-  const [uploading, setUploading] = React.useState(false);
-  const [fileInfo, setFileInfo] = React.useState(null);
+
   return (
     <div className="opdtest-main-con">
-      <div className="opdtest-header">Applicant Details</div>
+      <div className="opdtest-header">
+        <div>Applicant Details</div>
+        <div style={{ width: "45%" }}>
+          <InputGroup>
+            <Input
+              placeholder="Search by ID or name..."
+              style={{ margin: 0 }}
+            />
+            <InputGroup.Button>
+              <FontAwesomeIcon icon={faSearch} />
+            </InputGroup.Button>
+          </InputGroup>
+        </div>
+      </div>
       <hr className="opdtest-line" />
       <div className="opdtest-container">
         <div className="opdtest-input-con">
-          <div className="opdtest-input">
-            <InputGroup>
-              <input
-                type="text"
-                className="rs-input"
-                placeholder="Search by ID or Name"
-              />
-              <button className="rs-btn rs-btn-primary rs-btn-blue">
-                Search
-              </button>
-            </InputGroup>
-          </div>
-        </div>
-        <div className="opdtest-input-con">
-          <div className="opdtest-input">
+          <div className="opdtest-input-single">
             <label>Full Name</label>
-            <input type="text" />
+            <input type="text" className="rs-input" />
           </div>
         </div>
         <div className="opdtest-input-con">
-          <div className="opdtest-input">
-            <label>Profile Photo</label>
-
-            <label
-              className="btn btn-secondary"
-              style={{ width: 150, height: 150 , display:"flex" , justifyContent:"center" , alignItems:"center" , backgroundColor:"#bbbbbb" , borderRadius:"50%" }}
-            >
-              <CameraRetroIcon style={{ width: 25, height: 50 }} />
-              <input
-                type="file"
-                accept="image/jpeg, image/png, image/gif"
-                multiple
-                // onChange={handleFileChange}
-                style={{ display: "none" }}
+          <div className="opdtest-input-con-left">
+            <div className="opdtest-input">
+              <label>Profile Photo</label>
+              <label className="opdtest-pro-pic">
+                <FontAwesomeIcon
+                  icon={faCamera}
+                  style={{ width: 35, height: 50, color: "white" }}
+                />
+                <input
+                  type="file"
+                  accept="image/jpeg, image/png, image/gif"
+                  multiple
+                  // onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+              </label>
+           
+            </div>
+          </div>
+          <div className="opdtest-input-con-right">
+            <div className="opdtest-input-single">
+              <label>Date of Birth</label>
+              <DatePicker
+                id="dateOfBirth"
+                name="dateOfBirth"
+                placeholder="YYYY-MM-DD"
+                format="yyyy-MM-dd"
+                // onChange={(value) => {
+                //   if (value instanceof Date) {
+                //     form.setValue("dateOfBirth", value);
+                //   }
+                // }}
+                // onClick={handleDatePickerClick}
+                // value={form.getValues("dateOfBirth")}
+                // style={{borderStyle:'none' , border:'1px solid rgba(0, 0, 0, 0.5)' , borderRadius:'5px'  }}
               />
-            </label>
-          </div>
-        </div>
-        <div className="opdtest-input-con-two">
-          <div className="opdtest-input">
-            <label>Date of Birth</label>
-            <input type="text" />
-          </div>
-          <div className="opdtest-input">
-            <label>Sex</label>
-            <input type="text" />
+            </div>
+            <div className="opdtest-input-single ">
+              <label>Sex</label>
+              <SelectPicker
+                searchable={false}
+                style={{ width: "100%" }}
+                data={["Male", "Female"].map((item) => ({
+                  label: item,
+                  value: item,
+                }))}
+              />
+            </div>
           </div>
         </div>
         <div className="opdtest-input-con">
-          <div className="opdtest-input">
+          <div className="opdtest-input-single">
             <label>Address</label>
-            <input type="text" />
+            <input type="text" className="rs-input" />
           </div>
         </div>
         <div className="opdtest-input-con-two">
           <div className="opdtest-input">
             <label>Email</label>
-            <input type="text" />
+            <input type="text" className="rs-input" />
           </div>
           <div className="opdtest-input">
             <label>Mobile Number</label>
-            <input type="text" />
+            <input type="text" className="rs-input" />
           </div>
         </div>
         <div className="opdtest-input-con-two">
           <div className="opdtest-input">
             <label>Civil Status</label>
-            <input type="text" />
+            <SelectPicker
+              searchable={false}
+              style={{ width: "100%" }}
+              data={["Married", "Single", "Divorced", "Widowed "].map(
+                (item) => ({
+                  label: item,
+                  value: item,
+                })
+              )}
+            />
           </div>
           <div className="opdtest-input">
             <label>Nic</label>
-            <input type="text" />
+            <input type="text" className="rs-input" />
           </div>
         </div>
         {/* <hr className="opdtest-line" /> */}
         <div className="opdtest-input-con-two">
           <div className="opdtest-input">
             <label>Time Of Last Meal</label>
-            <input type="text" />
+            <input type="text" className="rs-input" />
           </div>
           <div className="opdtest-input">
             <label>Referred By</label>
-            <input type="text" />
+            <input type="text" className="rs-input" />
           </div>
         </div>
       </div>
+      <Divider />
       <div className="opdtest-footer"></div>
     </div>
   );
