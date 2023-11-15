@@ -37,12 +37,12 @@ function SidebarComp() {
           backgroundColor="#ffffff"
         >
           <Menu>
-            <button
+            {/* <button
               className="login-right-btn btn btn-dark collapse-btn"
               onClick={() => setCollapsed(!collapsed)}
-            >
-              <FontAwesomeIcon icon={collapsed ? faBars : faBars}/>
-            </button>
+            > */}
+              <FontAwesomeIcon icon={collapsed ? faBars : faBars} className="collapse-btn" onClick={() => setCollapsed(!collapsed)}/>
+            {/* </button> */}
             <h6 className="sidebar-ctgry" style={{marginTop:'20px'}}>Menu</h6>
             <Link to="dashboard" className="sidebar-link">
               <MenuItem

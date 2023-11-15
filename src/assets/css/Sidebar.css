@@ -14,7 +14,7 @@
 }
 
 .collapse-btn {
-  margin: 15px;
+  margin: 15px 20px;
   width: 20px;
   height: auto;
   display: flex;
@@ -24,8 +24,9 @@
   position: relative;
   top: 0;
   right: 0;
-  background-color: #000000;
+  color: #000;
   border-style: none;
+  cursor: pointer;
 }
 
 .sidebar-ctgry {
