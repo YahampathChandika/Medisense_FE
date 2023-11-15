@@ -7,7 +7,7 @@
 .opdtest-header {
     font-size: 30px;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,9 +97,11 @@
     padding-left: 10px;
 }
 
-
-
 .opdtest-line {
 margin-bottom: 30px;
 }
 
+.opdtest-footer {
+    display: flex;
+    justify-content: end;
+}

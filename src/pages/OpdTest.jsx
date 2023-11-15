@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../src/assets/css/OpdTest.css";
 import { Divider, InputGroup } from "rsuite";
-import { Input, DatePicker, SelectPicker } from "rsuite";
+import { Input, DatePicker, SelectPicker , Button, } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
@@ -11,8 +11,7 @@ function OpdTest() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-      setProfilePic(file);
-    
+      setProfilePic(file); 
   };
   return (
     <div className="opdtest-main-con">
@@ -144,7 +143,11 @@ function OpdTest() {
         </div>
       </div>
       <Divider />
-      <div className="opdtest-footer"></div>
+      <div className="opdtest-footer">
+         <Button appearance="primary" style={{ height: 40, width: 100 }}>
+           Continue
+        </Button>
+      </div>
     </div>
   );
 }
