@@ -1,6 +1,9 @@
-.home-container {
+.sidebar {
   display: flex;
-  height: calc(100vh - 70px);
+  height: auto;
+  color: red !important;
+  position: fixed;
+  background-color: rgb(255, 255, 255);
 }
 
 .content-container {

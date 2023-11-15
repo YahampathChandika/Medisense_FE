@@ -28,13 +28,12 @@ function SidebarComp() {
 
   return (
     <>
-      <div className="home-container">
         <Sidebar
           collapsed={collapsed}
-          width="220px"
+          width="206px"
           collapsedWidth="70px"
           transitionDuration={500}
-          backgroundColor="#ffffff"
+          className="sidebar"
         >
           <Menu>
             {/* <button
@@ -168,7 +167,6 @@ function SidebarComp() {
             </Link>
           </Menu>
         </Sidebar>
-      </div>
     </>
   );
 }
