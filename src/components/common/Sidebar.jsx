@@ -43,7 +43,7 @@ function SidebarComp() {
             >
               <FontAwesomeIcon icon={collapsed ? faBars : faBars}/>
             </button>
-            <h6 className="sidebar-ctgry">Menu</h6>
+            <h6 className="sidebar-ctgry" style={{marginTop:'20px'}}>Menu</h6>
             <Link to="dashboard" className="sidebar-link">
               <MenuItem
                 className={
@@ -55,7 +55,7 @@ function SidebarComp() {
                 Dashboard
               </MenuItem>
             </Link>
-            <Link to="reception" className="sidebar-link">
+            <Link to="gcc" className="sidebar-link">
               <MenuItem
                 className={
                   selectedMenuItem === "allPatients" ? "selected-menu-item" : ""
