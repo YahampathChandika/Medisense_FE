@@ -1,0 +1,63 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.opdtest-header {
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.opdtest-main-con {
+    margin: 50px 10% 100px 10%;
+    width: 100%;
+
+}
+
+.opdtest-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.opdtest-input-con-two {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+}
+
+.opdtest-input{
+    width:42%;
+    margin-bottom: 30px;
+}
+
+.opdtest-input input {
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 10px;
+    border: 0.5px solid #bbbbbb;
+}
+
+.opdtest-input-grp {
+    width:42%;
+    margin-bottom: 30px;
+    
+}
+
+.opdtest-input-grp input {
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 10px;
+    border: 0.5px solid #bbbbbb;
+}
+
+.opdtest-input label {
+    margin-bottom: 10px;
+}
+
+.opdtest-line {
+margin-bottom: 30px;
+}
+

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Reception from "./pages/Reception";
 import Cashier from "./pages/Cashier";
+import OpdTest from "./pages/OpdTest";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="reception" element={<Reception />} />
         <Route path="cashier" element={<Cashier />} />
+        <Route path="opdTest" element={<OpdTest />} />
       </Route>
     </Routes>
   );
