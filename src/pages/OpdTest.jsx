@@ -7,7 +7,13 @@ import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
 
 function OpdTest() {
+  const [profilePic, setProfilePic] = useState("");
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+      setProfilePic(file);
+    
+  };
   return (
     <div className="opdtest-main-con">
       <div className="opdtest-header">
@@ -37,19 +43,26 @@ function OpdTest() {
             <div className="opdtest-input">
               <label>Profile Photo</label>
               <label className="opdtest-pro-pic">
-                <FontAwesomeIcon
-                  icon={faCamera}
-                  style={{ width: 35, height: 50, color: "white" }}
-                />
                 <input
                   type="file"
                   accept="image/jpeg, image/png, image/gif"
-                  multiple
-                  // onChange={handleFileChange}
+                  onChange={handleFileChange}
                   style={{ display: "none" }}
                 />
+                {profilePic ? (
+                  <img
+                    src={URL.createObjectURL(profilePic)}
+                    alt="Profile"
+                    className="profile-image"
+                    style={{ width:"200px", height:"200px", borderRadius: "50%" }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faCamera}
+                    style={{ width: 35, height: 50, color: "white" }}
+                  />
+                )}
               </label>
-           
             </div>
           </div>
           <div className="opdtest-input-con-right">
