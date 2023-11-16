@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Reception from "./pages/Reception";
 import Cashier from "./pages/Cashier";
 import Gcc from "./pages/Gcc";
+import OpdTest from "./pages/OpdTest";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="reception" element={<Reception />} />
         <Route path="cashier" element={<Cashier />} />
         <Route path="gcc" element={<Gcc />} />
+        <Route path="opdTest" element={<OpdTest />} />
       </Route>
     </Routes>
   );
