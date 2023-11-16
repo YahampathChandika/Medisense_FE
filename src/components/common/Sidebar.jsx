@@ -65,24 +65,24 @@ function SidebarComp() {
                 Tests / Packages
               </MenuItem>
             </Link>
+            <Link to="addAgency" className="sidebar-link">
+              <MenuItem
+                className={
+                  selectedMenuItem === "addAgency" ? "selected-menu-item" : ""
+                }
+                icon={<FontAwesomeIcon icon={faGlobe} />}
+                onClick={() => handleMenuItemClick("addAgency")}
+              >
+                Agency
+              </MenuItem>
+            </Link>
             <Link to="opdTest" className="sidebar-link">
               <MenuItem
                 className={
                   selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
                 }
-                icon={<FontAwesomeIcon icon={faGlobe} />}
-                onClick={() => handleMenuItemClick("opdTest")}
-              >
-                Agency
-              </MenuItem>
-            </Link>
-            <Link to="cashier" className="sidebar-link">
-              <MenuItem
-                className={
-                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
-                }
                 icon={<FontAwesomeIcon icon={faUser} />}
-                onClick={() => handleMenuItemClick("cashier")}
+                onClick={() => handleMenuItemClick("opdTest")}
               >
                 Users
               </MenuItem>
