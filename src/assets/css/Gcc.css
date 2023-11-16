@@ -1,28 +1,3 @@
-* {
-  padding: 0;
-  margin: 0;
-}
-
-.rs-col,
-.rs-row {
-  padding: 0;
-  margin: 0;
-}
-
-.rs-input, .rs-picker {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  height: 40px;
-  margin-bottom: 25px;
-  margin-top: 10px;
-}
-
-.rs-picker-toggle {
-    height: 40px;
-    border-style: none !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5) !important;
-}
-
 .gcc-con {
   width: 100%;
   overflow-x: hidden;
@@ -31,23 +6,18 @@
   background-color: white;
 }
 
-.gcc-title {
-  font-size: 25px;
-  font-weight: 600;
-}
-
 .gcc-select {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .gcc-select-drop {
-    margin: 0;
-    width: 78%;
+  margin: 0;
+  width: 78%;
 }
 
 .gcc-select-btn {
-    height: 40px;
-    width: 20%;
-    margin-left: 2%;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+  height: 40px;
+  width: 20%;
+  margin-left: 2%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
