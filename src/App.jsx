@@ -7,6 +7,7 @@ import Reception from "./pages/Reception";
 import Cashier from "./pages/Cashier";
 import Gcc from "./pages/Gcc";
 import OpdTest from "./pages/OpdTest";
+import CreatePackage from "./pages/CreatePackage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="cashier" element={<Cashier />} />
         <Route path="gcc" element={<Gcc />} />
         <Route path="opdTest" element={<OpdTest />} />
+        <Route path="createPackage" element={<CreatePackage />} />
       </Route>
     </Routes>
   );

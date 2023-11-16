@@ -36,7 +36,7 @@ function Gcc() {
     <Container className="gcc-con">
       <form onSubmit={handleSubmit(onSubmit)}>
         <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={11} className="gcc-title">
+          <FlexboxGrid.Item colspan={11} className="main-title">
             Applicant Details
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>

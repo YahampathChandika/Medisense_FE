@@ -76,7 +76,7 @@ function SidebarComp() {
                 Agency
               </MenuItem>
             </Link>
-            <Link to="cashier" className="sidebar-link">
+            <Link to="createPackage" className="sidebar-link">
               <MenuItem
                 className={
                   selectedMenuItem === "cashier" ? "selected-menu-item" : ""

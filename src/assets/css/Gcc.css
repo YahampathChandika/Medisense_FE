@@ -31,9 +31,10 @@
   background-color: white;
 }
 
-.gcc-title {
+.main-title {
   font-size: 25px;
   font-weight: 600;
+  color: black;
 }
 
 .gcc-select {
