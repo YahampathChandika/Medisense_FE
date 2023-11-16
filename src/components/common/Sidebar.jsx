@@ -121,13 +121,13 @@ function SidebarComp() {
                 Accounts
               </MenuItem>
             </Link>
-            <Link to="cashier" className="sidebar-link">
+            <Link to="opdTest" className="sidebar-link">
               <MenuItem
                 className={
-                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                  selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
                 }
                 icon={<FontAwesomeIcon icon={faXRay} />}
-                onClick={() => handleMenuItemClick("cashier")}
+                onClick={() => handleMenuItemClick("opdTest")}
               >
                 X-Ray
               </MenuItem>
