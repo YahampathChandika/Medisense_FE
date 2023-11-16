@@ -15,22 +15,34 @@ import {
   Dropdown,
 } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { format } from "date-fns";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import AddJobModal from "../components/modals/AddJob";
 
 function Gcc() {
+  const form = useForm({
+    mode: "onTouched",
+  });
+
   const {
     register,
     handleSubmit,
+    setValue, // Add this line to destructure setValue from form methods
     watch,
     formState: { errors },
   } = useForm();
 
+ 
   const onSubmit = (data) => {
-    console.log(data);
+    // Format the date before logging the data
+    const formattedDateOfBirth = format(data.dateOfBirth, "yyyy-MM-dd");
+
+    // Log the data with the formatted date
+    console.log({ ...data, dateOfBirth: formattedDateOfBirth });
   };
+
 
   return (
     <Container className="gcc-con">
@@ -65,17 +77,27 @@ function Gcc() {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <Row>Date of Birth</Row>
-            <DatePicker block oneTap />
+            <DatePicker
+              block
+              oneTap
+              format="yyyy-MM-dd"
+              id="dateOfBirth"
+              name="dateOfBirth"
+              value={watch("dateOfBirth")} // Make sure to pass the value from react-hook-form
+              onChange={(value) => setValue("dateOfBirth", value)} // Use setValue to update the form value
+            />
             <Row>Sex</Row>
             <SelectPicker
-              searchable={false}
-              style={{ width: "100%" }}
-              data={["Male", "Female"].map((item) => ({
-                label: item,
-                value: item,
-              }))}
-              {...register("sex")}
-            />
+            searchable={false}
+            style={{ width: "100%" }}
+            data={["Male", "Female"].map((item) => ({
+              label: item,
+              value: item,
+            }))}
+            {...register("sex")}
+            onChange={(value) => setValue("sex", value)}
+          />
+            
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Row>
@@ -92,16 +114,17 @@ function Gcc() {
             />
             <Row>Civil Status</Row>
             <SelectPicker
-              searchable={false}
-              style={{ width: "100%" }}
-              data={["Married", "Single", "Divorced", "Widowed "].map(
-                (item) => ({
-                  label: item,
-                  value: item,
-                })
-              )}
-              {...register("civilStatus")}
-            />
+            searchable={false}
+            style={{ width: "100%" }}
+            data={["Married", "Single", "Divorced", "Widowed"].map(
+              (item) => ({
+                label: item,
+                value: item,
+              })
+            )}
+            {...register("civilStatus")}
+            onChange={(value) => setValue("civilStatus", value)}
+          />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <Row>Mobile Number</Row>
@@ -132,7 +155,11 @@ function Gcc() {
           <FlexboxGrid.Item colspan={7}>
             <Row>Agency</Row>
             <Row className="gcc-select">
-              <SelectPicker className="gcc-select-drop" />
+            <SelectPicker
+              className="gcc-select-drop"
+              {...register("agency")} // Assuming "agency" is the field name
+              onChange={(value) => setValue("agency", value)}
+            />
               <Button className="gcc-select-btn">Add</Button>
             </Row>
           </FlexboxGrid.Item>

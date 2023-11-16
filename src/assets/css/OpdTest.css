@@ -52,10 +52,12 @@
     margin-left: 20%;
     cursor: pointer;
     margin-top: 10px;
+    transition: 500ms;
   }
   
   .opdtest-pro-pic:hover {
     background-color: #919191 !important; 
+    transition: 500ms;
   }
 
 
@@ -82,6 +84,7 @@
     height: 40px;
     border-radius: 5px;
     padding-left: 10px;
+    
 }
 
 
