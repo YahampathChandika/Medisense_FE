@@ -68,10 +68,9 @@ function OpdTest() {
             <div className="opdtest-input-single">
               <label>Date of Birth</label>
               <DatePicker
-                id="dateOfBirth"
-                name="dateOfBirth"
                 placeholder="YYYY-MM-DD"
                 format="yyyy-MM-dd"
+                autoComplete="off"
                 // onChange={(value) => {
                 //   if (value instanceof Date) {
                 //     form.setValue("dateOfBirth", value);
