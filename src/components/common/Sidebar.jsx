@@ -76,27 +76,13 @@ function SidebarComp() {
                 Agency
               </MenuItem>
             </Link>
-            <Link to="opdTest" className="sidebar-link">
-              <MenuItem
-                className={
-                  selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
-                }
-<<<<<<< HEAD
-=======
-                icon={<FontAwesomeIcon icon={faGlobe} />}
-                onClick={() => handleMenuItemClick("opdTest")}
-              >
-                Agency
-              </MenuItem>
-            </Link>
             <Link to="createPackage" className="sidebar-link">
               <MenuItem
                 className={
-                  selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                  selectedMenuItem === "createPackage" ? "selected-menu-item" : ""
                 }
->>>>>>> f1f762de7505d4bfb6770846aa0cc5c500f5645a
                 icon={<FontAwesomeIcon icon={faUser} />}
-                onClick={() => handleMenuItemClick("opdTest")}
+                onClick={() => handleMenuItemClick("createPackage")}
               >
                 Users
               </MenuItem>
