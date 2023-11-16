@@ -1,110 +1,104 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    overflow-x: hidden;}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
 .opdtest-header {
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-between;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .opdtest-main-con {
-    margin: 50px 5% 100px 5%;
-    width: 100vw;
-
+  margin: 50px 5% 100px 5%;
+  width: 100vw;
 }
 
 .opdtest-input-con-two {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
-.opdtest-input{
-    width:45%;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
+.opdtest-input {
+  width: 45%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .opdtest-input-single {
-    width:100%;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .opdtest-pro-pic {
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #d6d6d6;
-    border-radius: 50%;
-    margin-left: 20%;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: 500ms;
-  }
-  
-  .opdtest-pro-pic:hover {
-    background-color: #919191 !important; 
-    transition: 500ms;
-  }
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d6d6d6;
+  border-radius: 50%;
+  margin-left: 20%;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 500ms;
+}
 
+.opdtest-pro-pic:hover {
+  background-color: #919191 !important;
+  transition: 500ms;
+}
 
 .opdtest-input-con {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .opdtest-input-con-left {
-    width: 100%;
+  width: 100%;
 }
 
 .opdtest-input-con-right {
-    width: 82%;
+  width: 82%;
 }
 
 .opdtest-input input {
-    height: 40px;
-    border-radius: 5px;
-    padding-left: 10px;
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 10px;
 }
 
 .opdtest-input-single input {
-    height: 40px;
-    border-radius: 5px;
-    padding-left: 10px;
-    
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 10px;
 }
 
-
 .opdtest-input-grp {
-    width:50%;
-    margin-bottom: 10px;
-    
+  width: 50%;
+  margin-bottom: 10px;
 }
 
 .opdtest-input-grp input {
-    height: 40px;
-    border-radius: 5px;
-    padding-left: 10px;
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 10px;
 }
 
 .opdtest-line {
-margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .opdtest-footer {
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 }

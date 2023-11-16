@@ -5,7 +5,7 @@ import Navbar from "../components/common/Navbar";
 
 function home() {
   return (
-    <div style={{ width: "100vw", height:'100vh' }}>
+    <div style={{ width: "100vw", height:'100vh', overflowX:'hidden' }}>
       <Navbar />
       <div style={{ display: "flex" }}>
         <Sidebar />
