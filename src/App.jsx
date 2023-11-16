@@ -8,6 +8,9 @@ import Cashier from "./pages/Cashier";
 import Gcc from "./pages/Gcc";
 import OpdTest from "./pages/OpdTest";
 import CreatePackage from "./pages/CreatePackage";
+import All from "./components/createPackage/All";
+import Available from "./components/createPackage/Available";
+import Selected from "./components/createPackage/Selected";
 
 function App() {
   return (
@@ -19,7 +22,12 @@ function App() {
         <Route path="cashier" element={<Cashier />} />
         <Route path="gcc" element={<Gcc />} />
         <Route path="opdTest" element={<OpdTest />} />
-        <Route path="createPackage" element={<CreatePackage />} />
+        <Route path="createPackage" element={<CreatePackage />}>
+          <Route index element={<All />} />
+          <Route path="allTests" element={<All />} />
+          <Route path="availableTests" element={<Available />} />
+          <Route path="selectedTests" element={<Selected />} />
+        </Route>
       </Route>
     </Routes>
   );
