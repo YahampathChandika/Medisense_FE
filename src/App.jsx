@@ -11,6 +11,7 @@ import CreatePackage from "./pages/CreatePackage";
 import All from "./components/createPackage/All";
 import Available from "./components/createPackage/Available";
 import Selected from "./components/createPackage/Selected";
+import AddAgency from "./pages/AddAgency";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="cashier" element={<Cashier />} />
         <Route path="gcc" element={<Gcc />} />
         <Route path="opdTest" element={<OpdTest />} />
+        <Route path="addAgency" element={<AddAgency />} />
         <Route path="createPackage" element={<CreatePackage />}>
           <Route index element={<All />} />
           <Route path="allTests" element={<All />} />

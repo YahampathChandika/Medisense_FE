@@ -16,7 +16,7 @@ function AddAgency() {
     <Container className="gcc-con">
       <Header>
         <FlexboxGrid justify="start">
-          <FlexboxGrid.Item colspan={20} className="gcc-title">
+          <FlexboxGrid.Item colspan={20} className="main-title">
             Add Agency
           </FlexboxGrid.Item>
         </FlexboxGrid>

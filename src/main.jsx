@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import 'rsuite/dist/rsuite-no-reset.min.css';
 
 
+
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
