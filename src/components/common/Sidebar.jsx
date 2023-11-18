@@ -30,7 +30,7 @@ function SidebarComp() {
     <>
         <Sidebar
           collapsed={collapsed}
-          width="206px"
+          width="220px"
           collapsedWidth="70px"
           transitionDuration={500}
           className="sidebar"

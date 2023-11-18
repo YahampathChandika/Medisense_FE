@@ -93,15 +93,6 @@ import {
   translateDOMPositionXY_default
 } from "./chunk-KJ44WXYV.js";
 import {
-  require_react_dom
-} from "./chunk-MKG3NT3Y.js";
-import {
-  require_prop_types
-} from "./chunk-VER6FNRX.js";
-import {
-  require_react
-} from "./chunk-67XTWVEJ.js";
-import {
   _assertThisInitialized,
   _setPrototypeOf,
   addDays,
@@ -149,6 +140,15 @@ import {
   startOfWeek,
   subDays
 } from "./chunk-6OCEFDJ3.js";
+import {
+  require_react_dom
+} from "./chunk-MKG3NT3Y.js";
+import {
+  require_prop_types
+} from "./chunk-VER6FNRX.js";
+import {
+  require_react
+} from "./chunk-67XTWVEJ.js";
 import {
   __commonJS,
   __export,
