@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../assets/css/CreatePackage.css";
+import { Button } from "react-bootstrap";
 import {
-  Button,
   Col,
   Container,
   Divider,
@@ -51,8 +51,8 @@ function CreatePackage() {
         <FlexboxGrid justify="space-between" style={{ marginTop: "15px" }}>
           <FlexboxGrid.Item colspan={7}>
             <RadioGroup name="radioList" inline appearance="picker">
-              <Link to="allTests" className="radio-link " >
-                <Radio value="All" >All</Radio>
+              <Link to="allTests" className="radio-link ">
+                <Radio value="All">All</Radio>
               </Link>
               <Link to="availableTests" className="radio-link">
                 <Radio value="Available">Available</Radio>
@@ -80,7 +80,7 @@ function CreatePackage() {
             </InputGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={3}>
-            <Button appearance="primary" style={{ width: "100px" }}>
+            <Button className="w-30 h-10 bg-blue-600 text-white">
               Add Test
             </Button>
           </FlexboxGrid.Item>
@@ -100,11 +100,7 @@ function CreatePackage() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button
-            type="submit"
-            appearance="primary"
-            style={{ height: 40, width: 100 }}
-          >
+          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
             Continue
           </Button>
         </FlexboxGrid>

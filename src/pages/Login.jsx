@@ -1,8 +1,9 @@
 import React from "react";
-import { Checkbox, Button } from "rsuite";
+import { Checkbox } from "rsuite";
+import { Button } from "react-bootstrap";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "../assets/css/Login.css";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
@@ -30,7 +31,7 @@ function Login() {
         icon: "success",
         title: "Signed in successfully",
       });
-      navigate("/home/dashboard")
+      navigate("/home/dashboard");
     } else {
       Swal.fire({
         icon: "error",
@@ -64,7 +65,7 @@ function Login() {
               <Checkbox>Remember Me</Checkbox>
               <p className="login-left-mid-forgot">Forgot Password</p>
             </div>
-            <Button appearance="primary" type="submit" className="login-btn">
+            <Button type="submit" className="w-60 h-10 mt-10 hover:bg-slate-800 bg-gray-700 rounded-none	 text-white">
               Login
             </Button>
           </form>

@@ -1,8 +1,6 @@
 import React from "react";
 import "../assets/css/Gcc.css";
 import {
-  Button,
-  Col,
   Container,
   Divider,
   Input,
@@ -19,7 +17,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
-import AddJobModal from "../components/modals/AddJob";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
 
 function Gcc() {
   const form = useForm({
@@ -157,31 +156,33 @@ function Gcc() {
                 {...register("agency")} // Assuming "agency" is the field name
                 onChange={(value) => setValue("agency", value)}
               />
-              <Button className="gcc-select-btn">Add</Button>
+              <Button className="gcc-select-btn btn btn-outline-dark">
+                Add
+              </Button>
             </Row>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={7}>
             <Row>Job</Row>
             <Row className="gcc-select">
               <SelectPicker className="gcc-select-drop" />
-              <Button className="gcc-select-btn">Add</Button>
+              <Button className="gcc-select-btn btn btn-outline-dark">
+                Add
+              </Button>
             </Row>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={7}>
             <Row>Country</Row>
             <Row className="gcc-select">
               <SelectPicker className="gcc-select-drop" />
-              <Button className="gcc-select-btn">Add</Button>
+              <Button className="gcc-select-btn btn btn-outline-dark">
+                Add
+              </Button>
             </Row>
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button
-            type="submit"
-            appearance="primary"
-            style={{ height: 40, width: 100 }}
-          >
+          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
             Continue
           </Button>
         </FlexboxGrid>

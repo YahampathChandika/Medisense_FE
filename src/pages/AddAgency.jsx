@@ -8,8 +8,8 @@ import {
   Divider,
   Row,
   Input,
-  Button,
 } from "rsuite";
+import { Button } from "react-bootstrap";
 
 function AddAgency() {
   return (
@@ -53,11 +53,7 @@ function AddAgency() {
       <Divider />
       <Footer>
         <FlexboxGrid justify="end">
-          <Button
-            type="submit"
-            appearance="primary"
-            style={{ height: 40, width: 100 }}
-          >
+          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
             Continue
           </Button>
         </FlexboxGrid>
