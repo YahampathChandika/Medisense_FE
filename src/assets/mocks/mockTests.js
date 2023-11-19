@@ -7,10 +7,14 @@ export const mockData = (count) => {
       description: `Description ${i}`,
       testType: `Type 0${i}`,
       amount: `RS ${Math.floor(Math.random() * 1000)}.00`,
-      no: `#00${i}`,
+      no: `00${i}`,
       type: `Ray ${i}`,
       xrayFilm: `film ${i}`,
       remarks: `remark ${i}`,
+      result: `result ${i}`,
+      unit: `unit ${i}`,
+      status: `status ${i}`,
+      package: `package ${i}`,
     });
   }
 

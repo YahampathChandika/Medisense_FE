@@ -113,7 +113,7 @@ function SidebarComp() {
               Cashier
             </MenuItem>
           </Link>
-          <Link to="cashier" className="sidebar-link">
+          <Link to="opdTest" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "Accounts" ? "selected-menu-item" : ""
@@ -124,7 +124,7 @@ function SidebarComp() {
               Accounts
             </MenuItem>
           </Link>
-          <Link to="opdTest" className="sidebar-link">
+          <Link to="xray" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
@@ -146,7 +146,7 @@ function SidebarComp() {
               Lab
             </MenuItem>
           </Link>
-          <Link to="cashier" className="sidebar-link">
+          <Link to="miniLab" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "Mini-lab" ? "selected-menu-item" : ""
