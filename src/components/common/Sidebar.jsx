@@ -55,7 +55,7 @@ function SidebarComp() {
               Dashboard
             </MenuItem>
           </Link>
-          <Link to="gcc" className="sidebar-link">
+          <Link to="createPackage" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "Tests" ? "selected-menu-item" : ""
@@ -91,7 +91,7 @@ function SidebarComp() {
           <h6 className="sidebar-ctgry" style={{ marginTop: "20px" }}>
             Roles
           </h6>
-          <Link to="xray" className="sidebar-link">
+          <Link to="dashboard" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "Reception" ? "selected-menu-item" : ""
@@ -102,7 +102,7 @@ function SidebarComp() {
               Reception
             </MenuItem>
           </Link>
-          <Link to="reception" className="sidebar-link">
+          <Link to="cashier" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "allPatients" ? "selected-menu-item" : ""
@@ -137,9 +137,7 @@ function SidebarComp() {
           </Link>
           <Link to="lab" className="sidebar-link">
             <MenuItem
-              className={
-                selectedMenuItem === "Lab" ? "selected-menu-item" : ""
-              }
+              className={selectedMenuItem === "Lab" ? "selected-menu-item" : ""}
               icon={<FontAwesomeIcon icon={faFlaskVial} />}
               onClick={() => handleMenuItemClick("Lab")}
             >

@@ -25,7 +25,7 @@ function App() {
         <Route path="reception" element={<Reception />} />
         <Route path="cashier" element={<Cashier />} />
         <Route path="gcc" element={<Gcc />} />
-        <Route path="opdTest" element={<OpdTest />} />
+        <Route path="opd" element={<OpdTest />} />
         <Route path="addAgency" element={<AddAgency />} />
         <Route path="xray" element={<Xray />} />
         <Route path="miniLab" element={<MiniLab />} />
