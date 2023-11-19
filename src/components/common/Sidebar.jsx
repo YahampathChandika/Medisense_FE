@@ -91,7 +91,7 @@ function SidebarComp() {
           <h6 className="sidebar-ctgry" style={{ marginTop: "20px" }}>
             Roles
           </h6>
-          <Link to="dashboard" className="sidebar-link">
+          <Link to="xray" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "Reception" ? "selected-menu-item" : ""

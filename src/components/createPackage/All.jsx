@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { mockTests } from "../../assets/mocks/mockTests";
+import { mockData } from "../../assets/mocks/mockTests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
@@ -14,7 +14,7 @@ function All() {
   let indeterminate = false;
 
   const { Column, HeaderCell, Cell } = Table;
-  const data = mockTests(8);
+  const data = mockData(8);
 
   const getData = () => {
     if (sortColumn && sortType) {
