@@ -46,6 +46,10 @@ code {
   justify-content: center;
 }
 
+.rs-modal-wrapper {
+  width: 100vw !important;
+}
+
 .svg-inline--fa {
   cursor: pointer;
 }

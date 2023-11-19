@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../assets/css/Gcc.css";
 import {
   Container,
@@ -11,7 +11,10 @@ import {
   DatePicker,
   SelectPicker,
   Dropdown,
+  Modal,
+  ButtonToolbar,
 } from "rsuite";
+
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -19,8 +22,18 @@ import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
+import AddJobModal from "../components/modals/AddJob";
+import AddCountryModal from "../components/modals/AddCountry";
+import { Link } from "react-router-dom";
 
 function Gcc() {
+  const [jobOpen, setJobOpen] = useState(false);
+  const handleJobOpen = () => setJobOpen(true);
+  const handleJobClose = () => setJobOpen(false);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const handleCountryOpen = () => setCountryOpen(true);
+  const handleCountryClose = () => setCountryOpen(false);
+
   const form = useForm({
     mode: "onTouched",
   });
@@ -156,16 +169,21 @@ function Gcc() {
                 {...register("agency")} // Assuming "agency" is the field name
                 onChange={(value) => setValue("agency", value)}
               />
-              <Button className="gcc-select-btn btn btn-outline-dark">
-                Add
-              </Button>
+              <Link to="/home/addAgency">
+                <Button className="gcc-select-btn btn btn-outline-dark">
+                  Add
+                </Button>
+              </Link>
             </Row>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={7}>
             <Row>Job</Row>
             <Row className="gcc-select">
               <SelectPicker className="gcc-select-drop" />
-              <Button className="gcc-select-btn btn btn-outline-dark">
+              <Button
+                onClick={handleJobOpen}
+                className="gcc-select-btn btn btn-outline-dark"
+              >
                 Add
               </Button>
             </Row>
@@ -174,7 +192,10 @@ function Gcc() {
             <Row>Country</Row>
             <Row className="gcc-select">
               <SelectPicker className="gcc-select-drop" />
-              <Button className="gcc-select-btn btn btn-outline-dark">
+              <Button
+                onClick={handleCountryOpen}
+                className="gcc-select-btn btn btn-outline-dark"
+              >
                 Add
               </Button>
             </Row>
@@ -187,6 +208,8 @@ function Gcc() {
           </Button>
         </FlexboxGrid>
       </form>
+      <AddJobModal open={jobOpen} handleClose={handleJobClose} />
+      <AddCountryModal open={countryOpen} handleClose={handleCountryClose} />
     </Container>
   );
 }

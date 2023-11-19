@@ -2,9 +2,9 @@
 import React from "react";
 import { Modal, Button, Row, Col, FlexboxGrid, Input } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import { faVial } from "@fortawesome/free-solid-svg-icons";
 
-function AddJobModal({ open, handleClose }) {
+function AddTest({ open, handleClose }) {
   return (
     <Modal
       style={{
@@ -20,21 +20,43 @@ function AddJobModal({ open, handleClose }) {
         justify="space-between"
         className="flex justify-between items-center"
       >
-        <FlexboxGrid.Item colspan={7}>
-          <Col className="font-semibold text-2xl">Create Job</Col>
+        <FlexboxGrid.Item colspan={9}>
+          <Col className="font-semibold text-2xl">Add Test</Col>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={3}>
           <Col className="border-double border-4 text-blue-700	 border-slate-100 bg-slate-200 rounded-full h-12 w-12 items-center flex justify-center">
-            <FontAwesomeIcon icon={faBriefcase} />
+            <FontAwesomeIcon icon={faVial} />
           </Col>
         </FlexboxGrid.Item>
       </FlexboxGrid>
-      <Row>Create a new job.</Row>
+      <Row>Create a new test.</Row>
       <Row className="mt-4">
-        <Row>Name of Job</Row>
-        <Input className="mb-2" />
-        <Row>Description</Row>
-        <Input />
+        <FlexboxGrid
+          justify="space-between"
+          className="flex justify-between items-center"
+        >
+          <FlexboxGrid.Item colspan={15}>
+            <Row>Test Name</Row>
+            <Input />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={7}>
+            <Row>Code</Row>
+            <Input />
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+        <FlexboxGrid
+          justify="space-between"
+          className="flex justify-between items-center"
+        >
+          <FlexboxGrid.Item colspan={15}>
+            <Row>Amount</Row>
+            <Input />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={7}>
+            <Row>Type</Row>
+            <Input />
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
       </Row>
       <Row className="w-full flex justify-between mt-2">
         <Button
@@ -54,4 +76,4 @@ function AddJobModal({ open, handleClose }) {
   );
 }
 
-export default AddJobModal;
+export default AddTest;

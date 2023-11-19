@@ -17,8 +17,13 @@ import "rsuite/dist/rsuite-no-reset.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link, Outlet } from "react-router-dom";
+import AddTest from "../components/modals/AddTest";
 
 function CreatePackage() {
+  const [testOpen, setTestOpen] = useState(false);
+  const handleTestOpen = () => setTestOpen(true);
+  const handleTestClose = () => setTestOpen(false);
+
   const {
     register,
     handleSubmit,
@@ -80,7 +85,7 @@ function CreatePackage() {
             </InputGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={3}>
-            <Button className="w-30 h-10 bg-blue-600 text-white">
+            <Button onClick={handleTestOpen} className="w-30 h-10 bg-blue-600 text-white">
               Add Test
             </Button>
           </FlexboxGrid.Item>
@@ -105,6 +110,7 @@ function CreatePackage() {
           </Button>
         </FlexboxGrid>
       </form>
+      <AddTest open={testOpen} handleClose={handleTestClose} />
     </Container>
   );
 }
