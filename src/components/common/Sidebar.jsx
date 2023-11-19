@@ -135,7 +135,7 @@ function SidebarComp() {
               X-Ray
             </MenuItem>
           </Link>
-          <Link to="cashier" className="sidebar-link">
+          <Link to="lab" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "Lab" ? "selected-menu-item" : ""

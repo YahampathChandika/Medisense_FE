@@ -14,6 +14,7 @@ import Selected from "./components/createPackage/Selected";
 import AddAgency from "./pages/AddAgency";
 import Xray from "./pages/Xray";
 import MiniLab from "./pages/MiniLab";
+import Lab from "./pages/Lab";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="addAgency" element={<AddAgency />} />
         <Route path="xray" element={<Xray />} />
         <Route path="miniLab" element={<MiniLab />} />
+        <Route path="lab" element={<Lab />} />
         <Route path="createPackage" element={<CreatePackage />}>
           <Route index element={<All />} />
           <Route path="allTests" element={<All />} />
