@@ -77,6 +77,17 @@ function SidebarComp() {
               Agency
             </MenuItem>
           </Link>
+          <Link to="patients" className="sidebar-link">
+            <MenuItem
+              className={
+                selectedMenuItem === "patients" ? "selected-menu-item" : ""
+              }
+              icon={<FontAwesomeIcon icon={faUser} />}
+              onClick={() => handleMenuItemClick("patients")}
+            >
+              Patients
+            </MenuItem>
+          </Link>
           <Link to="createPackage" className="sidebar-link">
             <MenuItem
               className={
@@ -155,13 +166,13 @@ function SidebarComp() {
               Mini-lab
             </MenuItem>
           </Link>
-          <Link to="cashier" className="sidebar-link">
+          <Link to="opdTest" className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "Doctor" ? "selected-menu-item" : ""
+                selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faUserDoctor} />}
-              onClick={() => handleMenuItemClick("Doctor")}
+              onClick={() => handleMenuItemClick("opdTest")}
             >
               Doctor
             </MenuItem>
