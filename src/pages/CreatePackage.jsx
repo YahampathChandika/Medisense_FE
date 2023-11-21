@@ -56,15 +56,15 @@ function CreatePackage() {
         <FlexboxGrid justify="space-between" style={{ marginTop: "15px" }}>
           <FlexboxGrid.Item colspan={7}>
             <RadioGroup name="radioList" inline appearance="picker">
-              <Link to="allTests" className="radio-link ">
+              {/* <Link to="allTests" className="radio-link "> */}
                 <Radio value="All">All</Radio>
-              </Link>
-              <Link to="availableTests" className="radio-link">
+              {/* </Link> */}
+              {/* <Link to="availableTests" className="radio-link"> */}
                 <Radio value="Available">Available</Radio>
-              </Link>
-              <Link to="selectedTests" className="radio-link">
+              {/* </Link> */}
+              {/* <Link to="selectedTests" className="radio-link"> */}
                 <Radio value="Selected">Selected</Radio>
-              </Link>
+              {/* </Link> */}
             </RadioGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={6}>

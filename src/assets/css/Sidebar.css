@@ -1,7 +1,5 @@
 .sidebar {
   display: flex;
-  height: auto;
-  position: fixed;
 }
 
 .content-container {
@@ -50,4 +48,5 @@
 .ps-sidebar-container {
   background-color: transparent !important;
   width: 220px !important;
+  height: 100vh !important;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { mockData } from "../../assets/mocks/mockTests";
+import { mockData } from "../../assets/mocks/mockData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";

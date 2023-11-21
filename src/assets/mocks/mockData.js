@@ -6,7 +6,7 @@ export const mockData = (count) => {
       code: `TST00${i}`,
       description: `Description ${i}`,
       testType: `Type 0${i}`,
-      amount: `RS ${Math.floor(Math.random() * 1000)}.00`,
+      amount: `RS ${Math.floor(Math.random() * 1000)}`,
       no: `00${i}`,
       type: `Ray ${i}`,
       xrayFilm: `film ${i}`,

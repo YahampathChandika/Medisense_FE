@@ -5,11 +5,17 @@ import Navbar from "../components/common/Navbar";
 
 function home() {
   return (
-    <div style={{ width: "100vw", height:'100vh', overflowX:'hidden' }}>
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        overflowX: "hidden",
+      }}
+    >
       <Navbar />
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", marginTop: "60px", maxHeight:'88vh', overflowY:'hidden' }}>
         <Sidebar />
-        <Outlet /> 
+        <Outlet />
       </div>
     </div>
   );

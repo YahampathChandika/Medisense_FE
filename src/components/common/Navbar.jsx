@@ -11,7 +11,7 @@ const user = {
 
 const Navbar = () => {
   return (
-    <div className="bg-white border-b-2	w-full flex h-16 items-center justify-between">
+    <div className="bg-white fixed z-50 border-b-2	w-full flex h-16 items-center justify-between">
         <div className="flex items-center">
           <div className="relative">
             <div className="ml-10 flex items-baseline space-x-4">

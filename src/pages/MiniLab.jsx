@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../assets/css/Gcc.css";
-import { mockData } from "../assets/mocks/mockTests";
+import { mockData } from "../assets/mocks/mockData";
 import {
   Container,
   Divider,
@@ -30,7 +30,7 @@ function MiniLab() {
 
   const CustomHeaderCell = ({ children, className, ...props }) => {
     // Add your Tailwind CSS classes to the className
-    const headerClasses = "text-black font-bold text-sm";
+    const headerClasses = "text-blue-500 bg-black-400 font-bold text-sm";
 
     return (
       <Table.HeaderCell {...props} className={`${className} ${headerClasses}`}>

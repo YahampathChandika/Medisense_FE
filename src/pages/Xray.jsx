@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../assets/css/Gcc.css";
-import { mockData } from "../assets/mocks/mockTests";
+import { mockData } from "../assets/mocks/mockData";
 import {
   Container,
   Divider,
