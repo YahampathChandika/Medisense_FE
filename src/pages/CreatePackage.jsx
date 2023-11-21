@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../assets/css/CreatePackage.css";
-import { Button, ButtonGroup } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import {
   Col,
   Container,
@@ -11,6 +11,8 @@ import {
   InputGroup,
   Radio,
   RadioGroup,
+  ButtonToolbar,
+  ButtonGroup,
 } from "rsuite";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
@@ -35,11 +37,16 @@ function CreatePackage() {
     console.log(data);
   };
 
+  const btnStyles =
+    "bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-black focus:border-b-2 focus:border-black focus:text-black";
+
   return (
     <Container className="gcc-con">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row className="main-title">Create Package</Row>
-        <Divider />
+        <Row className="text-black font-montserrat text-3xl font-semibold">
+          Create Package
+        </Row>
+        <Divider className="border-t-2 border-gray-400" />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Package Code</Row>
@@ -51,52 +58,31 @@ function CreatePackage() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
 
-        <Row className="main-title">Select Tests</Row>
+        <Row className="text-black font-montserrat text-2xl font-semibold">
+          Select Tests
+        </Row>
 
         <FlexboxGrid justify="space-between" style={{ marginTop: "15px" }}>
           <FlexboxGrid.Item colspan={7}>
-            {/* <RadioGroup name="radioList" inline appearance="picker" className="border-none">
-              <Link to="allTests" className="radio-link focus:border-b-2 border-black	font-bold	focus:text-black text-red-600">
-                <Radio className="" value="All">All</Radio>
-              </Link>
-              <Link to="availableTests" className="radio-link">
-                <Radio value="Available">Available</Radio>
-              </Link>
-              <Link to="selectedTests" className="radio-link">
-                <Radio value="Selected">Selected</Radio>
-              </Link>
-            </RadioGroup> */}
             <ButtonGroup>
-              <Link
-                className="focus:border-b-2 focus:border-black"
-                to="allTests"
-              >
-                <Button className="bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-gray-600 focus:border-b-2 focus:border-black focus:text-black">
-                  All
-                </Button>
+              <Link to="allTests">
+                <Button className={btnStyles}>All</Button>
               </Link>
-              <Link
-                className="focus:border-b-2 border-black	font-bold	focus:text-black text-red-600"
-                to="availableTests"
-              >
-                <Button className="bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-gray-600 focus:border-b-2 focus:border-black focus:text-black">
-                  Available
-                </Button>
+              <Link to="availableTests">
+                <Button className={btnStyles}>Available</Button>
               </Link>
-              <Link
-                className="focus:border-b-2 border-black	font-bold	focus:text-black text-red-600"
-                to="selectedTests"
-              >
-                <Button className="bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-gray-600 focus:border-b-2 focus:border-black focus:text-black">
-                  Selected
-                </Button>
+              <Link to="selectedTests">
+                <Button className={btnStyles}>Selected</Button>
               </Link>
             </ButtonGroup>
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={6}>
-            <Row>
-              <Col>Total selected amount:</Col>
-              <Col>Rs.1900.00 </Col>
+          <FlexboxGrid.Item
+            colspan={10}
+            className="flex flex-nowrap justify-end items-center"
+          >
+            <Row className="space-x-2">
+              <Col className="flex flex-nowrap">Total selected amount:</Col>
+              <Col className="flex flex-nowrap font-semibold">Rs.19000.00 </Col>
             </Row>
           </FlexboxGrid.Item>
         </FlexboxGrid>
@@ -110,10 +96,10 @@ function CreatePackage() {
               </InputGroup.Button>
             </InputGroup>
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={3}>
+          <FlexboxGrid.Item colspan={6} className="justify-end flex">
             <Button
               onClick={handleTestOpen}
-              className="w-30 h-10 bg-blue-600 text-white"
+              className="w-40 h-10 bg-blue-600 text-white"
             >
               Add Test
             </Button>
@@ -135,7 +121,7 @@ function CreatePackage() {
         <Divider />
         <FlexboxGrid justify="end">
           <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
-            Continue
+            Create
           </Button>
         </FlexboxGrid>
       </form>

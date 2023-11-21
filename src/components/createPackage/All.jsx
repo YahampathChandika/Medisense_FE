@@ -82,6 +82,12 @@ function All() {
     </Cell>
   );
 
+  const createHeaderCell = (label) => (
+    <HeaderCell style={{ background: "#F2F4FF", color: "#768DC6", fontWeight:'600' }}>
+      {label}
+    </HeaderCell>
+  );
+
   return (
     <Table
       autoHeight
@@ -94,8 +100,8 @@ function All() {
       loading={loading}
       style={{ margin: "25px 0 40px" }}
     >
-      <Column width={50} align="center">
-        <HeaderCell style={{ padding: 0 }}>
+      <Column width={100} align="center">
+        <HeaderCell style={{ padding: 0, background: "#F2F4FF", color: "#768DC6" }}>
           <Checkbox
             inline
             checked={checked}
@@ -112,27 +118,27 @@ function All() {
       </Column>
 
       <Column sortable flexGrow>
-        <HeaderCell>Code</HeaderCell>
+        {createHeaderCell("CODE")}
         <Cell dataKey="code" />
       </Column>
 
       <Column sortable flexGrow fullText>
-        <HeaderCell>Description</HeaderCell>
+        {createHeaderCell("DESCRIPTION")}
         <Cell dataKey="description" />
       </Column>
 
       <Column sortable flexGrow>
-        <HeaderCell>Test Type</HeaderCell>
+        {createHeaderCell("TEST TYPE")}
         <Cell dataKey="testType" />
       </Column>
 
       <Column sortable flexGrow>
-        <HeaderCell>Amount</HeaderCell>
+        {createHeaderCell("AMOUNT")}
         <Cell dataKey="amount" />
       </Column>
 
       <Column flexGrow>
-        <HeaderCell>Action</HeaderCell>
+        {createHeaderCell("")}
         <Cell>
           <FontAwesomeIcon icon={faPenToSquare} />
           <FontAwesomeIcon icon={faTrash} style={{ marginLeft: "15px" }} />
