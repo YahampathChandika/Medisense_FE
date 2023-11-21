@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../assets/css/CreatePackage.css";
-import { Button } from "react-bootstrap";
+import { Button, ButtonGroup } from "react-bootstrap";
 import {
   Col,
   Container,
@@ -55,17 +55,43 @@ function CreatePackage() {
 
         <FlexboxGrid justify="space-between" style={{ marginTop: "15px" }}>
           <FlexboxGrid.Item colspan={7}>
-            <RadioGroup name="radioList" inline appearance="picker">
-              {/* <Link to="allTests" className="radio-link "> */}
-                <Radio value="All">All</Radio>
-              {/* </Link> */}
-              {/* <Link to="availableTests" className="radio-link"> */}
+            {/* <RadioGroup name="radioList" inline appearance="picker" className="border-none">
+              <Link to="allTests" className="radio-link focus:border-b-2 border-black	font-bold	focus:text-black text-red-600">
+                <Radio className="" value="All">All</Radio>
+              </Link>
+              <Link to="availableTests" className="radio-link">
                 <Radio value="Available">Available</Radio>
-              {/* </Link> */}
-              {/* <Link to="selectedTests" className="radio-link"> */}
+              </Link>
+              <Link to="selectedTests" className="radio-link">
                 <Radio value="Selected">Selected</Radio>
-              {/* </Link> */}
-            </RadioGroup>
+              </Link>
+            </RadioGroup> */}
+            <ButtonGroup>
+              <Link
+                className="focus:border-b-2 focus:border-black"
+                to="allTests"
+              >
+                <Button className="bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-gray-600 focus:border-b-2 focus:border-black focus:text-black">
+                  All
+                </Button>
+              </Link>
+              <Link
+                className="focus:border-b-2 border-black	font-bold	focus:text-black text-red-600"
+                to="availableTests"
+              >
+                <Button className="bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-gray-600 focus:border-b-2 focus:border-black focus:text-black">
+                  Available
+                </Button>
+              </Link>
+              <Link
+                className="focus:border-b-2 border-black	font-bold	focus:text-black text-red-600"
+                to="selectedTests"
+              >
+                <Button className="bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-gray-600 focus:border-b-2 focus:border-black focus:text-black">
+                  Selected
+                </Button>
+              </Link>
+            </ButtonGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={6}>
             <Row>
@@ -74,7 +100,7 @@ function CreatePackage() {
             </Row>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider />
+        <Divider className="mt-0 mb-10" />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <InputGroup>
@@ -85,7 +111,10 @@ function CreatePackage() {
             </InputGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={3}>
-            <Button onClick={handleTestOpen} className="w-30 h-10 bg-blue-600 text-white">
+            <Button
+              onClick={handleTestOpen}
+              className="w-30 h-10 bg-blue-600 text-white"
+            >
               Add Test
             </Button>
           </FlexboxGrid.Item>
