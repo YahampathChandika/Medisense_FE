@@ -27,9 +27,14 @@ function Patients() {
   const [checked, setChecked] = useState(false);
   const data = mockData(18);
   const [view, setView] = useState("table");
+  const [activeButton, setActiveButton] = useState();
 
   const handleViewChange = (selectedView) => {
     setView(selectedView);
+  };
+
+  const handleBtnSelect = (buttonId) => {
+    setActiveButton(buttonId);
   };
 
   return (
@@ -74,13 +79,12 @@ function Patients() {
         </FlexboxGrid>
       </Header>
       <Content>
-        <ButtonGroup >
+        <ButtonGroup>
           <Button
             className={`patient-button-grp ${view === "table" ? "active" : ""}`}
             checked={checked}
             onChange={(e) => setChecked(e.currentTarget.checked)}
             type="checkbox"
-            
           >
             <div style={{ display: "flex" }}>
               <p>GCC Medicals </p>
@@ -130,6 +134,68 @@ function Patients() {
             <h6>Rs.85,125.00</h6>
           </Button>
         </ButtonGroup>
+        <div className="patient-select-btns">
+          <button
+            className={`${activeButton === "gcc" ? "active" : ""}`}
+            onClick={() => handleBtnSelect("gcc")}
+          >
+            <div style={{ display: "flex" }}>
+              <p>GCC Medicals</p>
+              <FontAwesomeIcon
+                icon={faCaretRight}
+                style={{ marginTop: "7.8px", marginLeft: "3px " }}
+              />
+              <FontAwesomeIcon icon={faCaretDown} />
+            </div>
+            <h4>120</h4>
+            <h6>Rs.85,125.00</h6>
+          </button>
+          <button
+            className={`${activeButton === "nongcc" ? "active" : ""}`}
+            onClick={() => handleBtnSelect("nongcc")}
+          >
+            <div style={{ display: "flex" }}>
+              <p>Non GCC Medicals</p>
+              <FontAwesomeIcon
+                icon={faCaretRight}
+                style={{ marginTop: "7.8px", marginLeft: "3px " }}
+              />
+              <FontAwesomeIcon icon={faCaretDown} />
+            </div>
+            <h4>110</h4>
+            <h6>Rs.185,125.00</h6>
+          </button>
+          <button
+            className={`${activeButton === "opd" ? "active" : ""}`}
+            onClick={() => handleBtnSelect("opd")}
+          >
+            <div style={{ display: "flex" }}>
+              <p>OPD Tests</p>
+              <FontAwesomeIcon
+                icon={faCaretRight}
+                style={{ marginTop: "7.8px", marginLeft: "3px " }}
+              />
+              <FontAwesomeIcon icon={faCaretDown} />
+            </div>
+            <h4>170</h4>
+            <h6>Rs.385,125.00</h6>
+          </button>
+          <button
+            className={`${activeButton === "total" ? "active" : ""}`}
+            onClick={() => handleBtnSelect("total")}
+          >
+            <div style={{ display: "flex" }}>
+              <p>Total</p>
+              <FontAwesomeIcon
+                icon={faCaretRight}
+                style={{ marginTop: "7.8px", marginLeft: "3px " }}
+              />
+              <FontAwesomeIcon icon={faCaretDown} />
+            </div>
+            <h4>300</h4>
+            <h6>Rs.485,125.00</h6>
+          </button>
+        </div>
         <TablePatients data={data} />
       </Content>
       {/* <Footer>Footer</Footer> */}
