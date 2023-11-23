@@ -1,0 +1,101 @@
+.patinet-header{
+  margin-bottom: 20px;
+}
+
+
+.patient-button-grp {
+  background-color: #f8f8f8 !important;
+  width: 22% !important;
+  height: 170px;
+  padding: 20px;
+  border-radius: 5px !important;
+  display: flex;
+  align-items: flex-start !important;
+  justify-content: left;
+  flex-direction: column;
+  color: #000;
+  border-bottom:none !important;
+}
+
+
+.patient-button-grp:hover,
+.patient-button-grp:focus {
+  background-color: #2148ab !important;
+  color: rgb(255, 255, 255) !important;
+}
+
+.rs-stack-item,
+.rs-btn-group {
+  display: flex;
+  width: 100% !important;
+  height: auto;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.patient-button-grp p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 20%;
+  margin-top: 3%;
+}
+
+.patient-button-grp h6 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0em;
+  text-align: left;
+  
+}
+
+.patient-button-grp h4 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 2%;
+}
+
+.patient-button-grp .fa-caret-down {
+  display: none; /* Hide the down arrow by default */
+  margin-top: 6.5px !important;
+  margin-left: 3px;
+}
+
+.patient-button-grp:hover .fa-caret-down,
+.patient-button-grp:focus .fa-caret-down {
+  display: block; /* Show the down arrow on hover or focus */
+}
+
+.patient-button-grp .fa-caret-right {
+  display: block; /* Show the right arrow by default */
+  color: #F63F3F;
+}
+
+.patient-button-grp:hover .fa-caret-right,
+.patient-button-grp:focus .fa-caret-right {
+  display: none; /* Hide the right arrow on hover or focus */
+}
+
+.patient-button-grp:active {
+  background-color: #2148ab !important;
+  color: rgb(255, 255, 255) !important;
+  
+}
+
+.patient-button-grp:active .fa-caret-right {
+  display: none; /* Hide the right arrow on click */
+}
+
+.patient-button-grp:active .fa-caret-down {
+  display: block; /* Show the down arrow on click */
+}
+
+.rs-stack {
+  display:contents;
+}

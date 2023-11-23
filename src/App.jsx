@@ -16,11 +16,13 @@ import Xray from "./pages/Xray";
 import MiniLab from "./pages/MiniLab";
 import Lab from "./pages/Lab";
 import Patients from "./pages/Patients";
+import TablePatients from "./components/tables/TablePatients";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="tablePatients" element={<TablePatients />} />
       <Route path="/home" element={<Home />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="opdTest" element={<OpdTest />} />

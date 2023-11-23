@@ -1,0 +1,10 @@
+/* TablePatients.css */
+
+.even-row {
+    background-color: rgb(88, 27, 27);
+  }
+  
+  .odd-row {
+    background-color: #808080;
+  }
+  
