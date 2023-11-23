@@ -13,7 +13,7 @@ function home() {
       }}
     >
       <Navbar />
-      <div style={{ display: "flex", marginTop: "60px", maxHeight:'88vh', overflowY:'hidden' }}>
+      <div style={{ display: "flex", marginTop: "60px", maxHeight:'88vh' }}>
         <Sidebar />
         <Outlet />
       </div>

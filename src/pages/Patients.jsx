@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "react-bootstrap";
 import {
   Container,
   Header,
@@ -6,7 +7,6 @@ import {
   FlexboxGrid,
   InputGroup,
   Input,
-  Button,
   InputPicker,
   DatePicker,
 } from "rsuite";
@@ -19,10 +19,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/TablePatients";
-import { mockData } from "../assets/mocks/mockData";
+import  mockData  from "../assets/mocks/mock.js";
 
 function Patients() {
-  const data = mockData(18);
+  const data = mockData;
   const [activeButton, setActiveButton] = useState();
 
   const handleBtnSelect = (buttonId) => {
@@ -48,7 +48,7 @@ function Patients() {
             </InputGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={2} className="main-title">
-            <Button type="submit" className="w-35 h-11 bg-blue-600 text-white">
+            <Button type="submit" className="w-40 h-11 bg-blue-600 text-white">
               Add Employee
             </Button>
           </FlexboxGrid.Item>
