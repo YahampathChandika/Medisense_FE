@@ -3,12 +3,10 @@ import {
   Container,
   Header,
   Content,
-  Footer,
   FlexboxGrid,
   InputGroup,
   Input,
   Button,
-  ButtonGroup,
   InputPicker,
   DatePicker,
 } from "rsuite";
@@ -24,14 +22,8 @@ import TablePatients from "../components/tables/TablePatients";
 import { mockData } from "../assets/mocks/mockData";
 
 function Patients() {
-  const [checked, setChecked] = useState(false);
   const data = mockData(18);
-  const [view, setView] = useState("table");
   const [activeButton, setActiveButton] = useState();
-
-  const handleViewChange = (selectedView) => {
-    setView(selectedView);
-  };
 
   const handleBtnSelect = (buttonId) => {
     setActiveButton(buttonId);
@@ -79,61 +71,6 @@ function Patients() {
         </FlexboxGrid>
       </Header>
       <Content>
-        <ButtonGroup>
-          <Button
-            className={`patient-button-grp ${view === "table" ? "active" : ""}`}
-            checked={checked}
-            onChange={(e) => setChecked(e.currentTarget.checked)}
-            type="checkbox"
-          >
-            <div style={{ display: "flex" }}>
-              <p>GCC Medicals </p>
-              <FontAwesomeIcon
-                icon={faCaretRight}
-                style={{ marginTop: "7.8px", marginLeft: "3px " }}
-              />
-              <FontAwesomeIcon icon={faCaretDown} />
-            </div>
-            <h4>120</h4>
-            <h6>Rs.85,125.00</h6>
-          </Button>
-          <Button className="patient-button-grp ">
-            <div style={{ display: "flex" }}>
-              <p>GCC Medicals </p>
-              <FontAwesomeIcon
-                icon={faCaretRight}
-                style={{ marginTop: "7.8px", marginLeft: "3px " }}
-              />
-              <FontAwesomeIcon icon={faCaretDown} />
-            </div>
-            <h4>120</h4>
-            <h6>Rs.85,125.00</h6>
-          </Button>
-          <Button className="patient-button-grp">
-            <div style={{ display: "flex" }}>
-              <p>GCC Medicals </p>
-              <FontAwesomeIcon
-                icon={faCaretRight}
-                style={{ marginTop: "7.8px", marginLeft: "3px " }}
-              />
-              <FontAwesomeIcon icon={faCaretDown} />
-            </div>
-            <h4>120</h4>
-            <h6>Rs.85,125.00</h6>
-          </Button>
-          <Button className="patient-button-grp">
-            <div style={{ display: "flex" }}>
-              <p>GCC Medicals </p>
-              <FontAwesomeIcon
-                icon={faCaretRight}
-                style={{ marginTop: "7.8px", marginLeft: "3px " }}
-              />
-              <FontAwesomeIcon icon={faCaretDown} />
-            </div>
-            <h4>120</h4>
-            <h6>Rs.85,125.00</h6>
-          </Button>
-        </ButtonGroup>
         <div className="patient-select-btns">
           <button
             className={`${activeButton === "gcc" ? "active" : ""}`}
