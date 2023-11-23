@@ -46,7 +46,7 @@ function CreatePackage() {
         <Row className="text-black font-montserrat text-3xl font-semibold">
           Create Package
         </Row>
-        <Divider className="border-t-2 border-gray-400" />
+        <Divider className="border-t-2 border-gray-300"/>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Package Code</Row>
