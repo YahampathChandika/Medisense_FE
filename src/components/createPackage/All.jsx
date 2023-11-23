@@ -83,7 +83,9 @@ function All() {
   );
 
   const createHeaderCell = (label) => (
-    <HeaderCell style={{ background: "#F2F4FF", color: "#768DC6", fontWeight:'600' }}>
+    <HeaderCell
+      style={{ background: "#F2F4FF", color: "#768DC6", fontWeight: "600" }}
+    >
       {label}
     </HeaderCell>
   );
@@ -101,7 +103,9 @@ function All() {
       style={{ margin: "25px 0 40px" }}
     >
       <Column width={100} align="center">
-        <HeaderCell style={{ padding: 0, background: "#F2F4FF", color: "#768DC6" }}>
+        <HeaderCell
+          style={{ padding: 0, background: "#F2F4FF", color: "#768DC6" }}
+        >
           <Checkbox
             inline
             checked={checked}

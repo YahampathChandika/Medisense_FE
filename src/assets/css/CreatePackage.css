@@ -1,0 +1,4 @@
+.rs-radio-group-picker .rs-radio-checked .rs-radio-checker>label {
+    border-color: #000 !important;
+    color: #000 !important;
+}

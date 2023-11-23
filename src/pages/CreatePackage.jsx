@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/CreatePackage.css";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import {
   Col,
   Container,
@@ -9,10 +10,8 @@ import {
   Row,
   FlexboxGrid,
   InputGroup,
-  Radio,
   RadioGroup,
-  ButtonToolbar,
-  ButtonGroup,
+  Radio,
 } from "rsuite";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
@@ -25,6 +24,7 @@ function CreatePackage() {
   const [testOpen, setTestOpen] = useState(false);
   const handleTestOpen = () => setTestOpen(true);
   const handleTestClose = () => setTestOpen(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -64,17 +64,29 @@ function CreatePackage() {
 
         <FlexboxGrid justify="space-between" style={{ marginTop: "15px" }}>
           <FlexboxGrid.Item colspan={7}>
-            <ButtonGroup>
-              <Link to="allTests">
-                <Button className={btnStyles}>All</Button>
-              </Link>
-              <Link to="availableTests">
-                <Button className={btnStyles}>Available</Button>
-              </Link>
-              <Link to="selectedTests">
-                <Button className={btnStyles}>Selected</Button>
-              </Link>
-            </ButtonGroup>
+            <RadioGroup
+              name="radioList"
+              inline
+              appearance="picker"
+              defaultValue="allTests"
+              className="border-none"
+            >
+              <Radio value="allTests" onClick={() => navigate("allTests")}>
+                All
+              </Radio>
+              <Radio
+                value="availableTests"
+                onClick={() => navigate("availableTests")}
+              >
+                Available
+              </Radio>
+              <Radio
+                value="selectedTests"
+                onClick={() => navigate("selectedTests")}
+              >
+                Selected
+              </Radio>
+            </RadioGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item
             colspan={10}
