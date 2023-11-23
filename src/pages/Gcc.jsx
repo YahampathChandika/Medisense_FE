@@ -10,9 +10,6 @@ import {
   Uploader,
   DatePicker,
   SelectPicker,
-  Dropdown,
-  Modal,
-  ButtonToolbar,
 } from "rsuite";
 
 import { format } from "date-fns";
@@ -24,15 +21,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import AddJobModal from "../components/modals/AddJob";
 import AddCountryModal from "../components/modals/AddCountry";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Gcc() {
   const [jobOpen, setJobOpen] = useState(false);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const [profilePic, setProfilePic] = useState("");
+
   const handleJobOpen = () => setJobOpen(true);
   const handleJobClose = () => setJobOpen(false);
-  const [countryOpen, setCountryOpen] = useState(false);
   const handleCountryOpen = () => setCountryOpen(true);
   const handleCountryClose = () => setCountryOpen(false);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePic(file);
+  };
 
   const form = useForm({
     mode: "onTouched",
@@ -45,6 +49,8 @@ function Gcc() {
     watch,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     // Format the date before logging the data
@@ -79,11 +85,26 @@ function Gcc() {
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Profile Photo</Row>
-            <Uploader listType="picture" action="//example.com/upload">
-              <button style={{ width: "120px", height: "120px" }}>
-                <FontAwesomeIcon icon={faCamera} />
-              </button>
-            </Uploader>
+            <label className=" w-40 h-40 flex justify-center items-center bg-gray-300 rounded-full ml-40 cursor-pointer mt-1 transition duration-500">
+              <input
+                type="file"
+                accept="image/jpeg, image/png, image/gif"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              {profilePic ? (
+                <img
+                  src={URL.createObjectURL(profilePic)}
+                  alt="Profile"
+                  className="w-40 h-40 rounded-full"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCamera}
+                  style={{ width: 35, height: 50, color: "white" }}
+                />
+              )}
+            </label>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <Row>Date of Birth</Row>
@@ -166,14 +187,15 @@ function Gcc() {
             <Row className="gcc-select">
               <SelectPicker
                 className="gcc-select-drop"
-                {...register("agency")} // Assuming "agency" is the field name
+                {...register("agency")}
                 onChange={(value) => setValue("agency", value)}
               />
-              <Link to="/home/addAgency">
-                <Button className="gcc-select-btn btn btn-outline-dark">
-                  Add
-                </Button>
-              </Link>
+              <Button
+                onClick={() => navigate("/home/addAgency")}
+                className="gcc-add-btn btn btn-outline-primary"
+              >
+                Add
+              </Button>
             </Row>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={7}>
@@ -182,7 +204,7 @@ function Gcc() {
               <SelectPicker className="gcc-select-drop" />
               <Button
                 onClick={handleJobOpen}
-                className="gcc-select-btn btn btn-outline-dark"
+                className="gcc-add-btn btn btn-outline-primary"
               >
                 Add
               </Button>
@@ -194,7 +216,7 @@ function Gcc() {
               <SelectPicker className="gcc-select-drop" />
               <Button
                 onClick={handleCountryOpen}
-                className="gcc-select-btn btn btn-outline-dark"
+                className="gcc-add-btn btn btn-outline-primary"
               >
                 Add
               </Button>
