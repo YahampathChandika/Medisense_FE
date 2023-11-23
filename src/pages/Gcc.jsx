@@ -79,7 +79,7 @@ function Gcc() {
             </InputGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider />
+        <Divider className="border-t-2 border-gray-300"/>
         <Row>Full Name</Row>
         <Input {...register("name")} />
         <FlexboxGrid justify="space-between">
