@@ -7,7 +7,6 @@ import {
   InputGroup,
   Row,
   FlexboxGrid,
-  Uploader,
   DatePicker,
   SelectPicker,
 } from "rsuite";

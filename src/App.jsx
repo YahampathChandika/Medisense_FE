@@ -29,7 +29,6 @@ function App() {
         <Route path="reception" element={<Reception />} />
         <Route path="patients" element={<Patients />} />
         <Route path="cashier" element={<Cashier />} />
-        <Route path="cashier" element={<Cashier />} />
         <Route path="gcc" element={<Gcc />} />
         <Route path="opd" element={<OpdTest />} />
         <Route path="addAgency" element={<AddAgency />} />
