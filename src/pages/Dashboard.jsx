@@ -8,10 +8,15 @@ import {
   faNewspaper,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { Divider, Row } from "rsuite";
 
 function Dashboard() {
   return (
     <div className="dash-main-con">
+      <Row className="text-black p-5 pt-0 pb-0 w-full font-montserrat text-3xl font-semibold">
+        <p className="pl-6">Medicals</p>
+        <Divider className="border-t-2 border-gray-300" />
+      </Row>
       <div className="dash-type-con">
         <Link to="/home/gcc">
           <div className="dash-type gcc">
