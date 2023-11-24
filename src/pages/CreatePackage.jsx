@@ -112,7 +112,7 @@ function CreatePackage() {
             <FlexboxGrid.Item colspan={6} className="justify-end flex">
               <Button
                 onClick={handleTestOpen}
-                className="w-40 h-10 bg-blue-600 text-white"
+                className="w-40 h-10 bg-blue-800 text-white"
               >
                 Add Test
               </Button>
@@ -132,7 +132,7 @@ function CreatePackage() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
+          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
             Create
           </Button>
         </FlexboxGrid>

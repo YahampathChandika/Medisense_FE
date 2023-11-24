@@ -176,7 +176,7 @@ function MiniLab() {
           sortType={sortType}
           onSortColumn={handleSortColumn}
           loading={loading}
-          style={{ margin: "25px 0 40px"}}
+          style={{ margin: "25px 0 40px" }}
         >
           <Table.Column sortable flexGrow align="center">
             <CustomHeaderCell>No</CustomHeaderCell>
@@ -208,10 +208,13 @@ function MiniLab() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 mr-10 bg-blue-600 text-white">
+          <Button
+            type="submit"
+            className="w-40 h-10 mr-10 bg-blue-800 text-white"
+          >
             Save
           </Button>
-          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
+          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
             New
           </Button>
         </FlexboxGrid>

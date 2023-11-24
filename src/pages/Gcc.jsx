@@ -78,7 +78,7 @@ function Gcc() {
             </InputGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider className="border-t-2 border-gray-300"/>
+        <Divider className="border-t-2 border-gray-300" />
         <Row>Full Name</Row>
         <Input {...register("name")} />
         <FlexboxGrid justify="space-between">
@@ -224,7 +224,7 @@ function Gcc() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
+          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
             Continue
           </Button>
         </FlexboxGrid>
