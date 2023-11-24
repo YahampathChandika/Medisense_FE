@@ -3,7 +3,7 @@
   height: 170px;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 40px;
   border-radius: 5px;
 }
 
@@ -13,7 +13,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  width: 100%;
+  width: 40% !important;
   cursor: pointer;
   padding: 20px;
   border-radius: 5px;
@@ -54,7 +54,7 @@
   line-height: 19px;
   letter-spacing: 0em;
   text-align: left;
-  margin-bottom: 10%;
+  margin-bottom: 11.5% !important;
   margin-top: 2%;
 }
 
@@ -132,4 +132,13 @@
   top: 0;
   background-color: #fff; /* Add your desired background color */
   z-index: 1;
+}
+
+.patient-image {
+  width: 30px; 
+  height: 30px; 
+  margin-right: 20px; 
+  border-radius: 50%;
+  
+  
 }
