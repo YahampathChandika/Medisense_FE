@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import AddTest from "../components/modals/AddTest";
 
 function CreatePackage() {
@@ -46,7 +46,7 @@ function CreatePackage() {
         <Row className="text-black font-montserrat text-3xl font-semibold">
           Create Package
         </Row>
-        <Divider className="border-t-2 border-gray-300"/>
+        <Divider className="border-t-2 border-gray-300" />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Package Code</Row>
@@ -99,27 +99,27 @@ function CreatePackage() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider className="mt-0 mb-10" />
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={11}>
-            <InputGroup>
-              <Input placeholder="Search Tests ..." style={{ margin: 0 }} />
-              <InputGroup.Button>
-                <FontAwesomeIcon icon={faSearch} />
-              </InputGroup.Button>
-            </InputGroup>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={6} className="justify-end flex">
-            <Button
-              onClick={handleTestOpen}
-              className="w-40 h-10 bg-blue-600 text-white"
-            >
-              Add Test
-            </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-
-        <Outlet />
-
+        <Row className="border-1 rounded-md mb-4">
+          <FlexboxGrid justify="space-between" className="m-3">
+            <FlexboxGrid.Item colspan={11}>
+              <InputGroup>
+                <Input placeholder="Search Tests ..." style={{ margin: 0 }} />
+                <InputGroup.Button>
+                  <FontAwesomeIcon icon={faSearch} />
+                </InputGroup.Button>
+              </InputGroup>
+            </FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={6} className="justify-end flex">
+              <Button
+                onClick={handleTestOpen}
+                className="w-40 h-10 bg-blue-600 text-white"
+              >
+                Add Test
+              </Button>
+            </FlexboxGrid.Item>
+          </FlexboxGrid>
+          <Outlet />
+        </Row>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Package Price</Row>

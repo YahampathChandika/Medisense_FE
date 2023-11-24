@@ -14,7 +14,7 @@ function All() {
   let indeterminate = false;
 
   const { Column, HeaderCell, Cell } = Table;
-  const data = mockData(8);
+  const data = mockData(18);
 
   const getData = () => {
     if (sortColumn && sortType) {
@@ -92,7 +92,7 @@ function All() {
 
   return (
     <Table
-      autoHeight
+      height={400}
       minHeight={200}
       bordered
       data={getData()}
@@ -141,7 +141,7 @@ function All() {
         <Cell dataKey="amount" />
       </Column>
 
-      <Column flexGrow>
+      <Column>
         {createHeaderCell("")}
         <Cell>
           <FontAwesomeIcon icon={faPenToSquare} />
