@@ -97,7 +97,7 @@ function Xray() {
             X - Ray
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider />
+        <Divider className="border-t-2 border-gray-300" />
         <FlexboxGrid
           justify="space-between"
           className="flex items-center justify-between"
@@ -185,7 +185,7 @@ function Xray() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
+          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
             Save
           </Button>
         </FlexboxGrid>

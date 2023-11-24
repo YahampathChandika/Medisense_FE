@@ -21,7 +21,7 @@ function AddAgency() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Divider />
+      <Divider className="border-t-2 border-gray-300" />
       <Content>
         <Row>
           <Row>Agency Name</Row>
@@ -53,7 +53,7 @@ function AddAgency() {
       <Divider />
       <Footer>
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 bg-blue-600 text-white">
+          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
             Continue
           </Button>
         </FlexboxGrid>

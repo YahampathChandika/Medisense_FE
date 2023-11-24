@@ -89,7 +89,7 @@ function TablePatients({ data }) {
         <tbody>
           {sortedData().map((patient, index) => (
             <tr key={index}>
-              <td className=" " style={{display:"flex " , flexDirection:"row" , paddingLeft:"100px"}}> 
+              <td className=" " style={{display:"flex " , flexDirection:"row" , paddingLeft:"20%"}}> 
                 <img
                   src={patient.img}
                   alt="Patient"

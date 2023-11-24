@@ -53,7 +53,7 @@ function AddCountryModal({ open, handleClose }) {
       <Row className="w-full flex justify-between mt-2">
         <Button
           onClick={handleClose}
-          className="w-2/5 bg-blue-700 text-white hover:bg-blue-600"
+          className="w-2/5 bg-blue-700 text-white hover:bg-blue-800"
         >
           Create
         </Button>

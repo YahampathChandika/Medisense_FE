@@ -108,7 +108,7 @@ function Lab() {
             </InputGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider />
+        <Divider className="border-t-2 border-gray-300" />
         <FlexboxGrid
           justify="space-between"
           className="flex items-center justify-between"
@@ -167,7 +167,10 @@ function Lab() {
             <Table.Cell dataKey="status" />
           </Table.Column>
         </Table>
-        <FlexboxGrid justify="space-between" className="flex items-center justify-between">
+        <FlexboxGrid
+          justify="space-between"
+          className="flex items-center justify-between"
+        >
           <FlexboxGrid.Item colspan={11}>
             <Row>Status</Row>
             <SelectPicker
@@ -182,7 +185,10 @@ function Lab() {
             />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={7}>
-            <Button type="submit" className="w-full h-10 bg-blue-600 text-white">
+            <Button
+              type="submit"
+              className="w-full h-10 bg-blue-800 text-white"
+            >
               Mark Default
             </Button>
           </FlexboxGrid.Item>
@@ -191,11 +197,11 @@ function Lab() {
         <FlexboxGrid justify="end">
           <Button
             type="submit"
-            className="w-32 h-10 mr-14 bg-blue-600 text-white"
+            className="w-32 h-10 mr-14 bg-blue-800 text-white"
           >
             Save
           </Button>
-          <Button type="submit" className="w-32 h-10 bg-blue-600 text-white">
+          <Button type="submit" className="w-32 h-10 bg-blue-800 text-white">
             New
           </Button>
         </FlexboxGrid>

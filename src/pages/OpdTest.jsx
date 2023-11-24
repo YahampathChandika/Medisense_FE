@@ -30,7 +30,7 @@ function OpdTest() {
           </InputGroup>
         </div>
       </div>
-      <hr className="opdtest-line" />
+      <Divider className="border-t-2 border-gray-300" />
       <div className="opdtest-container">
         <div className="opdtest-input-con">
           <div className="opdtest-input-single">
@@ -148,7 +148,10 @@ function OpdTest() {
       </div>
       <Divider />
       <div className="opdtest-footer">
-        <Button type="submit" className="w-40 h-10 bg-blue-600 text-white mb-10">
+        <Button
+          type="submit"
+          className="w-40 h-10 bg-blue-800 text-white mb-10"
+        >
           Continue
         </Button>
       </div>
