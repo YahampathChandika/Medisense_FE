@@ -34,12 +34,12 @@ function TablePatients({ data }) {
     return data;
   };
   return (
-    <div className="mt-14 " style={{ maxHeight: "400px", overflowY: "auto" }}>
+    <div className="" style={{ maxHeight: "400px", overflowY: "auto" }}>
       <Table striped hover className="text-left table-fixed">
         <thead>
           <tr>
             <th
-              className="patient-table-head"
+              className="patient-table-head-name"
               style={{ width: "25%" }}
               onClick={() => handleSort("name")}
             >
@@ -89,7 +89,7 @@ function TablePatients({ data }) {
         <tbody>
           {sortedData().map((patient, index) => (
             <tr key={index}>
-              <td className=" " style={{display:"flex " , flexDirection:"row" , paddingLeft:"11.5%"}}> 
+              <td className=" " style={{display:"flex " , flexDirection:"row" , paddingLeft:"23.8%"}}> 
                 <img
                   src={patient.img}
                   alt="Patient"

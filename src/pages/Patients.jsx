@@ -30,13 +30,14 @@ function Patients() {
   };
 
   return (
+    <div>
     <Container className="gcc-con ">
       <Header className="patinet-header">
         <FlexboxGrid justify="space-between " className="mb-4">
           <FlexboxGrid.Item colspan={11} className="main-title">
             Applicant Details
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={10}>
+          <FlexboxGrid.Item colspan={9}>
             <InputGroup>
               <InputGroup.Button>
                 <FontAwesomeIcon icon={faSearch} />
@@ -47,7 +48,7 @@ function Patients() {
               />
             </InputGroup>
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={2} className="main-title">
+          <FlexboxGrid.Item colspan={2.5} className="main-title">
             <Button
               style={{ width: "150px", height: "42px" }}
               className=" bg-blue-600 text-white"
@@ -142,9 +143,10 @@ function Patients() {
             <h6>Rs.485,125.00</h6>
           </button>
         </div>
-        <TablePatients data={data} />
       </Content>
     </Container>
+    <TablePatients data={data} />
+    </div>
   );
 }
 
