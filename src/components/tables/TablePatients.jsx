@@ -89,8 +89,12 @@ function TablePatients({ data }) {
         <tbody>
           {sortedData().map((patient, index) => (
             <tr key={index}>
-              <td className=" patient-table-data">
-                <FontAwesomeIcon icon={faCircleUser} className="pe-4" />
+              <td className=" " style={{display:"flex " , flexDirection:"row" , paddingLeft:"11.5%"}}> 
+                <img
+                  src={patient.img}
+                  alt="Patient"
+                  className="patient-image "
+                />
                 {patient.name}
               </td>
               <td className=" patient-table-data">{patient.contact}</td>

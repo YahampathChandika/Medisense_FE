@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 import {
   Container,
   Header,
@@ -19,7 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/TablePatients";
-import  mockData  from "../assets/mocks/mock.js";
+import mockData from "../assets/mocks/mock.js";
 
 function Patients() {
   const data = mockData;
@@ -48,7 +48,10 @@ function Patients() {
             </InputGroup>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={2} className="main-title">
-            <Button type="submit" className="w-40 h-11 bg-blue-600 text-white">
+            <Button
+              style={{ width: "150px", height: "42px" }}
+              className=" bg-blue-600 text-white"
+            >
               Add Employee
             </Button>
           </FlexboxGrid.Item>
@@ -66,7 +69,13 @@ function Patients() {
             />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={5}>
-            <DatePicker oneTap style={{ width: 250 }} />
+            <DatePicker
+              oneTap
+              style={{ width: 250 }}
+              placeholder="YYYY-MM-DD"
+              format="yyyy-MM-dd"
+              autoComplete="off"
+            />
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
@@ -135,7 +144,6 @@ function Patients() {
         </div>
         <TablePatients data={data} />
       </Content>
-      {/* <Footer>Footer</Footer> */}
     </Container>
   );
 }
