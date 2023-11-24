@@ -23,7 +23,7 @@ import mockData from "../assets/mocks/mock.js";
 
 function Patients() {
   const data = mockData;
-  const [activeButton, setActiveButton] = useState();
+  const [activeButton, setActiveButton] = useState("gcc");
 
   const handleBtnSelect = (buttonId) => {
     setActiveButton(buttonId);
@@ -58,9 +58,9 @@ function Patients() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <FlexboxGrid>
-          <FlexboxGrid.Item colspan={5}>
+          <FlexboxGrid.Item >
             <InputPicker
-              style={{ width: 250, height: 40 }}
+              style={{ width: 250, height: 40 , marginRight:"40px"}}
               placeholder={
                 <div className="z-100">
                   <FontAwesomeIcon icon={faArrowDownShortWide} />
@@ -69,7 +69,7 @@ function Patients() {
               }
             />
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={5}>
+          <FlexboxGrid.Item >
             <DatePicker
               oneTap
               style={{ width: 250 }}
