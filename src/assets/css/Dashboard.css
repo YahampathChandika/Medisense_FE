@@ -1,10 +1,10 @@
 .dash-main-con {
   width: 100%;
-  min-height: calc(93vh);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #dedede;
+  background-color: #ffffff;
 }
 
 .dash-type-con {
@@ -12,15 +12,15 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 40px;
-  width: 35%;
+  margin-top: 20px;
 }
 
 .dash-type {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 250px;
-  height: 250px;
+  width: 15vw;
+  height: 15vw;
   justify-content: center;
   border-radius: 5px;
   position: relative;
