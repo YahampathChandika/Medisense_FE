@@ -9,27 +9,16 @@
 
 .gcc-select {
   margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .gcc-select-drop {
   margin: 0;
   width: 78%;
-  border-right: none !important;
-  border-radius: 5px 0 0 5px !important;
 }
 
-.gcc-select-drop .rs-picker-toggle {
-  height: 39px;
-  border-radius: 5px 0 0 5px !important;
-}
-
-.gcc-add-btn {
+.gcc-select-btn {
   height: 40px;
-  margin-bottom: 15px;
   width: 20%;
-  border-radius: 0 5px 5px 0 !important;
-  font-size: 15px !important;
+  margin-left: 2%;
+  margin-bottom: 15px;
 }

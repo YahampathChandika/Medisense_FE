@@ -34,7 +34,7 @@ function TablePatients({ data }) {
     return data;
   };
   return (
-    <div className="" style={{ maxHeight: "450px", overflowY: "auto" }}>
+    <div className="" style={{ maxHeight: "450px", overflowY: "auto" , width:"auto"}}>
       <Table striped hover className="text-left table-fixed">
         <thead>
           <tr>
