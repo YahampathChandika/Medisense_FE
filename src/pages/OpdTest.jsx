@@ -30,7 +30,7 @@ function OpdTest() {
           </InputGroup>
         </div>
       </div>
-      <hr className="opdtest-line" />
+      <Divider className="border-t-2 border-gray-300" />
       <div className="opdtest-container">
         <div className="opdtest-input-con">
           <div className="opdtest-input-single">

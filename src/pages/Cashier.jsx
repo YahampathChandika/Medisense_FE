@@ -98,7 +98,7 @@ function Cashier() {
             Cashier
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider />
+        <Divider className="border-t-2 border-gray-300" />
         <FlexboxGrid
           justify="space-between"
           className="flex items-center justify-between"

@@ -21,7 +21,7 @@ function AddAgency() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Divider />
+      <Divider className="border-t-2 border-gray-300" />
       <Content>
         <Row>
           <Row>Agency Name</Row>
