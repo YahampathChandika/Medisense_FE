@@ -34,11 +34,11 @@ function Patients() {
       <Container className="gcc-con ">
         <Header className="patinet-header">
           <FlexboxGrid justify="space-between " className="mb-4">
-            <FlexboxGrid.Item colspan={6} className="main-title">
+            <FlexboxGrid.Item colspan={5} className="main-title">
               Customers
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={8}>
-              <InputGroup style={{marginLeft:"25%"}}>
+            <FlexboxGrid.Item colspan={9}>
+              <InputGroup style={{marginLeft:"30%" , marginRight:"10px"}}>
                 <InputGroup.Button>
                   <FontAwesomeIcon icon={faSearch} />
                 </InputGroup.Button>
