@@ -8,6 +8,8 @@ import {
   faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../assets/css/Patients.css";
+import image from "../../assets/images/dummy-profile-_new.jpg" 
+
 function TablePatients({ data }) {
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
 
@@ -91,7 +93,7 @@ function TablePatients({ data }) {
             <tr key={index}>
               <td className=" " style={{display:"flex " , flexDirection:"row" , paddingLeft:"20%" , border:"none"}}> 
                 <img
-                  src={patient.img}
+                  src={patient.img || image}
                   alt="Patient"
                   className="patient-image "
                 />
