@@ -1,5 +1,3 @@
-import Patients from "../../pages/Patients";
-
 export const mockData = (count) => {
   const mockData = [];
 
@@ -20,6 +18,5 @@ export const mockData = (count) => {
     });
   }
 
-  
   return mockData;
 };

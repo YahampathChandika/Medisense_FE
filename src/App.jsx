@@ -15,7 +15,7 @@ import AddAgency from "./pages/AddAgency";
 import Xray from "./pages/Xray";
 import MiniLab from "./pages/MiniLab";
 import Lab from "./pages/Lab";
-import Patients from "./pages/Patients";
+import Customers from "./pages/Customers";
 import TablePatients from "./components/tables/TablePatients";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="opdTest" element={<OpdTest />} />
         <Route path="reception" element={<Reception />} />
-        <Route path="patients" element={<Patients />} />
+        <Route path="customers" element={<Customers />} />
         <Route path="cashier" element={<Cashier />} />
         <Route path="gcc" element={<Gcc />} />
         <Route path="opd" element={<OpdTest />} />

@@ -21,7 +21,7 @@ import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/TablePatients";
 import mockData from "../assets/mocks/mock.js";
 
-function Patients() {
+function Customers() {
   const data = mockData;
   const [activeButton, setActiveButton] = useState("gcc");
 
@@ -30,7 +30,7 @@ function Patients() {
   };
 
   return (
-    <div style={{ width:"100%"}}>
+    <div style={{ width: "100%" }}>
       <Container className="gcc-con ">
         <Header className="patinet-header">
           <FlexboxGrid justify="space-between " className="mb-4">
@@ -38,13 +38,13 @@ function Patients() {
               Customers
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={9}>
-              <InputGroup style={{marginLeft:"30%" , marginRight:"10px"}}>
+              <InputGroup style={{ marginLeft: "30%", marginRight: "10px" }}>
                 <InputGroup.Button>
                   <FontAwesomeIcon icon={faSearch} />
                 </InputGroup.Button>
                 <Input
                   placeholder="Search by ID or name..."
-                  style={{ margin: 0 , widows:"100%" }}
+                  style={{ margin: 0, widows: "100%" }}
                 />
               </InputGroup>
             </FlexboxGrid.Item>
@@ -150,4 +150,4 @@ function Patients() {
   );
 }
 
-export default Patients;
+export default Customers;
