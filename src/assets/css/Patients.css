@@ -63,6 +63,26 @@
   }
 }
 
+.patient-select-btns button.active:hover {
+  background-color: #2148ab;
+  color: #ffffff;
+  font-size: 20px;
+  font-style: normal;
+  border-style: none;
+
+  .fa-caret-down {
+    display: block;
+    color: #ffffff;
+    margin-top: 6.5px !important;
+    margin-left: 5px;
+  }
+
+  .fa-caret-right {
+    display: none;
+  }
+}
+
+
 .patient-select-btns button p {
   font-size: 16px;
   font-weight: 400;
