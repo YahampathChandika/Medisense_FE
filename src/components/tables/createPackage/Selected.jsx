@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { mockData } from "../../assets/mocks/mockData";
+import { mockData } from "../../../assets//mocks/mockData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
 
-function Available() {
+function Selected() {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
@@ -152,4 +152,4 @@ function Available() {
   );
 }
 
-export default Available;
+export default Selected;

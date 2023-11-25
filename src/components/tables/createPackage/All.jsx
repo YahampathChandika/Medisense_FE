@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { mockData } from "../../assets/mocks/mockData";
+import { mockData } from "../../../assets//mocks/mockData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
 
-function Selected() {
+function All() {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ function Selected() {
   let indeterminate = false;
 
   const { Column, HeaderCell, Cell } = Table;
-  const data = mockData(8);
+  const data = mockData(18);
 
   const getData = () => {
     if (sortColumn && sortType) {
@@ -152,4 +152,4 @@ function Selected() {
   );
 }
 
-export default Selected;
+export default All;
