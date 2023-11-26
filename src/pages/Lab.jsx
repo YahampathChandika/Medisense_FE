@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
+import { useEffect } from "react";
 
 function Lab() {
   const [sortColumn, setSortColumn] = useState();
@@ -88,6 +89,10 @@ function Lab() {
   const onSubmit = (data) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    document.title = 'Lab | Medisense';
+  }, []);
 
   return (
     <Container className="gcc-con">

@@ -6,6 +6,7 @@ import { Input, DatePicker, SelectPicker } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
+import { useEffect } from "react";
 
 function OpdTest() {
   const [profilePic, setProfilePic] = useState("");
@@ -14,6 +15,11 @@ function OpdTest() {
     const file = event.target.files[0];
     setProfilePic(file);
   };
+
+  useEffect(() => {
+    document.title = 'OPD | Medisense';
+  }, []);
+
   return (
     <div className="opdtest-main-con">
       <div className="opdtest-header">

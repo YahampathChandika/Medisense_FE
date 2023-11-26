@@ -6,6 +6,7 @@ import "../assets/css/Login.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 function Login() {
   const { register, handleSubmit } = useForm();
@@ -42,6 +43,10 @@ function Login() {
       });
     }
   };
+
+  useEffect(() => {
+    document.title = 'LogIn | Medisense';
+  }, []);
 
   return (
     <div className="login-main">

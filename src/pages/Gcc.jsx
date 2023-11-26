@@ -21,6 +21,7 @@ import { Button } from "react-bootstrap";
 import AddJobModal from "../components/modals/AddJob";
 import AddCountryModal from "../components/modals/AddCountry";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function Gcc() {
   const [jobOpen, setJobOpen] = useState(false);
@@ -58,6 +59,10 @@ function Gcc() {
     // Log the data with the formatted date
     console.log({ ...data, dateOfBirth: formattedDateOfBirth });
   };
+
+  useEffect(() => {
+    document.title = 'GCC | Medisense';
+  }, []);
 
   return (
     <Container className="gcc-con">

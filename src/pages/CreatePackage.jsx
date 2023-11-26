@@ -37,6 +37,10 @@ function CreatePackage() {
     console.log(data);
   };
 
+  useEffect(() => {
+    document.title = 'Create Package | Medisense';
+  }, []);
+
   const btnStyles =
     "bg-transparent	text-gray-500 border-x-0 border-t-0 border-b-0	rounded-none	 hover:text-black focus:border-b-2 focus:border-black focus:text-black";
 

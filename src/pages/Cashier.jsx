@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
+import { useEffect } from "react";
 
 function Cashier() {
   const [sortColumn, setSortColumn] = useState();
@@ -89,6 +90,10 @@ function Cashier() {
     // console.log('register', data.payment);
     console.log("register", form.register.payment);
   };
+
+  useEffect(() => {
+    document.title = 'Cashier | Medisense';
+  }, []);
 
   return (
     <Container className="gcc-con">

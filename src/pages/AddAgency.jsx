@@ -10,8 +10,13 @@ import {
   Input,
 } from "rsuite";
 import { Button } from "react-bootstrap";
+import { useEffect } from "react";
 
 function AddAgency() {
+  useEffect(() => {
+    document.title = "Add Agency | Medisense";
+  }, []);
+
   return (
     <Container className="gcc-con">
       <Header>

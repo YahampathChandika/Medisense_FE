@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import {
   Container,
@@ -28,6 +28,10 @@ function Customers() {
   const handleBtnSelect = (buttonId) => {
     setActiveButton(buttonId);
   };
+
+  useEffect(() => {
+    document.title = 'Customers | Medisense';
+  }, []);
 
   return (
     <div style={{ width: "100%" }}>
@@ -73,8 +77,8 @@ function Customers() {
               <DatePicker
                 oneTap
                 style={{ width: 250 }}
-                placeholder="YYYY-MM-DD"
-                format="yyyy-MM-dd"
+                placeholder="YYYY-MM"
+                format="yyyy-MM"
                 autoComplete="off"
               />
             </FlexboxGrid.Item>
