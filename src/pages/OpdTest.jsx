@@ -21,7 +21,7 @@ function OpdTest() {
   }, []);
 
   return (
-    <div className="opdtest-main-con">
+    <div className="gcc-con">
       <div className="opdtest-header">
         <div>Applicant Details</div>
         <div style={{ width: "45%" }}>
