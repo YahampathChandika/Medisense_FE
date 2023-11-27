@@ -9,10 +9,6 @@
 
 .patient-select-btns button {
   color: #000;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
   width: 40% !important;
   cursor: pointer;
   padding: 20px;
@@ -84,30 +80,20 @@
 
 
 .patient-select-btns button p {
-  font-size: 16px;
   font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0em;
   text-align: left;
   margin-bottom: 11.5% !important;
   margin-top: 2%;
 }
 
 .patient-select-btns button h6 {
-  font-size: 22px;
   font-weight: 700;
-  line-height: 26px;
-  letter-spacing: 0em;
   text-align: left;
 }
 
 .patient-select-btns button h4 {
-  font-size: 22px;
   font-weight: 700;
-  line-height: 26px;
-  letter-spacing: 0em;
   text-align: left;
-  margin-bottom: 2%;
 }
 
 /* ------------------------------ */

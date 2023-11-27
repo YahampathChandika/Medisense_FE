@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 
 function SidebarComp() {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedMenuItem, setSelectedMenuItem] = useState("Items"); // Default selection
+  const [selectedMenuItem, setSelectedMenuItem] = useState();
 
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);

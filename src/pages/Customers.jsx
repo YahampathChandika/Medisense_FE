@@ -91,60 +91,60 @@ function Customers() {
               onClick={() => handleBtnSelect("gcc")}
             >
               <div style={{ display: "flex" }}>
-                <p>GCC Medicals</p>
+                <p className="text-sm">GCC Medicals</p>
                 <FontAwesomeIcon
                   icon={faCaretRight}
                   style={{ marginTop: "7.8px", marginLeft: "3px " }}
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4>120</h4>
-              <h6>Rs.85,125.00</h6>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">120</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.85,125.00</h6>
             </button>
             <button
               className={`${activeButton === "nongcc" ? "active" : ""}`}
               onClick={() => handleBtnSelect("nongcc")}
             >
               <div style={{ display: "flex" }}>
-                <p>Non GCC Medicals</p>
+                <p className="text-sm">Non GCC Medicals</p>
                 <FontAwesomeIcon
                   icon={faCaretRight}
                   style={{ marginTop: "7.8px", marginLeft: "3px " }}
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4>110</h4>
-              <h6>Rs.185,125.00</h6>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">110</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.185,125.00</h6>
             </button>
             <button
               className={`${activeButton === "opd" ? "active" : ""}`}
               onClick={() => handleBtnSelect("opd")}
             >
               <div style={{ display: "flex" }}>
-                <p>OPD Tests</p>
+                <p className="text-sm">OPD Tests</p>
                 <FontAwesomeIcon
                   icon={faCaretRight}
                   style={{ marginTop: "7.8px", marginLeft: "3px " }}
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4>170</h4>
-              <h6>Rs.385,125.00</h6>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">170</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.385,125.00</h6>
             </button>
             <button
               className={`${activeButton === "total" ? "active" : ""}`}
               onClick={() => handleBtnSelect("total")}
             >
               <div style={{ display: "flex" }}>
-                <p>Total</p>
+                <p className="text-sm">Total</p>
                 <FontAwesomeIcon
                   icon={faCaretRight}
                   style={{ marginTop: "7.8px", marginLeft: "3px " }}
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4>300</h4>
-              <h6>Rs.485,125.00</h6>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">300</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.485,125.00</h6>
             </button>
           </div>
         </Content>

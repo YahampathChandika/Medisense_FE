@@ -8,7 +8,7 @@ import {
   faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../assets/css/Patients.css";
-import image from "../../assets/images/dummy-profile-_new.jpg" 
+import image from "../../assets/images/dummy-profile-_new.jpg";
 
 function TablePatients({ data }) {
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
@@ -36,7 +36,10 @@ function TablePatients({ data }) {
     return data;
   };
   return (
-    <div className="" style={{ maxHeight: "450px", overflowY: "auto" , width:"auto"}}>
+    <div
+      className=""
+      style={{ maxHeight: "450px", overflowY: "auto", width: "auto" }}
+    >
       <Table striped hover className="text-left table-fixed">
         <thead>
           <tr>
@@ -84,14 +87,22 @@ function TablePatients({ data }) {
                 style={{ paddingLeft: "5px" }}
               />
             </th>
-            <th className="patient-table-head" style={{width:"1px"}}></th>
-            <th className="patient-table-head " style={{width:"20px"}}></th>
+            <th className="patient-table-head" style={{ width: "1px" }}></th>
+            <th className="patient-table-head " style={{ width: "20px" }}></th>
           </tr>
         </thead>
         <tbody>
           {sortedData().map((patient, index) => (
             <tr key={index}>
-              <td className=" " style={{display:"flex " , flexDirection:"row" , paddingLeft:"20%" , border:"none"}}> 
+              <td
+                className=" "
+                style={{
+                  display: "flex ",
+                  flexDirection: "row",
+                  paddingLeft: "20%",
+                  border: "none",
+                }}
+              >
                 <img
                   src={patient.img || image}
                   alt="Patient"
