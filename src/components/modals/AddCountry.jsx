@@ -3,7 +3,6 @@ import React from "react";
 import { Modal, Button, Row, Col, FlexboxGrid, Input } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBriefcase,
   faEarthAmericas,
 } from "@fortawesome/free-solid-svg-icons";
 

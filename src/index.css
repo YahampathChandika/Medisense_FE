@@ -4,21 +4,19 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
+} */
 
 * {
   padding: 0;
   margin: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 .rs-col,
@@ -50,7 +48,7 @@ code {
   width: 100vw !important;
 }
 
-.rs-radio-group-picker .rs-radio-checked .rs-radio-checker>label {
+.rs-radio-group-picker .rs-radio-checked .rs-radio-checker > label {
   border-color: #000 !important;
   color: #000 !important;
 }
