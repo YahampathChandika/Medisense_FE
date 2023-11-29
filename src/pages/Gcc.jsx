@@ -22,11 +22,15 @@ import AddJobModal from "../components/modals/AddJob";
 import AddCountryModal from "../components/modals/AddCountry";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useAddGccMutation } from "../store/api/addGcc";
+import { useDispatch } from "react-redux";
 
 function Gcc() {
   const [jobOpen, setJobOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
+  const [gccData] = useAddGccMutation();
+  const dispatch = useDispatch();
 
   const handleJobOpen = () => setJobOpen(true);
   const handleJobClose = () => setJobOpen(false);
@@ -52,16 +56,13 @@ function Gcc() {
 
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    // Format the date before logging the data
-    const formattedDateOfBirth = format(data.dateOfBirth, "yyyy-MM-dd");
-
-    // Log the data with the formatted date
-    console.log({ ...data, dateOfBirth: formattedDateOfBirth });
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    console.log(data);
   };
 
   useEffect(() => {
-    document.title = 'GCC | Medisense';
+    document.title = "GCC | Medisense";
   }, []);
 
   return (
@@ -175,7 +176,15 @@ function Gcc() {
               <Input {...register("passportId")} placeholder="Passport ID" />
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={7}>
-              <DatePicker block oneTap placeholder="Issued Date" />
+              <DatePicker
+                block
+                oneTap
+                placeholder="Issued Date"
+                id="passportDate"
+                name="passportDate"
+                value={watch("passportDate")}
+                onChange={(value) => setValue("passportDate", value)}
+              />
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={7}>
               <Input
