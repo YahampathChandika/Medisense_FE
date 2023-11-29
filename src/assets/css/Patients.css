@@ -97,7 +97,12 @@
   font-family: "Roboto", sans-serif;
 }
 
-/* ------------------------------ */
+.rs-picker-toolbar-right button {
+  background-color: #396ff8;
+  border-radius: 5px;
+}
+
+/* ------------------------------Table-------------------------------- */
 
 .patient-table-icon {
   border: none;
@@ -147,6 +152,7 @@
   line-height: 17px;
   letter-spacing: 0em;
   text-align: left;
+  cursor: pointer;
 }
 
 .patient-table-head-name {
@@ -158,6 +164,7 @@
   line-height: 17px;
   letter-spacing: 0em;
   text-align: left;
+  cursor: pointer;
 }
 
 .table-fixed thead {

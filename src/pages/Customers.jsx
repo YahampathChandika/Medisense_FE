@@ -9,6 +9,7 @@ import {
   Input,
   InputPicker,
   DatePicker,
+  DateRangePicker,
 } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,18 +21,23 @@ import {
 import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/TablePatients";
 import mockData from "../assets/mocks/mock.js";
+import { useNavigate } from "react-router";
 
 function Customers() {
   const data = mockData;
   const [activeButton, setActiveButton] = useState("gcc");
-
+  const navigate = useNavigate();
   const handleBtnSelect = (buttonId) => {
     setActiveButton(buttonId);
   };
 
   useEffect(() => {
-    document.title = 'Customers | Medisense';
+    document.title = "Customers | Medisense";
   }, []);
+
+  const handleDateRangeSelect = (selectedDates) => {
+    console.log("Start Date:", selectedDates[0], "End Date", selectedDates[1]);
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -54,10 +60,11 @@ function Customers() {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={2.5} className="main-title">
               <Button
+                onClick={() => navigate("/home/dashboard")}
                 style={{ width: "150px", height: "42px" }}
                 className=" bg-blue-600 text-white"
               >
-                Add Employee
+                Add Customer
               </Button>
             </FlexboxGrid.Item>
           </FlexboxGrid>
@@ -74,12 +81,12 @@ function Customers() {
               />
             </FlexboxGrid.Item>
             <FlexboxGrid.Item>
-              <DatePicker
-                oneTap
+              <DateRangePicker
+                showOneCalendar
+                placeholder="Select Date Range"
                 style={{ width: 250 }}
-                placeholder="YYYY-MM"
-                format="yyyy-MM"
                 autoComplete="off"
+                onOk={handleDateRangeSelect}
               />
             </FlexboxGrid.Item>
           </FlexboxGrid>
@@ -99,7 +106,9 @@ function Customers() {
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
               <h4 className="md:text-lg lg:text-xl xl:text-2xl">120</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.85,125.00</h6>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.85,125.00
+              </h6>
             </button>
             <button
               className={`${activeButton === "nongcc" ? "active" : ""}`}
@@ -114,7 +123,9 @@ function Customers() {
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
               <h4 className="md:text-lg lg:text-xl xl:text-2xl">110</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.185,125.00</h6>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.185,125.00
+              </h6>
             </button>
             <button
               className={`${activeButton === "opd" ? "active" : ""}`}
@@ -129,7 +140,9 @@ function Customers() {
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
               <h4 className="md:text-lg lg:text-xl xl:text-2xl">170</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.385,125.00</h6>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.385,125.00
+              </h6>
             </button>
             <button
               className={`${activeButton === "total" ? "active" : ""}`}
@@ -144,7 +157,9 @@ function Customers() {
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
               <h4 className="md:text-lg lg:text-xl xl:text-2xl">300</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">Rs.485,125.00</h6>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.485,125.00
+              </h6>
             </button>
           </div>
         </Content>
