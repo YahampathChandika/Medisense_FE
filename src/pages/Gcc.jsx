@@ -41,7 +41,6 @@ function Gcc() {
     const file = event.target.files[0];
     setProfilePic(file);
   };
-
   const form = useForm({
     mode: "onTouched",
   });
@@ -49,18 +48,18 @@ function Gcc() {
   const {
     register,
     handleSubmit,
-    setValue, // Add this line to destructure setValue from form methods
+    setValue,
     watch,
     formState: { errors },
-  } = useForm();
+  } = form;
 
   const navigate = useNavigate();
 
+ 
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    console.log(data);
+    console.log("data", data);
   };
-
   useEffect(() => {
     document.title = "GCC | Medisense";
   }, []);
@@ -116,12 +115,14 @@ function Gcc() {
             <DatePicker
               block
               oneTap
-              format="yyyy-MM-dd"
+              format="MM-dd-yyyy"
+              placeholder="MM-dd-yyyy"
               id="dateOfBirth"
               name="dateOfBirth"
-              value={watch("dateOfBirth")} // Make sure to pass the value from react-hook-form
-              onChange={(value) => setValue("dateOfBirth", value)} // Use setValue to update the form value
+              value={watch("dateOfBirth")}
+              onChange={(value) => setValue("dateOfBirth", value)}
             />
+
             <Row>Sex</Row>
             <SelectPicker
               searchable={false}
