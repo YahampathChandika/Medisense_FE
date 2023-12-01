@@ -17,7 +17,7 @@ function OpdTest() {
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
     fullName: "",
-    dateOfBorth: "",
+    dateOfBirth: "",
     profilePhoto: "",
     sevileStatus: "",
     gender: "",
@@ -33,7 +33,7 @@ function OpdTest() {
     setProfilePic("");
     setInputData({
       fullName: "",
-      dateOfBorth: "",
+      dateOfBirth: "",
       profilePhoto: "",
       sevileStatus: "",
       gender: "",
@@ -47,7 +47,7 @@ function OpdTest() {
   };
 
 
-  const formattedDate = formatDate(inputData.dateOfBorth);
+  const formattedDate = formatDate(inputData.dateOfBirth);
 
   function formatDate(date) {
     const formattedDate = new Date(date);
@@ -159,9 +159,9 @@ function OpdTest() {
                 placeholder="YYYY-MM-DD"
                 format="yyyy-MM-dd"
                 autoComplete="off"
-                value={inputData.dateOfBorth || null}
+                value={inputData.dateOfBirth || null}
                 onChange={(value) => {
-                  setInputData((prev) => ({ ...prev, dateOfBorth: value }));
+                  setInputData((prev) => ({ ...prev, dateOfBirth: value }));
                 }}
               />
             </div>
