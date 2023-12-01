@@ -17,6 +17,7 @@ import MiniLab from "./pages/MiniLab";
 import Lab from "./pages/Lab";
 import Customers from "./pages/Customers";
 import TablePatients from "./components/tables/TablePatients";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="xray" element={<Xray />} />
         <Route path="miniLab" element={<MiniLab />} />
         <Route path="lab" element={<Lab />} />
+        <Route path="test" element={<Test />} />
         <Route path="createPackage" element={<CreatePackage />}>
           <Route index element={<All />} />
           <Route path="allTests" element={<All />} />

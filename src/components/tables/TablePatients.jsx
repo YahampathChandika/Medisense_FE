@@ -91,7 +91,7 @@ function TablePatients({ data }) {
             <th className="patient-table-head " style={{ width: "20px" }}></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody >
           {sortedData().map((patient, index) => (
             <tr key={index}>
               <td

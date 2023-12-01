@@ -166,13 +166,13 @@ function SidebarComp() {
               Mini-lab
             </MenuItem>
           </Link>
-          <Link to="opdTest" className="sidebar-link">
+          <Link to="test" className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
+                selectedMenuItem === "test" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faUserDoctor} />}
-              onClick={() => handleMenuItemClick("opdTest")}
+              onClick={() => handleMenuItemClick("test")}
             >
               Doctor
             </MenuItem>

@@ -180,3 +180,8 @@
   margin-right: 20px;
   border-radius: 50%;
 }
+
+/* Assuming your CSS file is "Patients.css" */
+/* .text-left.table-fixed .table-data tr:nth-of-type(odd) > * {
+  background-color: rgb(94, 32, 32) !important;
+} */
