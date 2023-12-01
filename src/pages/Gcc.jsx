@@ -55,7 +55,6 @@ function Gcc() {
 
   const navigate = useNavigate();
 
- 
   const onSubmit = async (data, e) => {
     e.preventDefault();
     console.log("data", data);
@@ -239,7 +238,11 @@ function Gcc() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
+          <Button
+            type="submit"
+            className="w-40 h-10 bg-blue-800 text-white"
+            onClick={() => navigate("/home/test")}
+            >
             Continue
           </Button>
         </FlexboxGrid>

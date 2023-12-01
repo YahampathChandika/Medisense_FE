@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleUser,
   faTrashCan,
   faPen,
   faCaretDown,
@@ -37,7 +36,6 @@ function TablePatients({ data }) {
   };
   return (
     <div
-      className=""
       style={{ maxHeight: "450px", overflowY: "auto", width: "auto" }}
     >
       <Table striped hover className="text-left table-fixed">
