@@ -1,19 +1,23 @@
-import api from './api'
+import api from "./api";
 
-// Define a service using a base URL and expected endpoints
 export const addGccApi = api.injectEndpoints({
-  reducerPath: 'addGccApi',
+  reducerPath: "addGccApi",
   endpoints: (builder) => ({
-    addGcc: builder.mutation ({
-        query: (data) => ({
-            url: "addGcc",
-            method: "POST",
-            body: data
-        })
-    })
+    addGcc: builder.mutation({
+      query: (data) => ({
+        url: "addGcc",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    addOpd: builder.mutation({
+      query: (data) => ({
+        url: "addOpd",
+        method: "POST", 
+        body: data,
+      }),
+    }),
   }),
-})
+});
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useAddGccMutation } = addGccApi
+export const { useAddGccMutation, useAddOpdMutation } = addGccApi;

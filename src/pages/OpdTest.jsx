@@ -7,18 +7,84 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import { useEffect } from "react";
+import { useAddOpdMutation  } from "../store/api/addGcc";
+
 
 function OpdTest() {
+
+  const [addData] = useAddOpdMutation();
+
   const [profilePic, setProfilePic] = useState("");
+  const [inputData, setInputData] = useState({
+    fullName: "",
+    dateOfBorth: "",
+    profilePhoto: "",
+    sevileStatus: "",
+    gender: "",
+    address: "",
+    mobileNo: "",
+    email: "",
+    nic: "",
+    timeOfLastName: "",
+    referred: "",
+  });
+
+  const resetForm = () => {
+    setProfilePic("");
+    setInputData({
+      fullName: "",
+      dateOfBorth: "",
+      profilePhoto: "",
+      sevileStatus: "",
+      gender: "",
+      address: "",
+      mobileNo: "",
+      email: "",
+      nic: "",
+      timeOfLastName: "",
+      referred: "",
+    });
+  };
+
+
+  const formattedDate = formatDate(inputData.dateOfBorth);
+
+  function formatDate(date) {
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    const month = String(formattedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(formattedDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setProfilePic(file);
+
+    setInputData((prev) => ({
+      ...prev,
+      profilePhoto: URL.createObjectURL(file),
+    }));
   };
 
   useEffect(() => {
-    document.title = 'OPD | Medisense';
+    document.title = "OPD | Medisense";
   }, []);
+
+  const handleSubmit = async () => {
+    const updatedInputData = {
+      ...inputData,
+      dateOfBirth: formattedDate, 
+    };
+
+    try {
+      const  data = await addData(updatedInputData).unwrap();
+      console.log('Patient added successfully:', data);
+      resetForm(); 
+    } catch (error) {
+      console.error('Error adding patient:', error);
+    }
+  };
 
   return (
     <div className="gcc-con">
@@ -41,7 +107,18 @@ function OpdTest() {
         <div className="opdtest-input-con">
           <div className="opdtest-input-single">
             <label>Full Name</label>
-            <input type="text" className="rs-input" />
+            <input
+              type="text"
+              className="rs-input"
+              value={inputData.fullName}
+              onChange={(e) => {
+                e.preventDefault();
+                setInputData((pre) => ({
+                  ...pre,
+                  fullName: e.target.value,
+                }));
+              }}
+            />
           </div>
         </div>
         <div className="opdtest-input-con">
@@ -82,14 +159,10 @@ function OpdTest() {
                 placeholder="YYYY-MM-DD"
                 format="yyyy-MM-dd"
                 autoComplete="off"
-                // onChange={(value) => {
-                //   if (value instanceof Date) {
-                //     form.setValue("dateOfBirth", value);
-                //   }
-                // }}
-                // onClick={handleDatePickerClick}
-                // value={form.getValues("dateOfBirth")}
-                // style={{borderStyle:'none' , border:'1px solid rgba(0, 0, 0, 0.5)' , borderRadius:'5px'  }}
+                value={inputData.dateOfBorth || null}
+                onChange={(value) => {
+                  setInputData((prev) => ({ ...prev, dateOfBorth: value }));
+                }}
               />
             </div>
             <div className="opdtest-input-single ">
@@ -101,6 +174,10 @@ function OpdTest() {
                   label: item,
                   value: item,
                 }))}
+                value={inputData.gender}
+                onChange={(value) => {
+                  setInputData((prev) => ({ ...prev, gender: value }));
+                }}
               />
             </div>
           </div>
@@ -108,47 +185,118 @@ function OpdTest() {
         <div className="opdtest-input-con">
           <div className="opdtest-input-single">
             <label>Address</label>
-            <input type="text" className="rs-input" />
+            <input
+              type="text"
+              className="rs-input"
+              value={inputData.address}
+              onChange={(e) => {
+                e.preventDefault();
+                setInputData((pre) => ({
+                  ...pre,
+                  address: e.target.value,
+                }));
+              }}
+            />
           </div>
         </div>
         <div className="opdtest-input-con-two">
           <div className="opdtest-input">
             <label>Email</label>
-            <input type="text" className="rs-input" />
+            <input
+              type="text"
+              className="rs-input"
+              value={inputData.email}
+              onChange={(e) => {
+                e.preventDefault();
+                setInputData((pre) => ({
+                  ...pre,
+                  email: e.target.value,
+                }));
+              }}
+            />
           </div>
           <div className="opdtest-input">
             <label>Mobile Number</label>
-            <input type="text" className="rs-input" />
+            <input
+              type="text"
+              className="rs-input"
+              value={inputData.mobileNo}
+              onChange={(e) => {
+                e.preventDefault();
+                setInputData((pre) => ({
+                  ...pre,
+                  mobileNo: e.target.value,
+                }));
+              }}
+            />
           </div>
         </div>
         <div className="opdtest-input-con-two">
           <div className="opdtest-input">
-            <label>Civil Status</label>
+            <label>Status</label>
             <SelectPicker
               searchable={false}
               style={{ width: "100%" }}
-              data={["Married", "Single", "Divorced", "Widowed "].map(
+              data={["Married", "Single", "Divorced", "Widowed"].map(
                 (item) => ({
                   label: item,
                   value: item,
                 })
               )}
+              value={inputData.sevileStatus}
+              onChange={(value) => {
+                setInputData((prev) => ({ ...prev, sevileStatus: value }));
+              }}
             />
           </div>
           <div className="opdtest-input">
             <label>Nic</label>
-            <input type="text" className="rs-input" />
+            <input
+              type="text"
+              className="rs-input"
+              value={inputData.nic}
+              onChange={(e) => {
+                e.preventDefault();
+                setInputData((pre) => ({
+                  ...pre,
+                  nic: e.target.value,
+                }));
+              }}
+            />
           </div>
         </div>
         {/* <hr className="opdtest-line" /> */}
         <div className="opdtest-input-con-two">
           <div className="opdtest-input">
             <label>Time Of Last Meal</label>
-            <input type="text" className="rs-input" />
+            <input
+              type="text"
+              className="rs-input"
+              value={inputData.timeOfLastName}
+              onChange={(e) => {
+                e.preventDefault();
+                setInputData((pre) => ({
+                  ...pre,
+                  timeOfLastName: e.target.value,
+                }));
+              }}
+            />
           </div>
           <div className="opdtest-input">
             <label>Referred By</label>
-            <input type="text" className="rs-input" />
+
+            <input
+              type="text"
+              className="rs-input"
+              value={inputData.referred}
+              onChange={(e) => {
+                e.preventDefault();
+                setInputData((pre) => ({
+                  ...pre,
+                  referred: e.target.value,
+                }));
+              }}
+            />
           </div>
         </div>
       </div>
@@ -157,6 +305,7 @@ function OpdTest() {
         <Button
           type="submit"
           className="w-40 h-10 bg-blue-800 text-white mb-10"
+          onClick={handleSubmit}
         >
           Continue
         </Button>
