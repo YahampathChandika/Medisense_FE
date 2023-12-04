@@ -24,6 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAddGccMutation } from "../store/api/addGcc";
 import { useDispatch } from "react-redux";
+import SuccsessModal from "../components/modals/Succsess";
+import FailModal from "../components/modals/Fail";
 
 function Gcc() {
   const [jobOpen, setJobOpen] = useState(false);
@@ -242,13 +244,20 @@ function Gcc() {
             type="submit"
             className="w-40 h-10 bg-blue-800 text-white"
             onClick={() => navigate("/home/test")}
-            >
+          >
             Continue
           </Button>
         </FlexboxGrid>
       </form>
       <AddJobModal open={jobOpen} handleClose={handleJobClose} />
-      <AddCountryModal open={countryOpen} handleClose={handleCountryClose} />
+      {/* <AddCountryModal open={countryOpen} handleClose={handleCountryClose} /> */}
+      <FailModal
+        open={countryOpen}
+        handleClose={handleCountryClose}
+        headtxt={"Package Created"}
+        bodytxt={"The test package has been successfully created."}
+        btntxt={"Create"}
+      />
     </Container>
   );
 }
