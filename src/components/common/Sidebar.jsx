@@ -88,13 +88,13 @@ function SidebarComp() {
               Customers
             </MenuItem>
           </Link>
-          <Link to="createPackage" className="sidebar-link">
+          <Link to="users" className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "createPackage" ? "selected-menu-item" : ""
+                selectedMenuItem === "users" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faUser} />}
-              onClick={() => handleMenuItemClick("createPackage")}
+              onClick={() => handleMenuItemClick("users")}
             >
               Users
             </MenuItem>

@@ -15,6 +15,8 @@ export const mockData = (count) => {
       unit: `unit ${i}`,
       status: `status ${i}`,
       package: `package ${i}`,
+      email: `user${i}@gmail.com`,
+      role: `Role ${i}`,
     });
   }
 

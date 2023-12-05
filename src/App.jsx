@@ -19,6 +19,7 @@ import Customers from "./pages/Customers";
 import TablePatients from "./components/tables/TablePatients";
 import Test from "./pages/Test";
 import SelectedPackages from "./components/tables/tests/SelectedPackages";
+import Users from "./pages/Users";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="opd" element={<OpdTest />} />
         <Route path="addAgency" element={<AddAgency />} />
         <Route path="xray" element={<Xray />} />
+        <Route path="users" element={<Users />} />
         <Route path="miniLab" element={<MiniLab />} />
         <Route path="lab" element={<Lab />} />
         <Route path="test" element={<Test />}>
