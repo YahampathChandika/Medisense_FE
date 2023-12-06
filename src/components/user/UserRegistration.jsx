@@ -18,15 +18,37 @@ function UserRegistration({ open, handleClose }) {
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
     fullName: "",
+    role:"",
+    dateOfBirth: "",
+    profilePhoto:"",
+
   });
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setProfilePic(file);
+       setInputData((prev) => ({
+      ...prev,
+      profilePhoto: URL.createObjectURL(file),
+    }));
   };
 
+  const formattedDate = formatDate(inputData.dateOfBirth);
+
+  function formatDate(date) {
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    const month = String(formattedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(formattedDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
   const handleSubmit = () => {
-    console.log("input data" , inputData)
+    const updatedInputData = {
+      ...inputData,
+      dateOfBirth:formattedDate,
+    }
+    console.log("input data" , updatedInputData)
   }
 
   return (
@@ -99,25 +121,25 @@ function UserRegistration({ open, handleClose }) {
                       placeholder="YYYY-MM-DD"
                       format="yyyy-MM-dd"
                       autoComplete="off"
-                      // value={inputData.dateOfBirth || null}
-                      // onChange={(value) => {
-                      //   setInputData((prev) => ({ ...prev, dateOfBirth: value }));
-                      // }}
+                      value={inputData.dateOfBirth || null}
+                      onChange={(value) => {
+                        setInputData((prev) => ({ ...prev, dateOfBirth: value }));
+                      }}
                     />
                   </div>
                   <div className="userregistration-input-single ">
-                    <label>Sex</label>
+                    <label>Role</label>
                     <SelectPicker
                       searchable={false}
                       style={{ width: "100%" }}
-                      data={["Male", "Female"].map((item) => ({
+                      data={["Admin", "Doctor"].map((item) => ({
                         label: item,
                         value: item,
                       }))}
-                      // value={inputData.gender}
-                      // onChange={(value) => {
-                      //   setInputData((prev) => ({ ...prev, gender: value }));
-                      // }}
+                      value={inputData.role}
+                      onChange={(value) => {
+                        setInputData((prev) => ({ ...prev, role: value }));
+                      }}
                     />
                   </div>
                 </div>
@@ -143,7 +165,7 @@ function UserRegistration({ open, handleClose }) {
           </Content>
           <Footer className="userregistration-footer">
             <Button className="w-40 h-10 bg-blue-800 text-white" onClick={handleSubmit}>
-              Add User
+              Register
             </Button>
           </Footer>
         </Container>
