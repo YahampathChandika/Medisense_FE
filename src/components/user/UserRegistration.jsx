@@ -18,16 +18,18 @@ function UserRegistration({ open, handleClose }) {
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
     fullName: "",
-    role:"",
+    role: "",
     dateOfBirth: "",
-    profilePhoto:"",
-
+    profilePhoto: "",
+    address: "",
+    email: "",
+    mobileNo: "",
   });
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setProfilePic(file);
-       setInputData((prev) => ({
+    setInputData((prev) => ({
       ...prev,
       profilePhoto: URL.createObjectURL(file),
     }));
@@ -46,10 +48,10 @@ function UserRegistration({ open, handleClose }) {
   const handleSubmit = () => {
     const updatedInputData = {
       ...inputData,
-      dateOfBirth:formattedDate,
-    }
-    console.log("input data" , updatedInputData)
-  }
+      dateOfBirth: formattedDate,
+    };
+    console.log("input data", updatedInputData);
+  };
 
   return (
     <Modal
@@ -73,12 +75,12 @@ function UserRegistration({ open, handleClose }) {
                     type="text"
                     className="rs-input"
                     value={inputData.fullName}
-                    onChange={(e)=> {
+                    onChange={(e) => {
                       e.preventDefault();
                       setInputData((pre) => ({
                         ...pre,
-                        fullName:e.target.value
-                      }))
+                        fullName: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -123,7 +125,10 @@ function UserRegistration({ open, handleClose }) {
                       autoComplete="off"
                       value={inputData.dateOfBirth || null}
                       onChange={(value) => {
-                        setInputData((prev) => ({ ...prev, dateOfBirth: value }));
+                        setInputData((prev) => ({
+                          ...prev,
+                          dateOfBirth: value,
+                        }));
                       }}
                     />
                   </div>
@@ -147,24 +152,60 @@ function UserRegistration({ open, handleClose }) {
               <div className="userregistration-input-con">
                 <div className="userregistration-input-single">
                   <label>Address</label>
-                  <input type="text" className="rs-input" />
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.address}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        address: e.target.value,
+                      }));
+                    }}
+                  />
                 </div>
               </div>
               <div className="userregistration-input-con-two">
                 <div className="userregistration-input">
                   <label>Email</label>
-                  <input type="text" className="rs-input" />
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.email}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        email: e.target.value,
+                      }));
+                    }}
+                  />
                 </div>
                 <div className="userregistration-input">
                   <label>Mobile Number</label>
-                  <input type="text" className="rs-input" />
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.mobileNo}
+                    onChange={(e)=>{
+                      e.preventDefault();
+                      setInputData( (pre) => ({
+                        ...pre,
+                        mobileNo:e.target.value
+                      }))
+                    }}
+                  />
                 </div>
               </div>
               {/* <hr className="userregistration-line" /> */}
             </div>
           </Content>
           <Footer className="userregistration-footer">
-            <Button className="w-40 h-10 bg-blue-800 text-white" onClick={handleSubmit}>
+            <Button
+              className="w-40 h-10 bg-blue-800 text-white"
+              onClick={handleSubmit}
+            >
               Register
             </Button>
           </Footer>
