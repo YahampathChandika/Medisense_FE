@@ -1,0 +1,97 @@
+.userregistration-main-con {
+  width: 100%;
+  height: 80vh;
+  padding: 20px 5%;
+
+}
+
+.userregistration-title {
+  font-size: 22px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.userregistration-input-con-two {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.userregistration-input {
+  width: 45%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.userregistration-input-single {
+  width: 100%;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.userregistration-pro-pic {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d6d6d6;
+  border-radius: 50%;
+  margin-left: 20%;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 500ms;
+}
+
+.userregistration-pro-pic:hover {
+  background-color: #919191 !important;
+  transition: 500ms;
+}
+
+.userregistration-input-con {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userregistration-input-con-left {
+  width: 100%;
+}
+
+.userregistration-input-con-right {
+  width: 82%;
+}
+
+.userregistration-input input {
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.userregistration-input-single input {
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.userregistration-input-grp {
+  width: 50%;
+  margin-bottom: 0px;
+}
+
+.userregistration-input-grp input {
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.userregistration-line {
+  margin-bottom: 10px;
+}
+
+.userregistration-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}

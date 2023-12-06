@@ -20,12 +20,14 @@ import TablePatients from "./components/tables/TablePatients";
 import Test from "./pages/Test";
 import SelectedPackages from "./components/tables/tests/SelectedPackages";
 import Users from "./pages/Users";
+import UserRegistration from "./components/user/userRegistration";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="tablePatients" element={<TablePatients />} />
+      <Route path="userRegistration" element={<UserRegistration />} />
       <Route path="/home" element={<Home />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="opdTest" element={<OpdTest />} />

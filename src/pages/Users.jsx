@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Content,
@@ -9,15 +9,18 @@ import {
   Input,
   InputGroup,
 } from "rsuite";
-import { useNavigate } from "react-router-dom";
 import { mockData } from "../assets/mocks/mockData";
 import { Button, Table } from "react-bootstrap";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import UserRegistration from "../components/user/userRegistration";
 
 function Users() {
-  const navigate = useNavigate();
+  const [isUserRegistrationOpen, setUserRegistrationOpen] = useState(false);
+  const handleTestOpen = () => setUserRegistrationOpen(true);
+  const handleTestClose = () => setUserRegistrationOpen(false);
+  
+
   const data = mockData(10);
 
   return (
@@ -43,7 +46,10 @@ function Users() {
                 </InputGroup>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={6} className="justify-end flex">
-                <Button className="w-40 h-10 bg-blue-800 text-white">
+                <Button
+                  className="w-40 h-10 bg-blue-800 text-white"
+                  onClick={handleTestOpen}
+                >
                   Add User
                 </Button>
               </FlexboxGrid.Item>
@@ -83,6 +89,10 @@ function Users() {
             </Table>
           </div>
         </div>
+        <UserRegistration
+          open={isUserRegistrationOpen}
+          handleClose={handleTestClose}
+        />
       </Container>
     </div>
   );
