@@ -11,17 +11,16 @@ import {
 import { Button } from "react-bootstrap";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useAddAgencyMutation } from "../store/agencyApi";
+import { useAddAgencyMutation } from "../store/api/agencyApi";
 
 function AddAgency() {
+  const [addAgency] = useAddAgencyMutation();
 
-  const [ addAgency ] = useAddAgencyMutation();
-  
   const form = useForm({
     mode: "onTouched",
   });
 
-  const { register , handleSubmit , reset } = form;
+  const { register, handleSubmit, reset } = form;
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -29,10 +28,10 @@ function AddAgency() {
 
     const responce = await addAgency(data);
 
-    if(responce.error) {
-        console.log("Failed")
-    }else {
-      console.log("Success")
+    if (responce.error) {
+      console.log("Failed");
+    } else {
+      console.log("Success");
       reset();
     }
   };

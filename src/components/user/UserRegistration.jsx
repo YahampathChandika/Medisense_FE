@@ -13,8 +13,11 @@ import "../../assets/css/UserRegistration.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
+import { useAddUserMutation } from "../../store/api/userApi";
 
 function UserRegistration({ open, handleClose }) {
+
+  const [ addUser ] = useAddUserMutation();
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
     fullName: "",
@@ -25,6 +28,8 @@ function UserRegistration({ open, handleClose }) {
     email: "",
     mobileNo: "",
   });
+
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -50,7 +55,9 @@ function UserRegistration({ open, handleClose }) {
       ...inputData,
       dateOfBirth: formattedDate,
     };
+
     console.log("input data", updatedInputData);
+    addUser( updatedInputData ) ;
   };
 
   return (

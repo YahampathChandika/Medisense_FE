@@ -7,7 +7,7 @@ import { faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FlexboxGrid, Input, InputGroup } from "rsuite";
 
 function SelectedPackages() {
-  const data = mockData(10);
+  const data = mockData(15);
 
   return (
     <div className="selectedpackages-main-con">
@@ -28,14 +28,14 @@ function SelectedPackages() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </div>
-      <div style={{ maxHeight: "475px", overflowY: "auto", width: "auto" }}>
+      <div style={{ maxHeight: "426px", overflowY: "auto", width: "auto" }}>
         <Table responsive>
           <thead className="selectedpackages-table-head">
             <tr>
               <th>No</th>
               <th>Package ID</th>
               <th>Amount</th>
-              <th style={{ paddingLeft: "7.5%" }}>Action</th>
+              <th style={{paddingLeft:"7.5%"}}>Action</th>
             </tr>
           </thead>
           <tbody className="selectedpackages-table-body">
@@ -44,18 +44,16 @@ function SelectedPackages() {
                 <td>{index + 1}</td>
                 <td>{test.description}</td>
                 <td>{test.amount}</td>
-                <td style={{ paddingLeft: "7.5%" }}>
-                  <FontAwesomeIcon
-                    icon={faTrashCan}
-                    style={{ color: "#A30D11" }}
-                  />
+                <td style={{paddingLeft:"7.5%"}}>
+                  <FontAwesomeIcon icon={faTrashCan} style={{color:"#A30D11"}}/>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
-      {/* <div className="selectedpackages-footer"></div> */}
+      <div className="selectedpackages-footer">
+      </div>
     </div>
   );
 }
