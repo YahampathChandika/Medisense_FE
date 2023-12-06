@@ -79,7 +79,7 @@ function AddAgency() {
               <Row>Email</Row>
               <input
                 className="rs-input"
-                placeholder="john@example.com"
+                placeholder="johnx@example.com"
                 name="email"
                 {...register("email")}
               />
