@@ -11,16 +11,17 @@ import CreatePackage from "./pages/CreatePackage";
 import All from "./components/tables/createPackage/All";
 import Available from "./components/tables/createPackage/Available";
 import Selected from "./components/tables/createPackage/Selected";
-import AddAgency from "./pages/AddAgency";
 import Xray from "./pages/Xray";
 import MiniLab from "./pages/MiniLab";
 import Lab from "./pages/Lab";
 import Customers from "./pages/Customers";
-import TablePatients from "./components/tables/TablePatients";
+import TablePatients from "./components/tables/customers/TablePatients";
 import Test from "./pages/Test";
 import SelectedPackages from "./components/tables/tests/SelectedPackages";
 import Users from "./pages/Users";
-import UserRegistration from "./components/user/userRegistration";
+import UserRegistration from "./components/modals/UserRegistration";
+import Agency from "./pages/Agency";
+import AddAgency from "./components/modals/AddAgency";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="gcc" element={<Gcc />} />
         <Route path="opd" element={<OpdTest />} />
         <Route path="addAgency" element={<AddAgency />} />
+        <Route path="agency" element={<Agency />} />
         <Route path="xray" element={<Xray />} />
         <Route path="users" element={<Users />} />
         <Route path="miniLab" element={<MiniLab />} />

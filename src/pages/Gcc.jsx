@@ -251,7 +251,7 @@ function Gcc() {
       </form>
       <AddJobModal open={jobOpen} handleClose={handleJobClose} />
       {/* <AddCountryModal open={countryOpen} handleClose={handleCountryClose} /> */}
-      <FailModal
+      <SuccsessModal
         open={countryOpen}
         handleClose={handleCountryClose}
         headtxt={"Package Created"}

@@ -14,8 +14,9 @@ import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import UserRegistration from "../components/modals/UserRegistration";
+import AddAgency from "../components/modals/AddAgency";
 
-function Users() {
+function Agency() {
   const [isUserRegistrationOpen, setUserRegistrationOpen] = useState(false);
   const handleTestOpen = () => setUserRegistrationOpen(true);
   const handleTestClose = () => setUserRegistrationOpen(false);
@@ -28,7 +29,7 @@ function Users() {
         <Header>
           <FlexboxGrid justify="start">
             <FlexboxGrid.Item colspan={20} className="main-title">
-              Users
+              Agencies
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Header>
@@ -38,7 +39,10 @@ function Users() {
             <FlexboxGrid justify="space-between" className="m-3">
               <FlexboxGrid.Item colspan={11}>
                 <InputGroup>
-                  <Input placeholder="Search Users ..." style={{ margin: 0 }} />
+                  <Input
+                    placeholder="Search Agencies ..."
+                    style={{ margin: 0 }}
+                  />
                   <InputGroup.Button>
                     <FontAwesomeIcon icon={faSearch} />
                   </InputGroup.Button>
@@ -49,7 +53,7 @@ function Users() {
                   className="w-40 h-10 bg-blue-800 text-white"
                   onClick={handleTestOpen}
                 >
-                  Add User
+                  Add Agency
                 </Button>
               </FlexboxGrid.Item>
             </FlexboxGrid>
@@ -60,7 +64,7 @@ function Users() {
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Role</th>
+                  <th>Address</th>
                   <th>Email</th>
                   <th>Action</th>
                 </tr>
@@ -88,7 +92,7 @@ function Users() {
             </Table>
           </div>
         </div>
-        <UserRegistration
+        <AddAgency
           open={isUserRegistrationOpen}
           handleClose={handleTestClose}
         />
@@ -97,4 +101,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Agency;

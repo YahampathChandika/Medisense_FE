@@ -19,7 +19,7 @@ import {
   faArrowDownShortWide,
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/css/Patients.css";
-import TablePatients from "../components/tables/TablePatients";
+import TablePatients from "../components/tables/customers/TablePatients";
 import mockData from "../assets/mocks/mock.js";
 import { useNavigate } from "react-router";
 

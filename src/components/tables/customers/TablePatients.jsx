@@ -6,8 +6,8 @@ import {
   faPen,
   faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
-import "../../assets/css/Patients.css";
-import image from "../../assets/images/dummy-profile-_new.jpg";
+import "../../../assets/css/Patients.css";
+import image from "../../../assets/images/dummy-profile-_new.jpg";
 
 function TablePatients({ data }) {
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
