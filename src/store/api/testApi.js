@@ -30,7 +30,7 @@ export const testApi = api.injectEndpoints({
 
 export const {
   useGetAllTestsQuery,
-  useAddUserMutation,
+  useDeleteTestMutation,
   useGetTestByIdQuery,
   useUpdateTestMutation,
 } = testApi;

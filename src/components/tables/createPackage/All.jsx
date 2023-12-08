@@ -3,7 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
 import AddTest from "../../modals/AddTest";
-import { useGetAllTestsQuery } from "../../../store/api/testApi";
+import {
+  useDeleteTestMutation,
+  useGetAllTestsQuery,
+} from "../../../store/api/testApi";
 
 function All() {
   const [sortColumn, setSortColumn] = useState();
@@ -11,7 +14,8 @@ function All() {
   const [loading, setLoading] = useState(false);
   const [checkedKeys, setCheckedKeys] = useState([]);
   const [testOpen, setTestOpen] = useState(false);
-  const { data: TestData, isLoading, error } = useGetAllTestsQuery();
+  const { data: testData, isLoading, error, refetch } = useGetAllTestsQuery();
+  const [deleteTest] = useDeleteTestMutation();
   const { Column, HeaderCell, Cell } = Table;
 
   const handleTestOpen = () => setTestOpen(true);
@@ -27,8 +31,8 @@ function All() {
       return [];
     }
 
-    if (TestData && TestData.payload) {
-      const sortedData = [...TestData.payload];
+    if (testData && testData.payload) {
+      const sortedData = [...testData.payload];
 
       if (sortColumn && sortType) {
         sortedData.sort((a, b) => {
@@ -67,7 +71,7 @@ function All() {
   };
 
   const handleCheckAll = (value, checked) => {
-    const keys = checked ? TestData.payload.map((item) => item.id) : [];
+    const keys = checked ? testData.payload.map((item) => item.id) : [];
     setCheckedKeys(keys);
   };
 
@@ -76,6 +80,17 @@ function All() {
       ? [...checkedKeys, value]
       : checkedKeys.filter((item) => item !== value);
     setCheckedKeys(keys);
+  };
+
+  const handleDelete = async (testId) => {
+    try {
+      // Call the deleteTest mutation
+      await deleteTest(testId);
+      // Refetch the data after deletion
+      refetch();
+    } catch (error) {
+      console.error("Error deleting test:", error);
+    }
   };
 
   const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
@@ -99,6 +114,8 @@ function All() {
     </HeaderCell>
   );
 
+  console.log("DATA", testData)
+
   return (
     <>
       <Table
@@ -118,10 +135,10 @@ function All() {
           >
             <Checkbox
               inline
-              checked={checkedKeys.length === TestData?.payload?.length}
+              checked={checkedKeys.length === testData?.payload?.length}
               indeterminate={
                 checkedKeys.length > 0 &&
-                checkedKeys.length < TestData?.payload?.length
+                checkedKeys.length < testData?.payload?.length
               }
               onChange={handleCheckAll}
               style={{ marginTop: "2px" }}
@@ -162,7 +179,11 @@ function All() {
               onClick={handleTestOpen}
               style={{ width: 15, height: 15, marginRight: 20 }}
             />
-            <FontAwesomeIcon icon={faTrash} style={{ width: 15, height: 15 }} />
+            <FontAwesomeIcon
+              icon={faTrash}
+              style={{ width: 15, height: 15 }}
+              onClick={() => handleDelete(testData.id)}
+            />
           </Cell>
         </Column>
       </Table>
