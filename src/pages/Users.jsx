@@ -4,7 +4,6 @@ import {
   Content,
   Divider,
   FlexboxGrid,
-  Footer,
   Header,
   Input,
   InputGroup,

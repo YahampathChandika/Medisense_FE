@@ -38,7 +38,7 @@ function CreatePackage() {
   };
 
   useEffect(() => {
-    document.title = 'Create Package | Medisense';
+    document.title = "Create Package | Medisense";
   }, []);
 
   const btnStyles =
@@ -141,7 +141,13 @@ function CreatePackage() {
           </Button>
         </FlexboxGrid>
       </form>
-      <AddTest open={testOpen} handleClose={handleTestClose} />
+      <AddTest
+        open={testOpen}
+        handleClose={handleTestClose}
+        headText={"Add Test"}
+        bodyText={"Create a new test."}
+        btnText={"Create"}
+      />
     </Container>
   );
 }
