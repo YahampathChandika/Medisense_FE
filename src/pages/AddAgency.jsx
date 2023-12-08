@@ -25,6 +25,7 @@ function AddAgency() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     console.log("data", data);
+    console.log("register", register);
 
     const responce = await addAgency(data);
 

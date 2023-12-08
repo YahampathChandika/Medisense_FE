@@ -1,6 +1,5 @@
 .userregistration-main-con {
   width: 100%;
-  height: 80vh;
   padding: 20px 5%;
   display: flex;
 }
@@ -25,7 +24,7 @@
 }
 
 .userregistration-input-single {
-  width: 100%;
+  width: 45%;
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;

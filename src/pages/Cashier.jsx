@@ -41,7 +41,6 @@ function Cashier() {
   const data = mockData(8);
 
   const CustomHeaderCell = ({ children, className, ...props }) => {
-    // Add your Tailwind CSS classes to the className
     const headerClasses = "text-black font-bold text-sm";
 
     return (
@@ -86,9 +85,9 @@ function Cashier() {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     // console.log('register', data.payment);
-    console.log("register", form.register.payment);
+    console.log("registeeee", getValues("name"));
+    console.log("register", data.name);
   };
 
   useEffect(() => {

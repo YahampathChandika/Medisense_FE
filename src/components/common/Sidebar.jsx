@@ -16,14 +16,15 @@ import {
   faUserDoctor,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../assets/css/Sidebar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SidebarComp() {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
-
+  const navigate = useNavigate();
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
+    navigate(menuItem);
   };
 
   return (
@@ -44,29 +45,29 @@ function SidebarComp() {
           <h6 className="sidebar-ctgry" style={{ marginTop: "20px" }}>
             Menu
           </h6>
-          <Link to="dashboard" className="sidebar-link">
+          <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "Items" ? "selected-menu-item" : ""
+                selectedMenuItem === "dashboard" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faHouse} />}
-              onClick={() => handleMenuItemClick("Items")}
+              onClick={() => handleMenuItemClick("dashboard")}
             >
               Dashboard
             </MenuItem>
-          </Link>
-          <Link to="createPackage" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "Tests" ? "selected-menu-item" : ""
+                selectedMenuItem === "createPackage" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faSyringe} />}
-              onClick={() => handleMenuItemClick("Tests")}
+              onClick={() => handleMenuItemClick("createPackage")}
             >
               Tests / Packages
             </MenuItem>
-          </Link>
-          <Link to="agency" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "agency" ? "selected-menu-item" : ""
@@ -76,8 +77,8 @@ function SidebarComp() {
             >
               Agency
             </MenuItem>
-          </Link>
-          <Link to="customers" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "customers" ? "selected-menu-item" : ""
@@ -87,8 +88,8 @@ function SidebarComp() {
             >
               Customers
             </MenuItem>
-          </Link>
-          <Link to="users" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "users" ? "selected-menu-item" : ""
@@ -98,75 +99,75 @@ function SidebarComp() {
             >
               Users
             </MenuItem>
-          </Link>
+          </div>
           <h6 className="sidebar-ctgry" style={{ marginTop: "20px" }}>
             Roles
           </h6>
-          <Link to="dashboard" className="sidebar-link">
+          <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "Reception" ? "selected-menu-item" : ""
+                selectedMenuItem === "dashboard" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faBookOpen} />}
-              onClick={() => handleMenuItemClick("Reception")}
+              onClick={() => handleMenuItemClick("dashboard")}
             >
               Reception
             </MenuItem>
-          </Link>
-          <Link to="cashier" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "allPatients" ? "selected-menu-item" : ""
+                selectedMenuItem === "cashier" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faCashRegister} />}
-              onClick={() => handleMenuItemClick("allPatients")}
+              onClick={() => handleMenuItemClick("cashier")}
             >
               Cashier
             </MenuItem>
-          </Link>
-          <Link to="opdTest" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "Accounts" ? "selected-menu-item" : ""
+                selectedMenuItem === "accounts" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faMoneyCheckDollar} />}
-              onClick={() => handleMenuItemClick("Accounts")}
+              onClick={() => handleMenuItemClick("accounts")}
             >
               Accounts
             </MenuItem>
-          </Link>
-          <Link to="xray" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "opdTest" ? "selected-menu-item" : ""
+                selectedMenuItem === "xray" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faXRay} />}
-              onClick={() => handleMenuItemClick("opdTest")}
+              onClick={() => handleMenuItemClick("xray")}
             >
               X-Ray
             </MenuItem>
-          </Link>
-          <Link to="lab" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
-              className={selectedMenuItem === "Lab" ? "selected-menu-item" : ""}
+              className={selectedMenuItem === "lab" ? "selected-menu-item" : ""}
               icon={<FontAwesomeIcon icon={faFlaskVial} />}
-              onClick={() => handleMenuItemClick("Lab")}
+              onClick={() => handleMenuItemClick("lab")}
             >
               Lab
             </MenuItem>
-          </Link>
-          <Link to="miniLab" className="sidebar-link">
+          </div>
+          <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "Mini-lab" ? "selected-menu-item" : ""
+                selectedMenuItem === "miniLab" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faFlask} />}
-              onClick={() => handleMenuItemClick("Mini-lab")}
+              onClick={() => handleMenuItemClick("miniLab")}
             >
               Mini-lab
             </MenuItem>
-          </Link>
-          <Link to="test" className="sidebar-link">
+          </div>
+          <div to="test" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "test" ? "selected-menu-item" : ""
@@ -176,7 +177,7 @@ function SidebarComp() {
             >
               Doctor
             </MenuItem>
-          </Link>
+          </div>
         </Menu>
       </Sidebar>
     </>

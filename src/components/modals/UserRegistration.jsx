@@ -13,23 +13,28 @@ import "../../assets/css/UserRegistration.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
-import { useAddUserMutation } from "../../store/api/userApi";
+import {
+  useAddUserMutation,
+  useGetUserRolesQuery,
+} from "../../store/api/userApi";
+import Swal from "sweetalert2";
 
 function UserRegistration({ open, handleClose }) {
-
-  const [ addUser ] = useAddUserMutation();
+  const [addUser, { isLoading, error }] = useAddUserMutation();
+  const { data: roles } = useGetUserRolesQuery();
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
-    fullName: "",
-    role: "",
+    firstName: "",
+    lastName: "",
+    roleId: "",
     dateOfBirth: "",
     profilePhoto: "",
     address: "",
     email: "",
-    mobileNo: "",
+    contactNo: "",
+    username: "",
+    password: "",
   });
-
-
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -42,6 +47,12 @@ function UserRegistration({ open, handleClose }) {
 
   const formattedDate = formatDate(inputData.dateOfBirth);
 
+  const roleData =
+    roles?.payload?.map((item) => ({
+      label: item.role,
+      value: item.id,
+    })) || [];
+
   function formatDate(date) {
     const formattedDate = new Date(date);
     const year = formattedDate.getFullYear();
@@ -50,14 +61,60 @@ function UserRegistration({ open, handleClose }) {
     return `${year}-${month}-${day}`;
   }
 
-  const handleSubmit = () => {
-    const updatedInputData = {
-      ...inputData,
-      dateOfBirth: formattedDate,
-    };
+  function resetForm() {
+    setInputData({
+      firstName: "",
+      lastName: "",
+      roleId: "",
+      dateOfBirth: "",
+      profilePhoto: "",
+      address: "",
+      email: "",
+      contactNo: "",
+      username: "",
+      password: "",
+    });
+    setProfilePic(""); // Reset profile picture as well
+  }
 
-    console.log("input data", updatedInputData);
-    addUser( updatedInputData ) ;
+  const updatedInputData = {
+    ...inputData,
+    dateOfBirth: formattedDate,
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await addUser(updatedInputData);
+      console.log("response", response);
+      if (response.data && !response.data.error) {
+        resetForm();
+        handleClose();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "User Registered successfully",
+        });
+      } else {
+        console.log("User adding failed", response);
+        Swal.fire({
+          title: "Oops...",
+          text: response?.error?.data?.payload || response?.data?.payload,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.log("User Reg Error", error);
+    }
   };
 
   return (
@@ -77,16 +134,31 @@ function UserRegistration({ open, handleClose }) {
             <div className="userregistration-container">
               <div className="userregistration-input-con">
                 <div className="userregistration-input-single">
-                  <label>Full Name</label>
+                  <label>First Name</label>
                   <input
                     type="text"
                     className="rs-input"
-                    value={inputData.fullName}
+                    value={inputData.firstName}
                     onChange={(e) => {
                       e.preventDefault();
                       setInputData((pre) => ({
                         ...pre,
-                        fullName: e.target.value,
+                        firstName: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="userregistration-input-single">
+                  <label>Last Name</label>
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.lastName}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        lastName: e.target.value,
                       }));
                     }}
                   />
@@ -144,13 +216,13 @@ function UserRegistration({ open, handleClose }) {
                     <SelectPicker
                       searchable={false}
                       style={{ width: "100%" }}
-                      data={["Admin", "Doctor"].map((item) => ({
-                        label: item,
-                        value: item,
-                      }))}
-                      value={inputData.role}
+                      data={roleData}
+                      value={inputData.roleId}
                       onChange={(value) => {
-                        setInputData((prev) => ({ ...prev, role: value }));
+                        setInputData((prev) => ({
+                          ...prev,
+                          roleId: value,
+                        }));
                       }}
                     />
                   </div>
@@ -192,15 +264,46 @@ function UserRegistration({ open, handleClose }) {
                 <div className="userregistration-input">
                   <label>Mobile Number</label>
                   <input
+                    name="phone"
+                    className="rs-input"
+                    value={inputData.contactNo}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        contactNo: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="userregistration-input-con-two">
+                <div className="userregistration-input">
+                  <label>Username</label>
+                  <input
                     type="text"
                     className="rs-input"
-                    value={inputData.mobileNo}
-                    onChange={(e)=>{
+                    value={inputData.username}
+                    onChange={(e) => {
                       e.preventDefault();
-                      setInputData( (pre) => ({
+                      setInputData((pre) => ({
                         ...pre,
-                        mobileNo:e.target.value
-                      }))
+                        username: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="userregistration-input">
+                  <label>Password</label>
+                  <input
+                    className="rs-input"
+                    value={inputData.password}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        password: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -210,10 +313,16 @@ function UserRegistration({ open, handleClose }) {
           </Content>
           <Footer className="userregistration-footer">
             <Button
-              className="w-40 h-10 bg-blue-800 text-white"
+              className="w-40 h-10 bg-blue-800 text-white mr-5"
               onClick={handleSubmit}
             >
               Register
+            </Button>
+            <Button
+              className="w-40 h-10 bg-red-700 text-white border-none hover:bg-red-600"
+              onClick={handleClose}
+            >
+              Cancel
             </Button>
           </Footer>
         </Container>
