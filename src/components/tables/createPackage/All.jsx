@@ -7,6 +7,7 @@ import {
   useDeleteTestMutation,
   useGetAllTestsQuery,
 } from "../../../store/api/testApi";
+import Swal from "sweetalert2";
 
 function All() {
   const [sortColumn, setSortColumn] = useState();
@@ -82,16 +83,38 @@ function All() {
     setCheckedKeys(keys);
   };
 
+  // const handleDelete = async (testId) => {
+  //   try {
+  //     await deleteTest(testId);
+  //     refetch();
+  //   } catch (error) {
+  //     console.error("Error deleting test:", error);
+  //   }
+  // };
+
   const handleDelete = async (testId) => {
     try {
-      // Call the deleteTest mutation
-      await deleteTest(testId);
-      // Refetch the data after deletion
-      refetch();
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        await deleteTest(testId);
+        await refetch();
+        Swal.fire("Deleted!", "Your record has been deleted.", "success");
+      }
     } catch (error) {
       console.error("Error deleting test:", error);
+      Swal.fire("Error", "There was an error deleting the record.", "error");
     }
   };
+
 
   const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
     <Cell {...props} style={{ padding: 0 }}>
@@ -114,8 +137,6 @@ function All() {
     </HeaderCell>
   );
 
-  console.log("DATA", testData)
-
   return (
     <>
       <Table
@@ -129,13 +150,16 @@ function All() {
         loading={loading}
         style={{ margin: "25px 0 40px" }}
       >
-        <Column width={100} align="center">
+        <Column flexGrow={1} align="center">
           <HeaderCell
             style={{ padding: 0, background: "#F2F4FF", color: "#768DC6" }}
           >
             <Checkbox
               inline
-              checked={checkedKeys.length === testData?.payload?.length}
+              checked={
+                checkedKeys.length === testData?.payload?.length &&
+                checkedKeys.length != 0
+              }
               indeterminate={
                 checkedKeys.length > 0 &&
                 checkedKeys.length < testData?.payload?.length
@@ -150,40 +174,39 @@ function All() {
             onChange={handleCheck}
           />
         </Column>
-
-        <Column sortable flexGrow>
+        <Column sortable flexGrow={2}>
           {createHeaderCell("CODE")}
           <Cell dataKey="testCode" />
         </Column>
-
-        <Column sortable flexGrow fullText>
+        <Column sortable flexGrow={3} fullText>
           {createHeaderCell("NAME")}
           <Cell dataKey="description" />
         </Column>
-
-        <Column sortable flexGrow>
+        <Column sortable flexGrow={2}>
           {createHeaderCell("TEST TYPE")}
           <Cell dataKey="type" />
         </Column>
-
-        <Column sortable flexGrow>
+        <Column sortable flexGrow={2}>
           {createHeaderCell("PRICE")}
           <Cell dataKey="price" />
         </Column>
-
         <Column>
           {createHeaderCell("")}
-          <Cell>
-            <FontAwesomeIcon
-              icon={faPenToSquare}
-              onClick={handleTestOpen}
-              style={{ width: 15, height: 15, marginRight: 20 }}
-            />
-            <FontAwesomeIcon
-              icon={faTrash}
-              style={{ width: 15, height: 15 }}
-              onClick={() => handleDelete(testData.id)}
-            />
+          <Cell dataKey="id" flexGrow={1}>
+            {(rowData) => (
+              <>
+                <FontAwesomeIcon
+                  icon={faPenToSquare}
+                  onClick={handleTestOpen}
+                  style={{ width: 15, height: 15, marginRight: 20 }}
+                />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  style={{ width: 15, height: 15 }}
+                  onClick={() => handleDelete(rowData.id)}
+                />
+              </>
+            )}
           </Cell>
         </Column>
       </Table>
