@@ -25,6 +25,15 @@ export const testApi = api.injectEndpoints({
         body: updatedData,
       }),
     }),
+
+    addTest: builder.mutation({
+      query: (data) => ({
+        url: "/test/addTest",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -33,4 +42,5 @@ export const {
   useDeleteTestMutation,
   useGetTestByIdQuery,
   useUpdateTestMutation,
+  useAddTestMutation,
 } = testApi;
