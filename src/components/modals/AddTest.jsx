@@ -3,8 +3,37 @@ import React from "react";
 import { Modal, Button, Row, Col, FlexboxGrid, Input } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVial } from "@fortawesome/free-solid-svg-icons";
+import { useAddTestMutation, useGetAllTestsQuery } from "../../store/api/testApi";
+import { useForm } from "react-hook-form";
 
 function AddTest({ open, handleClose, headText, bodyText, btnText }) {
+  const { refetch } = useGetAllTestsQuery();
+  const [addTest] = useAddTestMutation();
+
+  const form = useForm({
+    mode: "onTouched",
+  });
+
+  const { register, handleSubmit, reset } = form;
+
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    console.log("data", data);
+    console.log("register", register);
+
+    const responce = await addTest(data);
+    console.log("Response:", responce);
+
+    if (responce.error) {
+      console.log("Failed");
+    } else {
+      console.log("Success");
+      reset();
+      await refetch();
+      handleClose();
+    }
+  };
+
   return (
     <Modal
       style={{
@@ -16,62 +45,64 @@ function AddTest({ open, handleClose, headText, bodyText, btnText }) {
       open={open}
       onClose={handleClose}
     >
-      <FlexboxGrid
-        justify="space-between"
-        className="flex justify-between items-center"
-      >
-        <FlexboxGrid.Item colspan={9}>
-          <Col className="font-semibold text-2xl">{headText}</Col>
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={3}>
-          <Col className="border-double border-4 text-blue-700	 border-slate-100 bg-slate-200 rounded-full h-12 w-12 items-center flex justify-center">
-            <FontAwesomeIcon icon={faVial} />
-          </Col>
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
-      <Row>{bodyText}</Row>
-      <Row className="mt-4">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FlexboxGrid
           justify="space-between"
           className="flex justify-between items-center"
         >
-          <FlexboxGrid.Item colspan={15}>
-            <Row>Test Name</Row>
-            <Input />
+          <FlexboxGrid.Item colspan={9}>
+            <Col className="font-semibold text-2xl">{headText}</Col>
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={7}>
-            <Row>Code</Row>
-            <Input />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <FlexboxGrid
-          justify="space-between"
-          className="flex justify-between items-center"
-        >
-          <FlexboxGrid.Item colspan={15}>
-            <Row>Amount</Row>
-            <Input />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={7}>
-            <Row>Type</Row>
-            <Input />
+          <FlexboxGrid.Item colspan={3}>
+            <Col className="border-double border-4 text-blue-700	 border-slate-100 bg-slate-200 rounded-full h-12 w-12 items-center flex justify-center">
+              <FontAwesomeIcon icon={faVial} />
+            </Col>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-      </Row>
-      <Row className="w-full flex justify-between mt-2">
-        <Button
-          onClick={handleClose}
-          className="w-2/5 bg-blue-700 text-white hover:bg-blue-800"
-        >
-          {btnText}
-        </Button>
-        <Button
-          onClick={handleClose}
-          className="w-2/5 border-solid border border-slate-700"
-        >
-          Cancel
-        </Button>
-      </Row>
+        <Row>{bodyText}</Row>
+        <Row className="mt-4">
+          <FlexboxGrid
+            justify="space-between"
+            className="flex justify-between items-center"
+          >
+            <FlexboxGrid.Item colspan={15}>
+              <Row>Test Name</Row>
+              <Input name="description" {...register("description")} />
+            </FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={7}>
+              <Row>Code</Row>
+              <Input name="testCode" {...register("testCode")} />
+            </FlexboxGrid.Item>
+          </FlexboxGrid>
+          <FlexboxGrid
+            justify="space-between"
+            className="flex justify-between items-center"
+          >
+            <FlexboxGrid.Item colspan={15}>
+              <Row>Amount</Row>
+              <Input name="price" {...register("price")} />
+            </FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={7}>
+              <Row>Type</Row>
+              <Input name="type" {...register("type")} />
+            </FlexboxGrid.Item>
+          </FlexboxGrid>
+        </Row>
+        <Row className="w-full flex justify-between mt-2">
+          <Button
+            type="submit"
+            className="w-2/5 bg-blue-700 text-white hover:bg-blue-800"
+          >
+            {btnText}
+          </Button>
+          <Button
+            onClick={handleClose}
+            className="w-2/5 border-solid border border-slate-700"
+          >
+            Cancel
+          </Button>
+        </Row>
+      </form>
     </Modal>
   );
 }
