@@ -1,15 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const testSlice = createSlice({
-  name: "selectedTests",
+const selectedTestsSlice = createSlice({
+  name: 'selectedTests',
   initialState: [],
   reducers: {
-    setSelectedTests: (state, action) => {
-      return action.payload;
+    addSelectedTest: (state, action) => {
+      state.push(action.payload);
+    },
+    removeSelectedTest: (state, action) => {
+      return state.filter((testId) => testId !== action.payload);
+    },
+    clearSelectedTests: (state) => {
+      return [];
     },
   },
 });
 
-export const { setSelectedTests } = testSlice.actions;
+export const {
+  addSelectedTest,
+  removeSelectedTest,
+  clearSelectedTests,
+} = selectedTestsSlice.actions;
 
-export default testSlice.reducer;
+export default selectedTestsSlice.reducer;

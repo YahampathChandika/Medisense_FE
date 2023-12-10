@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setSelectedTests } from "../../../store/slice/testSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
@@ -10,26 +8,25 @@ import {
   useGetAllTestsQuery,
 } from "../../../store/api/testApi";
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { addSelectedTest, clearSelectedTests, removeSelectedTest } from "../../../store/slice/testSlice";
 
 function All() {
-  const dispatch = useDispatch();
-  const selectedTests = useSelector((state) => state.selectedTests);
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
-  const [checkedKeys, setCheckedKeys] = useState([]);
+  // const [selectedTests, setSelectedTests] = useState([]);
   const [testOpen, setTestOpen] = useState(false);
   const { data: testData, isLoading, error, refetch } = useGetAllTestsQuery();
   const [deleteTest] = useDeleteTestMutation();
   const { Column, HeaderCell, Cell } = Table;
 
+  const dispatch = useDispatch();
+  const selectedTests = useSelector((state) => state.selectedTests);
+
+
   const handleTestOpen = (id) => setTestOpen(id);
   const handleTestClose = () => setTestOpen(false);
-
-  useEffect(() => {
-    dispatch(setSelectedTests(checkedKeys));
-    console.log("All Tests Data:", selectedTests);
-  }, [checkedKeys, dispatch]);
 
   const getData = () => {
     if (error) {
@@ -80,16 +77,32 @@ function All() {
     }, 500);
   };
 
+  // const handleCheckAll = (value, checked) => {
+  //   const keys = checked ? testData.payload.map((item) => item.id) : [];
+  //   setSelectedTests(keys);
+  // };
+
   const handleCheckAll = (value, checked) => {
     const keys = checked ? testData.payload.map((item) => item.id) : [];
-    setCheckedKeys(keys);
+    dispatch(clearSelectedTests());
+    keys.forEach((key) => {
+      dispatch(addSelectedTest(key));
+    });
   };
 
+  // const handleCheck = (value, checked) => {
+  //   const keys = checked
+  //     ? [...selectedTests, value]
+  //     : selectedTests.filter((item) => item !== value);
+  //   setSelectedTests(keys);
+  // };
+
   const handleCheck = (value, checked) => {
-    const keys = checked
-      ? [...checkedKeys, value]
-      : checkedKeys.filter((item) => item !== value);
-    setCheckedKeys(keys);
+    if (checked) {
+      dispatch(addSelectedTest(value));
+    } else {
+      dispatch(removeSelectedTest(value));
+    }
   };
 
   const handleDelete = async (testId) => {
@@ -107,7 +120,21 @@ function All() {
       if (result.isConfirmed) {
         await deleteTest(testId);
         await refetch();
-        Swal.fire("Deleted!", "Your record has been deleted.", "success");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Test Deleted",
+        });
       }
     } catch (error) {
       console.error("Error deleting test:", error);
@@ -136,7 +163,7 @@ function All() {
     </HeaderCell>
   );
 
-  console.log("chk", checkedKeys);
+  console.log("chk", selectedTests);
 
   return (
     <>
@@ -158,12 +185,12 @@ function All() {
             <Checkbox
               inline
               checked={
-                checkedKeys.length === testData?.payload?.length &&
-                checkedKeys.length !== 0
+                selectedTests.length === testData?.payload?.length &&
+                selectedTests.length !== 0
               }
               indeterminate={
-                checkedKeys.length > 0 &&
-                checkedKeys.length < testData?.payload?.length
+                selectedTests.length > 0 &&
+                selectedTests.length < testData?.payload?.length
               }
               onChange={handleCheckAll}
               style={{ marginTop: "2px" }}
@@ -171,7 +198,7 @@ function All() {
           </HeaderCell>
           <CheckCell
             dataKey="id"
-            checkedKeys={checkedKeys}
+            checkedKeys={selectedTests}
             onChange={handleCheck}
           />
         </Column>
