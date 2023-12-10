@@ -23,7 +23,7 @@ function All() {
   const [deleteTest] = useDeleteTestMutation();
   const { Column, HeaderCell, Cell } = Table;
 
-  const handleTestOpen = () => setTestOpen(true);
+  const handleTestOpen = (id) => setTestOpen(id);
   const handleTestClose = () => setTestOpen(false);
 
   useEffect(() => {
@@ -198,7 +198,7 @@ function All() {
               <>
                 <FontAwesomeIcon
                   icon={faPenToSquare}
-                  onClick={handleTestOpen}
+                  onClick={() => handleTestOpen(rowData.id)}
                   style={{ width: 15, height: 15, marginRight: 20 }}
                 />
                 <FontAwesomeIcon
@@ -212,11 +212,12 @@ function All() {
         </Column>
       </Table>
       <AddTest
-        open={testOpen}
-        handleClose={handleTestClose}
+        open={testOpen !== false}
+        handleClose={() => setTestOpen(false)}
         headText={"Update Test"}
         bodyText={"Update existing test."}
         btnText={"Update"}
+        id={testOpen}
       />
     </>
   );

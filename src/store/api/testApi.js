@@ -8,7 +8,7 @@ export const testApi = api.injectEndpoints({
     }),
 
     getTestById: builder.query({
-      query: (testId) => `test/updateTest/${testId}`,
+      query: (testId) => `test/getTestById/${testId}`,
     }),
 
     deleteTest: builder.mutation({
@@ -19,9 +19,9 @@ export const testApi = api.injectEndpoints({
     }),
 
     updateTest: builder.mutation({
-      query: ({ updatedData, id }) => ({
+      query: ({ id , updatedData }) => ({
         url: `test/updateTest/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: updatedData,
       }),
     }),
