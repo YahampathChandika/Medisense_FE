@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedTests } from "../../../store/slice/testSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
@@ -10,6 +12,8 @@ import {
 import Swal from "sweetalert2";
 
 function All() {
+  const dispatch = useDispatch();
+  const selectedTests = useSelector((state) => state.selectedTests);
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
@@ -21,6 +25,11 @@ function All() {
 
   const handleTestOpen = () => setTestOpen(true);
   const handleTestClose = () => setTestOpen(false);
+
+  useEffect(() => {
+    dispatch(setSelectedTests(checkedKeys));
+    console.log("All Tests Data:", selectedTests);
+  }, [checkedKeys, dispatch]);
 
   const getData = () => {
     if (error) {
@@ -83,15 +92,6 @@ function All() {
     setCheckedKeys(keys);
   };
 
-  // const handleDelete = async (testId) => {
-  //   try {
-  //     await deleteTest(testId);
-  //     refetch();
-  //   } catch (error) {
-  //     console.error("Error deleting test:", error);
-  //   }
-  // };
-
   const handleDelete = async (testId) => {
     try {
       const result = await Swal.fire({
@@ -115,7 +115,6 @@ function All() {
     }
   };
 
-
   const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
     <Cell {...props} style={{ padding: 0 }}>
       <div style={{ lineHeight: "46px" }}>
@@ -136,6 +135,8 @@ function All() {
       {label}
     </HeaderCell>
   );
+
+  console.log("chk", checkedKeys);
 
   return (
     <>
@@ -158,7 +159,7 @@ function All() {
               inline
               checked={
                 checkedKeys.length === testData?.payload?.length &&
-                checkedKeys.length != 0
+                checkedKeys.length !== 0
               }
               indeterminate={
                 checkedKeys.length > 0 &&

@@ -3,8 +3,11 @@ import { mockData } from "../../../assets//mocks/mockData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function Selected() {
+  const selectedTests = useSelector((state) => state.selectedTests); 
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
@@ -15,6 +18,11 @@ function Selected() {
 
   const { Column, HeaderCell, Cell } = Table;
   const data = mockData(8);
+
+  useEffect(() => {
+    // Log the selectedTests data whenever it changes
+    console.log("Selected Tests Data:", selectedTests);
+  }, [selectedTests]);
 
   const getData = () => {
     if (sortColumn && sortType) {
