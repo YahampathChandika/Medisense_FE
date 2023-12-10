@@ -21,7 +21,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
     isLoading,
     isError,
   } = useGetTestByIdQuery(id, { skip: !id });
-
+  console.log("id ", id);
   const form = useForm({
     mode: "onTouched",
   });
@@ -71,18 +71,18 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
       } catch (error) {
         console.log("Login Error", error);
       }
-    }else {
+    } else {
       const updatedData = {
         id,
-        ...data
-      }
+        ...data,
+      };
 
       try {
         e.preventDefault();
         console.log("data", updatedData);
         console.log("Update", updatedData);
 
-        const response = await updateTest({id , updatedData});
+        const response = await updateTest({ id, updatedData });
         console.log("Response update", response);
 
         if (response.error) {
@@ -110,14 +110,19 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
             title: "Test Updated",
           });
           reset();
-          await refetch();
           handleClose();
+          await refetch();
         }
       } catch (error) {
         console.log("Login Error", error);
       }
-      console.log(updatedData)
+      console.log(updatedData);
     }
+  };
+
+  const handleCloseModal = () => {
+    reset(); // Reset the form fields
+    handleClose(); // Close the modal
   };
 
   return (
@@ -129,7 +134,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
         alignItems: "center",
       }}
       open={open}
-      onClose={handleClose}
+      onClose={handleCloseModal} // Use the modified handleCloseModal function
     >
       {isLoading ? (
         <div>is Loding...</div>

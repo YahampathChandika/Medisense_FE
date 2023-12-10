@@ -13,11 +13,14 @@ import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import UserRegistration from "../components/modals/UserRegistration";
+import { useGetAllUsersQuery } from "../store/api/userApi";
 
 function Users() {
   const [isUserRegistrationOpen, setUserRegistrationOpen] = useState(false);
   const handleTestOpen = () => setUserRegistrationOpen(true);
   const handleTestClose = () => setUserRegistrationOpen(false);
+  const { data : getAllUsers } = useGetAllUsersQuery();
+  console.log("users" ,getAllUsers)
 
   const data = mockData(10);
 
