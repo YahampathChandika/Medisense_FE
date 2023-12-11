@@ -11,23 +11,61 @@ import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import AddAgency from "../components/modals/AddAgency";
-import { useGetAllAgencyQuery } from "../store/api/agencyApi";
+import { useDeleteAgencyMutation, useGetAllAgencyQuery } from "../store/api/agencyApi";
+import Swal from "sweetalert2";
 
 function Agency() {
   const [isAgencyRegistrationOpen, setAgencyRegistrationOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
-  const handleTestOpen = () => setAgencyRegistrationOpen(true);
-  const handleTestClose = () => setAgencyRegistrationOpen(false);
+  const handleAgencyOpen = () => setAgencyRegistrationOpen(true);
+  const handleAgencyClose = () => setAgencyRegistrationOpen(false);
   const handleUpdateOpen = (id) => setUpdateOpen(id);
   const handleUpdatecloce = () => setUpdateOpen(false);
 
   const { data: getAllAgency } = useGetAllAgencyQuery();
-  
+  const [ deleteAgency ] = useDeleteAgencyMutation();
+  const { refetch } = useGetAllAgencyQuery();
+
   console.log("get All Agency ", getAllAgency);
 
-  
+   
+  const handleDelete = async (agencyId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
 
-  const data = getAllAgency?.payload;
+      if (result.isConfirmed) {
+        await deleteAgency(agencyId);
+        await refetch();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Agency Deleted",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting agency:", error);
+      Swal.fire("Error", "There was an error deleting the record.", "error");
+    }
+  };
+
 
   return (
     <div style={{ width: "100%" }}>
@@ -57,7 +95,7 @@ function Agency() {
               <FlexboxGrid.Item colspan={6} className="justify-end flex">
                 <Button
                   className="w-40 h-10 bg-blue-800 text-white"
-                  onClick={handleTestOpen}
+                  onClick={handleAgencyOpen}
                 >
                   Add Agency
                 </Button>
@@ -76,22 +114,23 @@ function Agency() {
                 </tr>
               </thead>
               <tbody className="selectedpackages-table-body">
-                {getAllAgency?.payload?.map((test, index) => (
+                {getAllAgency?.payload?.map((agency, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{test.name}</td>
-                    <td>{test.address}</td>
-                    <td>{test.email}</td>
+                    <td>{agency.name}</td>
+                    <td>{agency.address}</td>
+                    <td>{agency.email}</td>
                     <td>
                       <FontAwesomeIcon
                         icon={faPen}
                         style={{ color: "#000000", marginRight: "20px" }}
-                        onClick={() => handleUpdateOpen(test.id)}
+                        onClick={() => handleUpdateOpen(agency.id)}
 
                       />
                       <FontAwesomeIcon
                         icon={faTrashCan}
                         style={{ color: "#A30D11" }}
+                        onClick={ () => {handleDelete(agency.id)}}
                       />
                     </td>
                   </tr>
@@ -102,7 +141,7 @@ function Agency() {
         </div>
         <AddAgency
           open={isAgencyRegistrationOpen}
-          handleClose={handleTestClose}
+          handleClose={handleAgencyClose}
           agencyhead="Add Agency"
           buttonName="Register"
         />

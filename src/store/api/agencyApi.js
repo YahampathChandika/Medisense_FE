@@ -26,6 +26,14 @@ export const agencyApi = api.injectEndpoints({
         body: inputData,
       }),
     }),
+
+    deleteAgency: builder.mutation({
+      query: (id) => ({
+        url: `/agency/deleteAgency/${id}`,
+       method: "DELETE",
+      }),
+    }),
+
   }),
 });
 
@@ -34,4 +42,5 @@ export const {
   useGetAllAgencyQuery,
   useGetAgencyByIDQuery,
   useUpdateAgencyMutation,
+  useDeleteAgencyMutation,
 } = agencyApi;

@@ -76,7 +76,7 @@ function UserRegistration({ open, handleClose , userTitle , buttonName }) {
       username: "",
       password: "",
     });
-    setProfilePic(""); // Reset profile picture as well
+    setProfilePic(""); 
   }
 
   const updatedInputData = {
