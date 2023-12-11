@@ -15,7 +15,6 @@ import Swal from "sweetalert2";
 function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
   const { refetch: refetcdata } = useGetAllTestsQuery();
   const [addTest] = useAddTestMutation();
-  console.log("id ", id);
 
   const [updateTest] = useUpdateTestMutation(id);
   const {

@@ -19,12 +19,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Outlet } from "react-router-dom";
 import AddTest from "../components/modals/AddTest";
+import { useSelector } from "react-redux";
 
 function CreatePackage() {
   const [testOpen, setTestOpen] = useState(false);
   const handleTestOpen = () => setTestOpen(true);
   const handleTestClose = () => setTestOpen(false);
   const navigate = useNavigate();
+  const totalPrice = useSelector((state) => state.selectedTests.price);
 
   const {
     register,
@@ -98,7 +100,7 @@ function CreatePackage() {
           >
             <Row className="space-x-2">
               <Col className="flex flex-nowrap">Total selected amount:</Col>
-              <Col className="flex flex-nowrap font-semibold">Rs.19000.00 </Col>
+              <Col className="flex flex-nowrap font-semibold">Rs. {totalPrice} </Col>
             </Row>
           </FlexboxGrid.Item>
         </FlexboxGrid>

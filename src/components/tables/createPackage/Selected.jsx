@@ -36,7 +36,7 @@ function Selected() {
 
     if (testData && testData.payload) {
       const filteredData = testData.payload.filter((test) =>
-        selectedTests.includes(test.id)
+        selectedTests.tests.includes(test.id)
       );
 
       const sortedData = [...filteredData];
@@ -146,8 +146,6 @@ function Selected() {
       {label}
     </HeaderCell>
   );
-
-  console.log("chk", selectedTests);
 
   return (
     <>

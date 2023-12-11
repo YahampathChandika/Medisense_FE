@@ -9,7 +9,11 @@ import {
 } from "../../../store/api/testApi";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { addSelectedTest, clearSelectedTests, removeSelectedTest } from "../../../store/slice/testSlice";
+import {
+  addSelectedTest,
+  clearSelectedTests,
+  removeSelectedTest,
+} from "../../../store/slice/testSlice";
 
 function All() {
   const [sortColumn, setSortColumn] = useState();
@@ -23,7 +27,8 @@ function All() {
 
   const dispatch = useDispatch();
   const selectedTests = useSelector((state) => state.selectedTests);
-
+  
+  console.log("selectedTests" , selectedTests.price)
 
   const handleTestOpen = (id) => setTestOpen(id);
   const handleTestClose = () => setTestOpen(false);
@@ -77,34 +82,6 @@ function All() {
     }, 500);
   };
 
-  // const handleCheckAll = (value, checked) => {
-  //   const keys = checked ? testData.payload.map((item) => item.id) : [];
-  //   setSelectedTests(keys);
-  // };
-
-  const handleCheckAll = (value, checked) => {
-    const keys = checked ? testData.payload.map((item) => item.id) : [];
-    dispatch(clearSelectedTests());
-    keys.forEach((key) => {
-      dispatch(addSelectedTest(key));
-    });
-  };
-
-  // const handleCheck = (value, checked) => {
-  //   const keys = checked
-  //     ? [...selectedTests, value]
-  //     : selectedTests.filter((item) => item !== value);
-  //   setSelectedTests(keys);
-  // };
-
-  const handleCheck = (value, checked) => {
-    if (checked) {
-      dispatch(addSelectedTest(value));
-    } else {
-      dispatch(removeSelectedTest(value));
-    }
-  };
-
   const handleDelete = async (testId) => {
     try {
       const result = await Swal.fire({
@@ -142,19 +119,68 @@ function All() {
     }
   };
 
-  const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
+  // const handleCheckAll = (value, checked) => {
+  //   const keys = checked ? testData.payload.map((item) => item.id) : [];
+  //   setSelectedTests(keys);
+  // };
+
+    // const handleCheck = (value, checked) => {
+  //   console.log("values", value);
+  //   if (checked) {
+  //     dispatch(addSelectedTest(value));
+  //   } else {
+  //     dispatch(removeSelectedTest(value));
+  //   }
+  // };
+
+  const handleCheckAll = (value, checked) => {
+    const selectedTestsArray = checked
+      ? testData.payload.map((item) => ({ id: item.id, price: item.price }))
+      : [];
+  
+    dispatch(clearSelectedTests());
+    selectedTestsArray.forEach((test) => {
+      dispatch(addSelectedTest(test));
+    });
+  };
+  
+
+  const handleCheck = (value, checked) => {
+    if (checked) {
+      dispatch(addSelectedTest({ id: value.id, price: value.price }));
+    } else {
+      dispatch(removeSelectedTest({ id: value.id, price: value.price }));
+    }
+  };
+
+  // const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
+  //   <Cell {...props} style={{ padding: 0 }}>
+  //     <div style={{ lineHeight: "46px" }}>
+  //       <Checkbox
+  //         value={rowData[dataKey]}
+  //         inline
+  //         onChange={onChange}
+  //         checked={checkedKeys.some((item) => item === rowData[dataKey])}
+  //       />
+  //     </div>
+  //   </Cell>
+  // );
+
+  const CheckCell = ({ rowData, onChange, checkedKeys, ...props }) => (
     <Cell {...props} style={{ padding: 0 }}>
       <div style={{ lineHeight: "46px" }}>
         <Checkbox
-          value={rowData[dataKey]}
+          value={{ id: rowData.id, price: rowData.price }}
           inline
           onChange={onChange}
-          checked={checkedKeys.some((item) => item === rowData[dataKey])}
+          checked={
+            checkedKeys.some((item) => item === rowData.id)
+          }
         />
       </div>
     </Cell>
   );
-
+  
   const createHeaderCell = (label) => (
     <HeaderCell
       style={{ background: "#F2F4FF", color: "#768DC6", fontWeight: "600" }}
@@ -162,8 +188,6 @@ function All() {
       {label}
     </HeaderCell>
   );
-
-  console.log("chk", selectedTests);
 
   return (
     <>
@@ -185,20 +209,19 @@ function All() {
             <Checkbox
               inline
               checked={
-                selectedTests.length === testData?.payload?.length &&
-                selectedTests.length !== 0
+                selectedTests.tests.length === testData?.payload?.length &&
+                selectedTests.tests.length !== 0
               }
               indeterminate={
-                selectedTests.length > 0 &&
-                selectedTests.length < testData?.payload?.length
+                selectedTests.tests.length > 0 &&
+                selectedTests.tests.length < testData?.payload?.length
               }
               onChange={handleCheckAll}
               style={{ marginTop: "2px" }}
             />
           </HeaderCell>
           <CheckCell
-            dataKey="id"
-            checkedKeys={selectedTests}
+            checkedKeys={selectedTests.tests}
             onChange={handleCheck}
           />
         </Column>
@@ -246,7 +269,6 @@ function All() {
         btnText={"Update"}
         id={testOpen}
       />
-      
     </>
   );
 }
