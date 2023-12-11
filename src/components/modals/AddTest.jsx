@@ -126,6 +126,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
             title: "Test Updated",
           });
           await handleClose();
+          await refetchUse();
           await refetcdata();
           reset();
         }
