@@ -28,7 +28,7 @@ function SelectedPackages() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </div>
-      <div style={{ maxHeight: "426px", overflowY: "auto", width: "auto" }}>
+      <div style={{ maxHeight: "426px", overflowY: "auto", width: "auto" , minHeight:"426px" }}>
         <Table >
           <thead className="selectedpackages-table-head">
             <tr>

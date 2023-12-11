@@ -1,0 +1,77 @@
+/* ---------------------Table------------------------- */
+
+.users-table-icon {
+    border: none;
+    width: 4%;
+    padding: 0% !important;
+    padding-left: 7.7% !important;
+    padding-top: 0.5% !important;
+    color: #000000 !important;
+  }
+  
+  .users-table-icon-pen {
+    border: none;
+    width: 8%;
+    padding: 0% !important;
+    padding-left: 5.5% !important;
+    padding-top: 0.5% !important;
+    color: #A30D11 !important;
+  }
+  
+
+  .users-table-data {
+    border-bottom: none;
+    padding-left: 3% !important;
+  }
+  
+  .users-table-head {
+    border-bottom: none;
+    padding-left: 3% !important;
+    /* color: #b1b1b1 !important; */
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    cursor: pointer;
+    background-color: #F2F4FF !important;
+  }
+  
+  .users-table-head-name {
+    border-bottom: none;
+    padding-left: 5% !important;
+    /* color: #b1b1b1 !important; */
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    cursor: pointer;
+    background-color: #F2F4FF !important;
+
+  }
+  
+  .table-fixed thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Add your desired background color */
+    z-index: 1;
+  }
+  
+  .users-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+
+  .usersTabble-table-body>tr:nth-of-type(even)>* {
+    --bs-table-color-type: var(--bs-table-striped-color);
+    --bs-table-bg-type: #F2F4FF;
+  }
+  
+  .usersTabble-table-body>tr:nth-of-type(odd)>* {
+    --bs-table-color-type: var(--bs-table-striped-color);
+    --bs-table-bg-type: #ffffff !important;
+  }

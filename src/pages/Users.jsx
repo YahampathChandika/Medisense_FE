@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import {
   Container,
-  Content,
   Divider,
   FlexboxGrid,
   Header,
   Input,
   InputGroup,
 } from "rsuite";
-import { mockData } from "../assets/mocks/mockData";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import UserRegistration from "../components/modals/UserRegistration";
 import { useGetAllUsersQuery } from "../store/api/userApi";
+import UsersTable from "../components/tables/users/usersTable";
+import mockData from "../assets/mocks/mock";
 
 function Users() {
   const [isUserRegistrationOpen, setUserRegistrationOpen] = useState(false);
   const handleTestOpen = () => setUserRegistrationOpen(true);
   const handleTestClose = () => setUserRegistrationOpen(false);
-  const { data : getAllUsers } = useGetAllUsersQuery();
+  const { data : getAllUsers ,isLoding , isError } = useGetAllUsersQuery();
   console.log("users" ,getAllUsers)
-  console.log("role" ,getAllUsers?.payload?.roles?.role )
+  const data = getAllUsers?.payload;
+
 
 
   return (
@@ -56,43 +57,15 @@ function Users() {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <div style={{ overflowY: "auto", width: "auto" }}>
-            <Table responsive>
-              <thead className="selectedpackages-table-head">
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Role</th>
-                  <th>Email</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody className="selectedpackages-table-body">
-                {getAllUsers?.payload.map((data, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{data?.firstName} {data?.lastName}</td>
-                    <td>{data?.roles?.role}</td>
-                    <td>{data.email}</td>
-                    <td>
-                      <FontAwesomeIcon
-                        icon={faPen}
-                        style={{ color: "#000000", marginRight: "20px" }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faTrashCan}
-                        style={{ color: "#A30D11" }}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+          <div>
+            <UsersTable data={data} Loding={isLoding} error={isError}/>
           </div>
         </div>
         <UserRegistration
           open={isUserRegistrationOpen}
           handleClose={handleTestClose}
+          userTitle="User Registration"
+          buttonName="Register"
         />
       </Container>
     </div>

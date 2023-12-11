@@ -15,12 +15,14 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
 import {
   useAddUserMutation,
+  useGetAllUsersQuery,
   useGetUserRolesQuery,
 } from "../../store/api/userApi";
 import Swal from "sweetalert2";
 
-function UserRegistration({ open, handleClose }) {
+function UserRegistration({ open, handleClose , userTitle , buttonName }) {
   const [addUser, { isLoading, error }] = useAddUserMutation();
+  const { refetch } = useGetAllUsersQuery();
   const { data: roles } = useGetUserRolesQuery();
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
@@ -89,6 +91,7 @@ function UserRegistration({ open, handleClose }) {
       if (response.data && !response.data.error) {
         resetForm();
         handleClose();
+        refetch();
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -127,7 +130,7 @@ function UserRegistration({ open, handleClose }) {
     >
       <div className="userregistration-main-con">
         <Container>
-          <Header className="userregistration-title">User Registration</Header>
+          <Header className="userregistration-title">{userTitle}</Header>
           <Divider />
           <Content>
             <div className="userregistration-container">
@@ -315,7 +318,7 @@ function UserRegistration({ open, handleClose }) {
               className="w-40 h-10 bg-blue-800 text-white mr-5"
               onClick={handleSubmit}
             >
-              Register
+              {buttonName}
             </Button>
             <Button
               className="w-40 h-10 bg-red-700 text-white border-none hover:bg-red-600"
