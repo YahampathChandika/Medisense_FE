@@ -1,27 +1,33 @@
 import React, { useState } from "react";
 import {
   Container,
-  Content,
   Divider,
   FlexboxGrid,
-  Footer,
   Header,
   Input,
   InputGroup,
 } from "rsuite";
-import { mockData } from "../assets/mocks/mockData";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import UserRegistration from "../components/modals/UserRegistration";
 import AddAgency from "../components/modals/AddAgency";
+import { useGetAllAgencyQuery } from "../store/api/agencyApi";
 
 function Agency() {
-  const [isUserRegistrationOpen, setUserRegistrationOpen] = useState(false);
-  const handleTestOpen = () => setUserRegistrationOpen(true);
-  const handleTestClose = () => setUserRegistrationOpen(false);
+  const [isAgencyRegistrationOpen, setAgencyRegistrationOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const handleTestOpen = () => setAgencyRegistrationOpen(true);
+  const handleTestClose = () => setAgencyRegistrationOpen(false);
+  const handleUpdateOpen = (id) => setUpdateOpen(id);
+  const handleUpdatecloce = () => setUpdateOpen(false);
 
-  const data = mockData(10);
+  const { data: getAllAgency } = useGetAllAgencyQuery();
+  
+  console.log("get All Agency ", getAllAgency);
+
+  
+
+  const data = getAllAgency?.payload;
 
   return (
     <div style={{ width: "100%" }}>
@@ -58,7 +64,7 @@ function Agency() {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <div style={{ overflowY: "auto", width: "auto" }}>
+          <div style={{ overflowY: "auto", width: "auto", minHeight: "550px" }}>
             <Table responsive>
               <thead className="selectedpackages-table-head">
                 <tr>
@@ -70,16 +76,18 @@ function Agency() {
                 </tr>
               </thead>
               <tbody className="selectedpackages-table-body">
-                {data.map((test, index) => (
+                {getAllAgency?.payload?.map((test, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{test.description}</td>
-                    <td>{test.role}</td>
+                    <td>{test.name}</td>
+                    <td>{test.address}</td>
                     <td>{test.email}</td>
                     <td>
                       <FontAwesomeIcon
                         icon={faPen}
                         style={{ color: "#000000", marginRight: "20px" }}
+                        onClick={() => handleUpdateOpen(test.id)}
+
                       />
                       <FontAwesomeIcon
                         icon={faTrashCan}
@@ -93,8 +101,17 @@ function Agency() {
           </div>
         </div>
         <AddAgency
-          open={isUserRegistrationOpen}
+          open={isAgencyRegistrationOpen}
           handleClose={handleTestClose}
+          agencyhead="Add Agency"
+          buttonName="Register"
+        />
+        <AddAgency
+          open={updateOpen}
+          handleClose={handleUpdatecloce}
+          id={updateOpen}
+          agencyhead="Update Agency"
+          buttonName="Update"
         />
       </Container>
     </div>

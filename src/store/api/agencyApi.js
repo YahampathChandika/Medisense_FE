@@ -5,12 +5,24 @@ export const agencyApi = api.injectEndpoints({
   endpoints: (builder) => ({
     addAgency: builder.mutation({
       query: (data) => ({
-        url: "/agency/addAgency",
+        url: "agency/addAgency",
         method: "POST",
         body: data,
       }),
     }),
+
+    getAllAgency: builder.query({
+      query: () => "agency/getAllAgencies",
+    }),
+
+    getAgencyByID: builder.query({
+      query: (id) => `agency/getAgencyById/${id}`,
+    }),
   }),
 });
 
-export const { useAddAgencyMutation } = agencyApi;
+export const {
+  useAddAgencyMutation,
+  useGetAllAgencyQuery,
+  useGetAgencyByIDQuery,  // Note the capital "D" here
+} = agencyApi;
