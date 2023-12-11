@@ -21,8 +21,8 @@ function Users() {
   const handleTestClose = () => setUserRegistrationOpen(false);
   const { data : getAllUsers } = useGetAllUsersQuery();
   console.log("users" ,getAllUsers)
+  console.log("role" ,getAllUsers?.payload?.roles?.role )
 
-  const data = mockData(10);
 
   return (
     <div style={{ width: "100%" }}>
@@ -68,12 +68,12 @@ function Users() {
                 </tr>
               </thead>
               <tbody className="selectedpackages-table-body">
-                {data.map((test, index) => (
+                {getAllUsers?.payload.map((data, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{test.description}</td>
-                    <td>{test.role}</td>
-                    <td>{test.email}</td>
+                    <td>{data?.firstName} {data?.lastName}</td>
+                    <td>{data?.roles?.role}</td>
+                    <td>{data.email}</td>
                     <td>
                       <FontAwesomeIcon
                         icon={faPen}

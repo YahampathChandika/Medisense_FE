@@ -20,11 +20,12 @@
 
 .selectedpackages-table-head th {
   background-color: #F2F4FF;
-  /* height: 50px; */
-  text-align: center; 
-  border-top: 1px solid #D5DAEC;
-
+  text-align: center;
+  position: sticky;
+  top: 0; /* Stick to the top of the container */
+  z-index: 100; /* Ensure the table head is above the scrolling content */
 }
+
 
 .selectedpackages-table-body td {
   height: 55px;

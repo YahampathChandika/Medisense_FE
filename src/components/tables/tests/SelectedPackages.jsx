@@ -29,7 +29,7 @@ function SelectedPackages() {
         </FlexboxGrid>
       </div>
       <div style={{ maxHeight: "426px", overflowY: "auto", width: "auto" }}>
-        <Table responsive>
+        <Table >
           <thead className="selectedpackages-table-head">
             <tr>
               <th>No</th>

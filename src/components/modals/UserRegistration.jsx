@@ -121,7 +121,6 @@ function UserRegistration({ open, handleClose }) {
     <Modal
       style={{
         width: "60%",
-        top: "1%",
       }}
       open={open}
       onClose={handleClose}
@@ -132,8 +131,8 @@ function UserRegistration({ open, handleClose }) {
           <Divider />
           <Content>
             <div className="userregistration-container">
-              <div className="userregistration-input-con">
-                <div className="userregistration-input-single">
+              <div className="userregistration-input-con-two">
+                <div className="userregistration-input">
                   <label>First Name</label>
                   <input
                     type="text"
@@ -148,7 +147,7 @@ function UserRegistration({ open, handleClose }) {
                     }}
                   />
                 </div>
-                <div className="userregistration-input-single">
+                <div className="userregistration-input">
                   <label>Last Name</label>
                   <input
                     type="text"

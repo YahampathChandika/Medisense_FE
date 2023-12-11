@@ -24,7 +24,7 @@
 }
 
 .userregistration-input-single {
-  width: 45%;
+  width: 100%;
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
