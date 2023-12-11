@@ -26,23 +26,28 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
   } = useGetTestByIdQuery(id, { skip: !id });
   const form = useForm({
     mode: "onTouched",
+    defaultValues: {
+      description: testById?.payload?.description || "",
+      testCode: testById?.payload?.testCode || "",
+      price: testById?.payload?.price || "",
+      type: testById?.payload?.type || "",
+    },
   });
 
   const { register, handleSubmit, reset, setValue } = form;
-
   useEffect(() => {
-    // Reset the form when the id prop changes
-    reset();
+    const setDefaultValues = async () => {
 
-    // If there is an id, set form values from the fetched data
-    if (id && testById) {
-      const { description, testCode, price, type } = testById.payload;
-      setValue("description", description);
-      setValue("testCode", testCode);
-      setValue("price", price);
-      setValue("type", type);
-    }
-  }, [id, testById, reset, setValue, open]); // Include 'open' in the dependency array
+      if (id && testById) {
+        const { description, testCode, price, type } = testById.payload;
+        setValue("description", description);
+        setValue("testCode", testCode);
+        setValue("price", price);
+        setValue("type", type);
+      }
+    };
+    setDefaultValues();
+  }, [id, testById, reset, setValue, open]); 
 
   const isEditing = !!id;
   const isNewPatient = !isEditing;
@@ -128,7 +133,6 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
           await handleClose();
           await refetchUse();
           await refetcdata();
-          reset();
         }
       } catch (error) {
         console.log("Login Error", error);
@@ -177,7 +181,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
                 <Row>Test Name</Row>
                 <Input
                   name="description"
-                  defaultValue={testById?.payload?.description}
+                  defaultValue="description"
                   {...register("description")}
                 />
               </FlexboxGrid.Item>
@@ -185,7 +189,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
                 <Row>Code</Row>
                 <Input
                   name="testCode"
-                  defaultValue={testById?.payload?.testCode}
+                  defaultValue="testCode"
                   {...register("testCode")}
                 />
               </FlexboxGrid.Item>
@@ -198,7 +202,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
                 <Row>Amount</Row>
                 <Input
                   name="price"
-                  defaultValue={testById?.payload?.price}
+                  defaultValue="price"
                   {...register("price")}
                 />
               </FlexboxGrid.Item>
@@ -206,7 +210,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
                 <Row>Type</Row>
                 <Input
                   name="type"
-                  defaultValue={testById?.payload?.type}
+                  defaultValue="type"
                   {...register("type")}
                 />
               </FlexboxGrid.Item>
