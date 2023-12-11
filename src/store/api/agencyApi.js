@@ -18,11 +18,20 @@ export const agencyApi = api.injectEndpoints({
     getAgencyByID: builder.query({
       query: (id) => `agency/getAgencyById/${id}`,
     }),
+
+    updateAgency: builder.mutation({
+      query: ({ id, inputData }) => ({
+        url: `agency/updateAgency/${id}`,
+        method: "PATCH",
+        body: inputData,
+      }),
+    }),
   }),
 });
 
 export const {
   useAddAgencyMutation,
   useGetAllAgencyQuery,
-  useGetAgencyByIDQuery,  // Note the capital "D" here
+  useGetAgencyByIDQuery,
+  useUpdateAgencyMutation,
 } = agencyApi;

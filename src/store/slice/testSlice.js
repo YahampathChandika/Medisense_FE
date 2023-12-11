@@ -33,9 +33,21 @@ const selectedTestsSlice = createSlice({
   initialState: { tests: [], price: 0 },
   reducers: {
     addSelectedTest: (state, action) => {
-      console.log("addSelectedTest previous state 1", state.tests[0] , state.price);
-      console.log("addSelectedTest previous state 2", state.tests[1], state.price);
-      console.log("addSelectedTest previous state 3", state.tests[2], state.price);
+      console.log(
+        "addSelectedTest previous state 1",
+        state.tests[0],
+        state.price
+      );
+      console.log(
+        "addSelectedTest previous state 2",
+        state.tests[1],
+        state.price
+      );
+      console.log(
+        "addSelectedTest previous state 3",
+        state.tests[2],
+        state.price
+      );
 
       const { id, price } = action.payload;
       state.tests.push(id);
@@ -49,11 +61,11 @@ const selectedTestsSlice = createSlice({
     removeSelectedTest: (state, action) => {
       console.log("removeSelectedTest action payload", action.payload);
       console.log("removeSelectedTest previous state", state);
-    
+
       const { id, price } = action.payload;
       state.tests = state.tests.filter((testId) => testId !== id);
       state.price -= price;
-    
+
       console.log("removeSelectedTest new state", state);
     },
 
@@ -72,4 +84,3 @@ export const { addSelectedTest, removeSelectedTest, clearSelectedTests } =
   selectedTestsSlice.actions;
 
 export default selectedTestsSlice.reducer;
-

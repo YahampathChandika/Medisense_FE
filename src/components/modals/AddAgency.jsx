@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Content, Divider, Footer, Header, Modal } from "rsuite";
 import "../../assets/css/AddAgency.css";
 import { Button } from "react-bootstrap";
 import {
   useAddAgencyMutation,
   useGetAgencyByIDQuery,
+  useGetAllAgencyQuery,
+  useUpdateAgencyMutation,
 } from "../../store/api/agencyApi";
+import Swal from "sweetalert2";
 
 function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
   const [addAgency] = useAddAgencyMutation();
+  const [loadingDefaults, setLoadingDefaults] = useState(true);
+  const { refetch } = useGetAllAgencyQuery();
+  const [updatteAgency] = useUpdateAgencyMutation();
+
   console.log("id", id);
   const {
     data: getAGencybyId,
@@ -17,8 +24,26 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
   } = useGetAgencyByIDQuery(id, { skip: !id });
   console.log("id", getAGencybyId?.payload?.name);
 
+  useEffect(() => {
+    if (getAGencybyId) {
+      const defaultValues = getAGencybyId.payload || {};
+      setInputData({
+        name: defaultValues.name || "",
+        address: defaultValues.address || "",
+        email: defaultValues.email || "",
+        telephone: defaultValues.telephone || "",
+        fax: defaultValues.fax || "",
+        contactPerson: defaultValues.contactPerson || "",
+        labourLicence: defaultValues.labourLicence || "",
+        commision: defaultValues.commision || "",
+      });
+
+      setLoadingDefaults(false);
+    }
+  }, [getAGencybyId]);
+
   const [inputData, setInputData] = useState({
-    name: getAGencybyId?.payload?.name , 
+    name: "",
     address: "",
     email: "",
     telephone: "",
@@ -28,9 +53,100 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
     commision: "",
   });
 
-  const handleSubmit = () => {
-    addAgency(inputData);
-    console.log("input data", inputData);
+  const resetForm = () => {
+    setInputData({
+      fullName: "",
+      dateOfBirth: "",
+      profilePhoto: "",
+      sevileStatus: "",
+      gender: "",
+      address: "",
+      mobileNo: "",
+      email: "",
+      nic: "",
+      timeOfLastName: "",
+      referred: "",
+    });
+  };
+
+  const isEditing = !!id;
+  const isNewPatient = !isEditing;
+
+  const handleSubmit = async (e) => {
+    if (isNewPatient) {
+      try {
+        e.preventDefault();
+        console.log("data", inputData);
+
+        const response = await addAgency(inputData);
+        console.log("Response:", response);
+
+        if (response.error) {
+          console.log("Add Agency Error", response);
+          Swal.fire({
+            title: "Oops...",
+            text: response?.error?.data?.payload,
+            icon: "error",
+          });
+        } else {
+          console.log("Success");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Test Added",
+          });
+          resetForm();
+          await refetch();
+          handleClose();
+        }
+      } catch (error) {
+        console.log("Add agency Error", error);
+      }
+    } else {
+      try {
+        const response = await updatteAgency({ id, inputData });
+        console.log("response", response);
+        if (response.error) {
+          console.log("Update egency Error", response);
+          Swal.fire({
+            title: "Oops...",
+            text: response?.error?.data?.payload,
+            icon: "error",
+          });
+        } else {
+          console.log("Success");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Test Updated",
+          });
+          await handleClose();
+          refetch();
+        }
+      } catch (error) {
+        console.log("Update Error", error);
+      }
+    }
   };
 
   return (
@@ -59,7 +175,6 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                     <input
                       type="text"
                       className="rs-input"
-                      defaultValue={getAGencybyId?.payload?.name}
                       value={inputData.name}
                       onChange={(e) => {
                         e.preventDefault();
