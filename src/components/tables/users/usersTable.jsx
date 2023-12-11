@@ -10,7 +10,7 @@ import "../../../assets/css/Users.css";
 import image from "../../../assets/images/dummy-profile-_new.jpg";
 import UserRegistration from "../../modals/UserRegistration";
 
-function UsersTable({ data, Loding, error }) {
+function UsersTable({ data, Loding, searchQuery  }) {
   console.log("data", data);
   const [testOpen, setTestOpen] = useState(false);
   const handleTestOpen = (id) => setTestOpen(id);
@@ -24,10 +24,23 @@ function UsersTable({ data, Loding, error }) {
     setSortConfig({ key, order });
   };
 
+ 
+  const filteredData = () => {
+    const filtered = (data ?? []).filter((user) => {
+      const fullName = `${user.firstName} ${user.lastName}`;
+      return (
+        fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.roles.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.contactNo.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+    return filtered;
+  };
+
   const sortedData = () => {
     if (sortConfig.key) {
-      console.log("Sorting data:", data);
-      const sorted = [...(data ?? [])].sort((a, b) => {
+      const sorted = [...filteredData()].sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.order === "asc" ? -1 : 1;
         }
@@ -36,13 +49,11 @@ function UsersTable({ data, Loding, error }) {
         }
         return 0;
       });
-      console.log("Sorted data:", sorted);
       return sorted;
     }
-    return data ?? [];
+    return filteredData();
   };
 
-  console.log("Rendering UsersTable with data:", data);
   return (
     <div
       style={{
@@ -62,7 +73,7 @@ function UsersTable({ data, Loding, error }) {
             >
               Name
               <FontAwesomeIcon
-                icon={faCaretDown}
+                // icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
               />
             </th>
@@ -73,7 +84,7 @@ function UsersTable({ data, Loding, error }) {
             >
               Email
               <FontAwesomeIcon
-                icon={faCaretDown}
+                // icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
               />
             </th>
@@ -84,7 +95,7 @@ function UsersTable({ data, Loding, error }) {
             >
               Role
               <FontAwesomeIcon
-                icon={faCaretDown}
+                // icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
               />
             </th>
@@ -95,7 +106,7 @@ function UsersTable({ data, Loding, error }) {
             >
               Contact No
               <FontAwesomeIcon
-                icon={faCaretDown}
+                // icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
               />
             </th>

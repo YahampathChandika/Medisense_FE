@@ -1,3 +1,4 @@
+// Users.js
 import React, { useState } from "react";
 import {
   Container,
@@ -9,21 +10,28 @@ import {
 } from "rsuite";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faSearch,
+  faTrashCan,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 import UserRegistration from "../components/modals/UserRegistration";
 import { useGetAllUsersQuery } from "../store/api/userApi";
-import UsersTable from "../components/tables/users/usersTable";
+import UsersTable from "../components/tables/users/UsersTable"; // Note the corrected import path
 import mockData from "../assets/mocks/mock";
 
 function Users() {
   const [isUserRegistrationOpen, setUserRegistrationOpen] = useState(false);
   const handleTestOpen = () => setUserRegistrationOpen(true);
   const handleTestClose = () => setUserRegistrationOpen(false);
-  const { data : getAllUsers ,isLoding , isError } = useGetAllUsersQuery();
-  console.log("users" ,getAllUsers)
+  const { data: getAllUsers, isLoading, isError } = useGetAllUsersQuery();
   const data = getAllUsers?.payload;
+  const [searchQuery, setSearchQuery] = useState("");
 
-
+  const handleSearchChange = (value) => {
+    setSearchQuery(value);
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -41,7 +49,12 @@ function Users() {
             <FlexboxGrid justify="space-between" className="m-3">
               <FlexboxGrid.Item colspan={11}>
                 <InputGroup>
-                  <Input placeholder="Search Users ..." style={{ margin: 0 }} />
+                  <Input
+                    placeholder="Search Users ..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    style={{ margin: 0 }}
+                  />
                   <InputGroup.Button>
                     <FontAwesomeIcon icon={faSearch} />
                   </InputGroup.Button>
@@ -58,7 +71,12 @@ function Users() {
             </FlexboxGrid>
           </div>
           <div>
-            <UsersTable data={data} Loding={isLoding} error={isError}/>
+            <UsersTable
+              data={data}
+              isLoading={isLoading}
+              error={isError}
+              searchQuery={searchQuery}
+            />
           </div>
         </div>
         <UserRegistration
