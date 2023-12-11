@@ -1,5 +1,5 @@
 // ModalComponent.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, Button, Row, Col, FlexboxGrid, Input } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVial } from "@fortawesome/free-solid-svg-icons";
@@ -13,20 +13,37 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
 function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
-  const { refetch } = useGetAllTestsQuery();
+  const { refetch: refetcdata } = useGetAllTestsQuery();
   const [addTest] = useAddTestMutation();
-  const [updateTest] = useUpdateTestMutation();
+  console.log("id ", id);
+
+  const [updateTest] = useUpdateTestMutation(id);
   const {
     data: testById,
     isLoading,
     isError,
+    refetch: refetchUse,
   } = useGetTestByIdQuery(id, { skip: !id });
-  console.log("id ", id);
   const form = useForm({
     mode: "onTouched",
   });
 
-  const { register, handleSubmit, reset } = form;
+  const { register, handleSubmit, reset, setValue } = form;
+
+  useEffect(() => {
+    // Reset the form when the id prop changes
+    reset();
+
+    // If there is an id, set form values from the fetched data
+    if (id && testById) {
+      const { description, testCode, price, type } = testById.payload;
+      setValue("description", description);
+      setValue("testCode", testCode);
+      setValue("price", price);
+      setValue("type", type);
+    }
+  }, [id, testById, reset, setValue, open]); // Include 'open' in the dependency array
+
   const isEditing = !!id;
   const isNewPatient = !isEditing;
 
@@ -65,7 +82,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
             title: "Test Added",
           });
           reset();
-          await refetch();
+          await refetcdata();
           handleClose();
         }
       } catch (error) {
@@ -78,7 +95,6 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
       };
 
       try {
-        e.preventDefault();
         console.log("data", updatedData);
         console.log("Update", updatedData);
 
@@ -109,20 +125,15 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
             icon: "success",
             title: "Test Updated",
           });
+          await handleClose();
+          await refetcdata();
           reset();
-          handleClose();
-          await refetch();
         }
       } catch (error) {
         console.log("Login Error", error);
       }
       console.log(updatedData);
     }
-  };
-
-  const handleCloseModal = () => {
-    reset(); // Reset the form fields
-    handleClose(); // Close the modal
   };
 
   return (
@@ -134,7 +145,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
         alignItems: "center",
       }}
       open={open}
-      onClose={handleCloseModal} // Use the modified handleCloseModal function
+      onClose={handleClose}
     >
       {isLoading ? (
         <div>is Loding...</div>
@@ -165,16 +176,16 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
                 <Row>Test Name</Row>
                 <Input
                   name="description"
-                  {...register("description")}
                   defaultValue={testById?.payload?.description}
+                  {...register("description")}
                 />
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={7}>
                 <Row>Code</Row>
                 <Input
                   name="testCode"
-                  {...register("testCode")}
                   defaultValue={testById?.payload?.testCode}
+                  {...register("testCode")}
                 />
               </FlexboxGrid.Item>
             </FlexboxGrid>
@@ -186,16 +197,16 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
                 <Row>Amount</Row>
                 <Input
                   name="price"
-                  {...register("price")}
                   defaultValue={testById?.payload?.price}
+                  {...register("price")}
                 />
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={7}>
                 <Row>Type</Row>
                 <Input
                   name="type"
-                  {...register("type")}
                   defaultValue={testById?.payload?.type}
+                  {...register("type")}
                 />
               </FlexboxGrid.Item>
             </FlexboxGrid>
