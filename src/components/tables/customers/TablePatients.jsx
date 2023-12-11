@@ -10,6 +10,7 @@ import "../../../assets/css/Patients.css";
 import image from "../../../assets/images/dummy-profile-_new.jpg";
 
 function TablePatients({ data }) {
+  console.log(data);
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
 
   const handleSort = (key) => {

@@ -1,45 +1,29 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Content,
-  Divider,
-  Footer,
-  Header,
-  Modal,
-} from "rsuite";
+import { Container, Content, Divider, Footer, Header, Modal } from "rsuite";
 import "../../assets/css/AddAgency.css";
 import { Button } from "react-bootstrap";
-import { useAddUserMutation } from "../../store/api/userApi";
+import { useAddAgencyMutation } from "../../store/api/agencyApi";
 
 function AddAgency({ open, handleClose }) {
-  const [addUser] = useAddUserMutation();
+  const [addAgency] = useAddAgencyMutation();
+
   const [inputData, setInputData] = useState({
     name: "",
-    regNo: "",
-    regDate: "",
     address: "",
     email: "",
-    mobileNo: "",
+    telephone: "",
+    fax:"",
+    contactPerson:"",
+    labourLicence:"",
+    commision:"",
   });
 
-  const formattedDate = formatDate(inputData.dateOfBirth);
 
-  function formatDate(date) {
-    const formattedDate = new Date(date);
-    const year = formattedDate.getFullYear();
-    const month = String(formattedDate.getMonth() + 1).padStart(2, "0");
-    const day = String(formattedDate.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
 
   const handleSubmit = () => {
-    const updatedInputData = {
-      ...inputData,
-      dateOfBirth: formattedDate,
-    };
-
-    console.log("input data", updatedInputData);
-    addUser(updatedInputData);
+   
+    addAgency(inputData);
+    console.log("input data", inputData);
   };
 
   return (
@@ -75,38 +59,6 @@ function AddAgency({ open, handleClose }) {
                 </div>
               </div>
               <div className="addAgency-input-con">
-                <div className="addAgency-input-con-left">
-                  <label>Reg No</label>
-                  <input
-                    type="text"
-                    className="rs-input"
-                    value={inputData.regNo}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setInputData((pre) => ({
-                        ...pre,
-                        regNo: e.target.value,
-                      }));
-                    }}
-                  />
-                </div>
-                <div className="addAgency-input-con-right">
-                  <label>Reg Date</label>
-                  <input
-                    type="text"
-                    className="rs-input"
-                    value={inputData.regDate}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setInputData((pre) => ({
-                        ...pre,
-                        regDate: e.target.value,
-                      }));
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="addAgency-input-con">
                 <div className="addAgency-input-single">
                   <label>Address</label>
                   <input
@@ -122,6 +74,40 @@ function AddAgency({ open, handleClose }) {
                     }}
                   />
                 </div>
+              </div>
+              <div className="addAgency-input-con">
+                <div className="addAgency-input-con-left">
+                  <label>Telephone</label>
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.telephone}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        telephone: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="addAgency-input-con-right">
+                  <label>Fax</label>
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.fax}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        fax: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="addAgency-input-con">
               </div>
               <div className="addAgency-input-con-two">
                 <div className="addAgency-input">
@@ -140,16 +126,48 @@ function AddAgency({ open, handleClose }) {
                   />
                 </div>
                 <div className="addAgency-input">
-                  <label>Mobile Number</label>
+                  <label>Contact Person</label>
                   <input
                     type="text"
                     className="rs-input"
-                    value={inputData.mobileNo}
+                    value={inputData.contactPerson}
                     onChange={(e) => {
                       e.preventDefault();
                       setInputData((pre) => ({
                         ...pre,
-                        mobileNo: e.target.value,
+                        contactPerson: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="addAgency-input-con-two">
+                <div className="addAgency-input">
+                  <label>Labour Licence</label>
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.labourLicence}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        labourLicence: e.target.value,
+                      }));
+                    }}
+                  />
+                </div>
+                <div className="addAgency-input">
+                  <label>Commision</label>
+                  <input
+                    type="text"
+                    className="rs-input"
+                    value={inputData.commision}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setInputData((pre) => ({
+                        ...pre,
+                        commision: e.target.value,
                       }));
                     }}
                   />

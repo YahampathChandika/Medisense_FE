@@ -5,7 +5,7 @@ export const agencyApi = api.injectEndpoints({
   endpoints: (builder) => ({
     addAgency: builder.mutation({
       query: (data) => ({
-        url: "addAgency",
+        url: "/agency/addAgency",
         method: "POST",
         body: data,
       }),

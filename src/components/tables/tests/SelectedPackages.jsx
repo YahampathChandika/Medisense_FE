@@ -28,8 +28,8 @@ function SelectedPackages() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </div>
-      <div style={{ maxHeight: "426px", overflowY: "auto", width: "auto" }}>
-        <Table responsive>
+      <div style={{ maxHeight: "426px", overflowY: "auto", width: "auto" , minHeight:"426px" }}>
+        <Table >
           <thead className="selectedpackages-table-head">
             <tr>
               <th>No</th>
