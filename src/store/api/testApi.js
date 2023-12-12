@@ -19,7 +19,7 @@ export const testApi = api.injectEndpoints({
     }),
 
     updateTest: builder.mutation({
-      query: ({ id , updatedData }) => ({
+      query: ({ id, updatedData }) => ({
         url: `test/updateTest/${id}`,
         method: "PATCH",
         body: updatedData,
@@ -34,6 +34,13 @@ export const testApi = api.injectEndpoints({
       }),
     }),
 
+    createPackage: builder.mutation({
+      query: (data) => ({
+        url: "package/createPackage",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -43,4 +50,5 @@ export const {
   useGetTestByIdQuery,
   useUpdateTestMutation,
   useAddTestMutation,
+  useCreatePackageMutation,
 } = testApi;

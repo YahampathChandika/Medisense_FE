@@ -20,6 +20,8 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Outlet } from "react-router-dom";
 import AddTest from "../components/modals/AddTest";
 import { useSelector } from "react-redux";
+import { useCreatePackageMutation } from "../store/api/testApi";
+import Swal from "sweetalert2";
 
 function CreatePackage() {
   const [testOpen, setTestOpen] = useState(false);
@@ -27,7 +29,9 @@ function CreatePackage() {
   const handleTestClose = () => setTestOpen(false);
   const navigate = useNavigate();
   const totalPrice = useSelector((state) => state.selectedTests.price);
-
+  const testList = useSelector((state) => state.selectedTests.tests);
+  const [createPackage] = useCreatePackageMutation();
+  console.log("testList", testList);
   const {
     register,
     handleSubmit,
@@ -35,8 +39,45 @@ function CreatePackage() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const packageData = {
+        ...data,
+        tests: testList,
+      };
+      console.log(packageData);
+
+      const response = await createPackage(packageData);
+
+      if (response.error) {
+        console.log("Package Creating Failed!", response);
+        Swal.fire({
+          title: "Error...",
+          text: response?.error?.data?.payload?.errors?.message,
+          icon: "error",
+        });
+      } else {
+        console.log("Success");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Package Created",
+        });
+        reset();
+      }
+    } catch (error) {
+      console.log("Login Error", error);
+    }
   };
 
   useEffect(() => {
@@ -56,11 +97,11 @@ function CreatePackage() {
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Package Code</Row>
-            <Input {...register("pkgCode")} />
+            <Input {...register("packageCode")} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <Row>Package Name</Row>
-            <Input {...register("pkgName")} />
+            <Input {...register("name")} />
           </FlexboxGrid.Item>
         </FlexboxGrid>
 
@@ -100,7 +141,9 @@ function CreatePackage() {
           >
             <Row className="space-x-2">
               <Col className="flex flex-nowrap">Total selected amount:</Col>
-              <Col className="flex flex-nowrap font-semibold">Rs. {totalPrice} </Col>
+              <Col className="flex flex-nowrap font-semibold">
+                Rs. {totalPrice}{" "}
+              </Col>
             </Row>
           </FlexboxGrid.Item>
         </FlexboxGrid>
@@ -129,11 +172,11 @@ function CreatePackage() {
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Package Price</Row>
-            <Input {...register("pkgPrice")} />
+            <Input {...register("price")} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <Row>Description</Row>
-            <Input {...register("desc")} />
+            <Input {...register("discription")} />
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider />
