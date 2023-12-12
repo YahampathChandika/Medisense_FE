@@ -11,7 +11,10 @@ import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import AddAgency from "../components/modals/AddAgency";
-import { useDeleteAgencyMutation, useGetAllAgencyQuery } from "../store/api/agencyApi";
+import {
+  useDeleteAgencyMutation,
+  useGetAllAgencyQuery,
+} from "../store/api/agencyApi";
 import Swal from "sweetalert2";
 
 function Agency() {
@@ -21,14 +24,14 @@ function Agency() {
   const handleAgencyClose = () => setAgencyRegistrationOpen(false);
   const handleUpdateOpen = (id) => setUpdateOpen(id);
   const handleUpdatecloce = () => setUpdateOpen(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { data: getAllAgency } = useGetAllAgencyQuery();
-  const [ deleteAgency ] = useDeleteAgencyMutation();
+  const [deleteAgency] = useDeleteAgencyMutation();
   const { refetch } = useGetAllAgencyQuery();
 
   console.log("get All Agency ", getAllAgency);
 
-   
   const handleDelete = async (agencyId) => {
     try {
       const result = await Swal.fire({
@@ -66,6 +69,16 @@ function Agency() {
     }
   };
 
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+  };
+
+  const filteredAgencies = getAllAgency?.payload?.filter(
+    (agency) => (
+      agency.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      agency.email.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   return (
     <div style={{ width: "100%" }}>
@@ -86,6 +99,8 @@ function Agency() {
                   <Input
                     placeholder="Search Agencies ..."
                     style={{ margin: 0 }}
+                    value={searchQuery}
+                    onChange={(value) => handleSearch(value)}
                   />
                   <InputGroup.Button>
                     <FontAwesomeIcon icon={faSearch} />
@@ -114,7 +129,7 @@ function Agency() {
                 </tr>
               </thead>
               <tbody className="selectedpackages-table-body">
-                {getAllAgency?.payload?.map((agency, index) => (
+                {filteredAgencies?.map((agency, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{agency.name}</td>
@@ -125,12 +140,13 @@ function Agency() {
                         icon={faPen}
                         style={{ color: "#000000", marginRight: "20px" }}
                         onClick={() => handleUpdateOpen(agency.id)}
-
                       />
                       <FontAwesomeIcon
                         icon={faTrashCan}
                         style={{ color: "#A30D11" }}
-                        onClick={ () => {handleDelete(agency.id)}}
+                        onClick={() => {
+                          handleDelete(agency.id);
+                        }}
                       />
                     </td>
                   </tr>

@@ -72,10 +72,10 @@ function UsersTable({ data, Loding, searchQuery  }) {
               onClick={() => handleSort("firstName")}
             >
               Name
-              <FontAwesomeIcon
-                // icon={faCaretDown}
+              {/* <FontAwesomeIcon
+                icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
-              />
+              /> */}
             </th>
             <th
               className="users-table-head"
@@ -83,10 +83,10 @@ function UsersTable({ data, Loding, searchQuery  }) {
               onClick={() => handleSort("email")}
             >
               Email
-              <FontAwesomeIcon
-                // icon={faCaretDown}
+              {/* <FontAwesomeIcon
+                icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
-              />
+              /> */}
             </th>
             <th
               className="users-table-head"
@@ -94,10 +94,10 @@ function UsersTable({ data, Loding, searchQuery  }) {
               onClick={() => handleSort("role")}
             >
               Role
-              <FontAwesomeIcon
-                // icon={faCaretDown}
+              {/* <FontAwesomeIcon
+                icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
-              />
+              /> */}
             </th>
             <th
               className="users-table-head"
@@ -105,10 +105,10 @@ function UsersTable({ data, Loding, searchQuery  }) {
               onClick={() => handleSort("contactNo")}
             >
               Contact No
-              <FontAwesomeIcon
-                // icon={faCaretDown}
+              {/* <FontAwesomeIcon
+                icon={faCaretDown}
                 style={{ paddingLeft: "5px" }}
-              />
+              /> */}
             </th>
             <th className="users-table-head" style={{ width: "1px" }}></th>
             <th className="users-table-head " style={{ width: "20px" }}></th>
