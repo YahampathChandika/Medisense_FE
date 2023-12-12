@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Table, Checkbox } from "rsuite";
@@ -7,7 +7,6 @@ import {
   useDeleteTestMutation,
   useGetAllTestsQuery,
 } from "../../../store/api/testApi";
-import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addSelectedTest,
@@ -88,42 +87,7 @@ function All() {
     }, 500);
   };
 
-  const handleDelete = async (testId) => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-
-      if (result.isConfirmed) {
-        await deleteTest(testId);
-        await refetch();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Test Deleted",
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting test:", error);
-      Swal.fire("Error", "There was an error deleting the record.", "error");
-    }
-  };
+  
 
   const handleCheckAll = (value, checked) => {
     const selectedTestsArray = checked

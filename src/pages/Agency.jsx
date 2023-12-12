@@ -97,7 +97,7 @@ function Agency() {
                 {filteredAgencies?.map((agency, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{agency.id}</td>
+                    <td>{agency.name}</td>
                     <td>{agency.address}</td>
                     <td>{agency.email}</td>
                     <td>
