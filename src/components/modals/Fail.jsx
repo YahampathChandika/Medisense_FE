@@ -14,13 +14,13 @@ function FailModal({
   id,
   deleteApi,
   refetchTable,
-  titleSucess
 }) {
   console.log(id);
 
   const handleDelete = async () => {
     try {
       const responce = await deleteApi(id);
+      console.log(responce)
       if (responce.error) {
         console.log("error");
         Swal.fire({
@@ -42,7 +42,7 @@ function FailModal({
         });
         Toast.fire({
           icon: "success",
-          title: titleSucess,
+          title: responce?.data?.payload,
         });
         await refetchTable();
         handleClose();

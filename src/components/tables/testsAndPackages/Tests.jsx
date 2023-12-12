@@ -120,7 +120,6 @@ function SelectedPackages() {
         id={deleteOpen}
         deleteApi={deleteTest}
         refetchTable={refetch}
-        titleSucess="Test Deleted"
 
       />
     </div>

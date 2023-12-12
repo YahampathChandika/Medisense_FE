@@ -215,7 +215,6 @@ function All() {
           id={deleteOpen}
           deleteApi={deleteTest}
           refetchTable={refetch}
-          titleSucess="Test Deleted"
         />
     </>
   );
