@@ -34,12 +34,7 @@ function Agency() {
 
   console.log("get All Agency ", getAllAgency);
 
-
-  const handleDeleteOpen = (id) => {
-    setDeleteOpen(id);
-  };
-  
-
+  const handleDeleteOpen = (id) => setDeleteOpen(id);
   const handleSearch = (value) => {
     setSearchQuery(value);
   };
@@ -126,30 +121,28 @@ function Agency() {
           </div>
         </div>
         <AddAgency
-          open={isAgencyRegistrationOpen}
+          open={isAgencyRegistrationOpen !== false}
           handleClose={handleAgencyClose}
           agencyhead="Add Agency"
           buttonName="Register"
         />
         <AddAgency
-          open={updateOpen}
+          open={updateOpen !== false}
           handleClose={handleUpdatecloce}
           id={updateOpen}
           agencyhead="Update Agency"
           buttonName="Update"
         />
-        {deleteOpen && (
-          <FailModal
-            open={deleteOpen}
-            handleClose={handleDeletecloce}
-            headtxt="Delete Agency"
-            bodytxt="Are you sure you want to delete this agency? This action cannot be undone."
-            btntxt="Delete"
-            id={deleteOpen}
-            deleteApi={deleteAgency}
-            refetchTable={refetch}
-          />
-        )}
+        <FailModal
+          open={deleteOpen !== false}
+          handleClose={handleDeletecloce}
+          headtxt="Delete Agency"
+          bodytxt="Are you sure you want to delete this agency? This action cannot be undone."
+          btntxt="Delete"
+          id={deleteOpen}
+          deleteApi={deleteAgency}
+          refetchTable={refetch}
+        />
       </Container>
     </div>
   );

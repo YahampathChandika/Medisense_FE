@@ -14,6 +14,7 @@ import {
   clearSelectedTests,
   removeSelectedTest,
 } from "../../../store/slice/testSlice";
+import FailModal from "../../modals/Fail";
 
 function All() {
   const [sortColumn, setSortColumn] = useState();
@@ -24,6 +25,11 @@ function All() {
   const { data: testData, isLoading, error, refetch } = useGetAllTestsQuery();
   const [deleteTest] = useDeleteTestMutation();
   const { Column, HeaderCell, Cell } = Table;
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleDeleteOpen = (id) => setDeleteOpen(id);
+  const handleDeletecloce = () => setDeleteOpen(false);
+
+
 
   const dispatch = useDispatch();
   const selectedTests = useSelector((state) => state.selectedTests);
@@ -254,7 +260,7 @@ function All() {
                 <FontAwesomeIcon
                   icon={faTrash}
                   style={{ width: 15, height: 15 }}
-                  onClick={() => handleDelete(rowData.id)}
+                  onClick={() => handleDeleteOpen(rowData.id)}
                 />
               </>
             )}
@@ -269,6 +275,16 @@ function All() {
         btnText={"Update"}
         id={testOpen}
       />
+       <FailModal
+          open={deleteOpen !== false}
+          handleClose={handleDeletecloce}
+          headtxt="Delete Test"
+          bodytxt="Are you sure you want to delete this Test? This action cannot be undone."
+          btntxt="Delete"
+          id={deleteOpen}
+          deleteApi={deleteTest}
+          refetchTable={refetch}
+        />
     </>
   );
 }
