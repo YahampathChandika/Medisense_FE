@@ -143,7 +143,7 @@ function Agency() {
             open={deleteOpen}
             handleClose={handleDeletecloce}
             headtxt="Delete Agency"
-            bodytxt="Are you sure you want to delete this customer? This action cannot be undone."
+            bodytxt="Are you sure you want to delete this agency? This action cannot be undone."
             btntxt="Delete"
             id={deleteOpen}
             deleteApi={deleteAgency}
