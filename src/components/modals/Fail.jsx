@@ -15,7 +15,6 @@ function FailModal({
   deleteApi,
   refetchTable,
 }) {
-  console.log(id);
 
   const handleDelete = async () => {
     try {

@@ -1,33 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import "../../../assets/css/Tests.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCaretDown,
+  faCaretUp,
   faPenToSquare,
   faSearch,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FlexboxGrid, Input, InputGroup } from "rsuite";
 import AddTest from "../../modals/AddTest";
-import { useState } from "react";
 import {
   useDeleteTestMutation,
   useGetAllTestsQuery,
 } from "../../../store/api/testApi";
-import Swal from "sweetalert2";
 import FailModal from "../../modals/Fail";
 
-function SelectedPackages() {
+function Tests() {
   const [testOpen, setTestOpen] = useState(false);
   const [addTestOpen, setAddTestOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [sorting, setSorting] = useState({
+    column: null,
+    order: "asc",
+  });
+
   const handleAddTestOpen = () => setAddTestOpen(true);
   const handleTestOpen = (id) => setTestOpen(id);
   const handleDeleteOpen = (id) => setDeleteOpen(id);
   const handleDeleteclose = () => setDeleteOpen(false);
   const { data: testData, isLoading, error, refetch } = useGetAllTestsQuery();
   const [deleteTest] = useDeleteTestMutation();
-  console.log("data", testData);
+
+  const handleSort = (column) => {
+    setSorting((prevSorting) => ({
+      column,
+      order:
+        prevSorting.column === column && prevSorting.order === "asc"
+          ? "desc"
+          : "asc",
+    }));
+  };
+
+  const filteredData = testData?.payload
+    ? testData.payload.filter((data) =>
+        Object.values(data).some(
+          (value) =>
+            value &&
+            value.toString().toLowerCase().includes(searchValue.toLowerCase())
+        )
+      )
+    : [];
+
+  const sortedData = () => {
+    if (sorting.column && filteredData) {
+      const sorted = [...filteredData];
+      sorted.sort((a, b) => {
+        const aValue =
+          sorting.column === "price"
+            ? parseFloat(a[sorting.column])
+            : a[sorting.column];
+        const bValue =
+          sorting.column === "price"
+            ? parseFloat(b[sorting.column])
+            : b[sorting.column];
+
+        if (isNaN(aValue) || isNaN(bValue)) {
+          // If values are not numeric, fallback to string comparison
+          return sorting.order === "asc"
+            ? a[sorting.column].localeCompare(b[sorting.column])
+            : b[sorting.column].localeCompare(a[sorting.column]);
+        }
+
+        return sorting.order === "asc" ? aValue - bValue : bValue - aValue;
+      });
+      return sorted;
+    }
+    return filteredData || [];
+  };
 
   return (
     <div className="selectedpackages-main-con">
@@ -35,7 +87,12 @@ function SelectedPackages() {
         <FlexboxGrid justify="space-between" className="m-3">
           <FlexboxGrid.Item colspan={11}>
             <InputGroup>
-              <Input placeholder="Search Tests ..." style={{ margin: 0 }} />
+              <Input
+                placeholder="Search Tests ..."
+                style={{ margin: 0 }}
+                value={searchValue}
+                onChange={(value) => setSearchValue(value)}
+              />
               <InputGroup.Button>
                 <FontAwesomeIcon icon={faSearch} />
               </InputGroup.Button>
@@ -62,15 +119,47 @@ function SelectedPackages() {
         <Table>
           <thead className="selectedpackages-table-head">
             <tr>
-              <th>Code</th>
-              <th>Description</th>
-              <th>Type</th>
-              <th>Price</th>
+              <th onClick={() => handleSort("testCode")}>
+                Test Code
+                {sorting.column === "testCode" && (
+                  <FontAwesomeIcon
+                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
+                    className="ml-2"
+                  />
+                )}
+              </th>
+              <th onClick={() => handleSort("description")}>
+                Description
+                {sorting.column === "description" && (
+                  <FontAwesomeIcon
+                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
+                    className="ml-2"
+                  />
+                )}
+              </th>
+              <th onClick={() => handleSort("type")}>
+                Type
+                {sorting.column === "type" && (
+                  <FontAwesomeIcon
+                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
+                    className="ml-2"
+                  />
+                )}
+              </th>
+              <th onClick={() => handleSort("price")}>
+                Price
+                {sorting.column === "price" && (
+                  <FontAwesomeIcon
+                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
+                    className="ml-2"
+                  />
+                )}
+              </th>
               <th></th>
             </tr>
           </thead>
           <tbody className="selectedpackages-table-body">
-            {testData?.payload.map((test) => (
+            {sortedData().map((test) => (
               <tr key={test.id}>
                 <td>{test.testCode}</td>
                 <td>{test.description}</td>
@@ -92,6 +181,13 @@ function SelectedPackages() {
                 </td>
               </tr>
             ))}
+            {filteredData && filteredData.length === 0 && (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  <p className="text-gray-500">No data to display.</p>
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </div>
@@ -125,4 +221,4 @@ function SelectedPackages() {
   );
 }
 
-export default SelectedPackages;
+export default Tests;
