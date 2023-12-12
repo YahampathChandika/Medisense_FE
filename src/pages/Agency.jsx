@@ -75,10 +75,11 @@ function Agency() {
 
   const filteredAgencies = getAllAgency?.payload?.filter(
     (agency) => (
-      agency.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      agency.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       agency.email.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
+  
 
   return (
     <div style={{ width: "100%" }}>
