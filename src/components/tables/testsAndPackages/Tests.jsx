@@ -216,6 +216,7 @@ function Tests() {
         id={deleteOpen}
         deleteApi={deleteTest}
         refetchTable={refetch}
+
       />
     </div>
   );

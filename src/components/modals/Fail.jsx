@@ -19,6 +19,7 @@ function FailModal({
   const handleDelete = async () => {
     try {
       const responce = await deleteApi(id);
+      console.log(responce)
       if (responce.error) {
         console.log("error");
         Swal.fire({
@@ -40,7 +41,7 @@ function FailModal({
         });
         Toast.fire({
           icon: "success",
-          title: "Agency Deleted",
+          title: responce?.data?.payload,
         });
         await refetchTable();
         handleClose();

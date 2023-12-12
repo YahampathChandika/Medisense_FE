@@ -190,6 +190,7 @@ function Packages() {
         id={deleteOpen}
         deleteApi={deletePackage}
         refetchTable={refetch}
+
       />
     </div>
   );
