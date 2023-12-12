@@ -18,7 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import UserRegistration from "../components/modals/UserRegistration";
 import { useGetAllUsersQuery } from "../store/api/userApi";
-import UsersTable from "../components/tables/users/UsersTable"; // Note the corrected import path
+import UsersTable from "../components/tables/users/usersTable";
 import mockData from "../assets/mocks/mock";
 
 function Users() {
