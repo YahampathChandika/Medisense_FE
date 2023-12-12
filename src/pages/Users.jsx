@@ -8,18 +8,14 @@ import {
   Input,
   InputGroup,
 } from "rsuite";
-import { Button, Table } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPen,
   faSearch,
-  faTrashCan,
-  faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
 import UserRegistration from "../components/modals/UserRegistration";
 import { useGetAllUsersQuery } from "../store/api/userApi";
 import UsersTable from "../components/tables/users/usersTable";
-import mockData from "../assets/mocks/mock";
 
 function Users() {
   const [isUserRegistrationOpen, setUserRegistrationOpen] = useState(false);

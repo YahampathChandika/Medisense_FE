@@ -15,15 +15,17 @@ import {
   useDeleteAgencyMutation,
   useGetAllAgencyQuery,
 } from "../store/api/agencyApi";
-import Swal from "sweetalert2";
+import FailModal from "../components/modals/Fail";
 
 function Agency() {
   const [isAgencyRegistrationOpen, setAgencyRegistrationOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const handleAgencyOpen = () => setAgencyRegistrationOpen(true);
   const handleAgencyClose = () => setAgencyRegistrationOpen(false);
   const handleUpdateOpen = (id) => setUpdateOpen(id);
   const handleUpdatecloce = () => setUpdateOpen(false);
+  const handleDeletecloce = () => setDeleteOpen(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data: getAllAgency } = useGetAllAgencyQuery();
@@ -32,54 +34,16 @@ function Agency() {
 
   console.log("get All Agency ", getAllAgency);
 
-  const handleDelete = async (agencyId) => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-
-      if (result.isConfirmed) {
-        await deleteAgency(agencyId);
-        await refetch();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Agency Deleted",
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting agency:", error);
-      Swal.fire("Error", "There was an error deleting the record.", "error");
-    }
-  };
-
+  const handleDeleteOpen = (id) => setDeleteOpen(id);
   const handleSearch = (value) => {
     setSearchQuery(value);
   };
 
   const filteredAgencies = getAllAgency?.payload?.filter(
-    (agency) => (
+    (agency) =>
       agency.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       agency.email.toLowerCase().includes(searchQuery.toLowerCase())
-    )
   );
-  
 
   return (
     <div style={{ width: "100%" }}>
@@ -133,7 +97,7 @@ function Agency() {
                 {filteredAgencies?.map((agency, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{agency.name}</td>
+                    <td>{agency.id}</td>
                     <td>{agency.address}</td>
                     <td>{agency.email}</td>
                     <td>
@@ -146,7 +110,7 @@ function Agency() {
                         icon={faTrashCan}
                         style={{ color: "#A30D11" }}
                         onClick={() => {
-                          handleDelete(agency.id);
+                          handleDeleteOpen(agency.id);
                         }}
                       />
                     </td>
@@ -157,17 +121,27 @@ function Agency() {
           </div>
         </div>
         <AddAgency
-          open={isAgencyRegistrationOpen}
+          open={isAgencyRegistrationOpen !== false}
           handleClose={handleAgencyClose}
           agencyhead="Add Agency"
           buttonName="Register"
         />
         <AddAgency
-          open={updateOpen}
+          open={updateOpen !== false}
           handleClose={handleUpdatecloce}
           id={updateOpen}
           agencyhead="Update Agency"
           buttonName="Update"
+        />
+        <FailModal
+          open={deleteOpen !== false}
+          handleClose={handleDeletecloce}
+          headtxt="Delete Agency"
+          bodytxt="Are you sure you want to delete this agency? This action cannot be undone."
+          btntxt="Delete"
+          id={deleteOpen}
+          deleteApi={deleteAgency}
+          refetchTable={refetch}
         />
       </Container>
     </div>
