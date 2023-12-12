@@ -41,6 +41,17 @@ export const testApi = api.injectEndpoints({
         body: data,
       }),
     }),
+
+    getAllPackages: builder.query({
+      query: () => "package/getAllPackages",
+    }),
+
+    deletePackage: builder.mutation({
+      query: (packageId) => ({
+        url: `package/deletePackage/${packageId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -51,4 +62,6 @@ export const {
   useUpdateTestMutation,
   useAddTestMutation,
   useCreatePackageMutation,
+  useGetAllPackagesQuery,
+  useDeletePackageMutation,
 } = testApi;

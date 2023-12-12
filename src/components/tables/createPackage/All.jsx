@@ -27,8 +27,8 @@ function All() {
 
   const dispatch = useDispatch();
   const selectedTests = useSelector((state) => state.selectedTests);
-  
-  console.log("selectedTests" , selectedTests.price)
+
+  console.log("selectedTests", selectedTests.price);
 
   const handleTestOpen = (id) => setTestOpen(id);
   const handleTestClose = () => setTestOpen(false);
@@ -119,31 +119,16 @@ function All() {
     }
   };
 
-  // const handleCheckAll = (value, checked) => {
-  //   const keys = checked ? testData.payload.map((item) => item.id) : [];
-  //   setSelectedTests(keys);
-  // };
-
-    // const handleCheck = (value, checked) => {
-  //   console.log("values", value);
-  //   if (checked) {
-  //     dispatch(addSelectedTest(value));
-  //   } else {
-  //     dispatch(removeSelectedTest(value));
-  //   }
-  // };
-
   const handleCheckAll = (value, checked) => {
     const selectedTestsArray = checked
       ? testData.payload.map((item) => ({ id: item.id, price: item.price }))
       : [];
-  
+
     dispatch(clearSelectedTests());
     selectedTestsArray.forEach((test) => {
       dispatch(addSelectedTest(test));
     });
   };
-  
 
   const handleCheck = (value, checked) => {
     if (checked) {
@@ -153,19 +138,6 @@ function All() {
     }
   };
 
-  // const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
-  //   <Cell {...props} style={{ padding: 0 }}>
-  //     <div style={{ lineHeight: "46px" }}>
-  //       <Checkbox
-  //         value={rowData[dataKey]}
-  //         inline
-  //         onChange={onChange}
-  //         checked={checkedKeys.some((item) => item === rowData[dataKey])}
-  //       />
-  //     </div>
-  //   </Cell>
-  // );
-
   const CheckCell = ({ rowData, onChange, checkedKeys, ...props }) => (
     <Cell {...props} style={{ padding: 0 }}>
       <div style={{ lineHeight: "46px" }}>
@@ -173,14 +145,12 @@ function All() {
           value={{ id: rowData.id, price: rowData.price }}
           inline
           onChange={onChange}
-          checked={
-            checkedKeys.some((item) => item === rowData.id)
-          }
+          checked={checkedKeys.some((item) => item === rowData.id)}
         />
       </div>
     </Cell>
   );
-  
+
   const createHeaderCell = (label) => (
     <HeaderCell
       style={{ background: "#F2F4FF", color: "#768DC6", fontWeight: "600" }}
@@ -220,10 +190,7 @@ function All() {
               style={{ marginTop: "2px" }}
             />
           </HeaderCell>
-          <CheckCell
-            checkedKeys={selectedTests.tests}
-            onChange={handleCheck}
-          />
+          <CheckCell checkedKeys={selectedTests.tests} onChange={handleCheck} />
         </Column>
         <Column sortable flexGrow={2}>
           {createHeaderCell("CODE")}

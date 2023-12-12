@@ -59,10 +59,10 @@ function SidebarComp() {
           <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "createPackage" ? "selected-menu-item" : ""
+                selectedMenuItem === "testAndPackages" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faSyringe} />}
-              onClick={() => handleMenuItemClick("createPackage")}
+              onClick={() => handleMenuItemClick("testAndPackages")}
             >
               Tests / Packages
             </MenuItem>
