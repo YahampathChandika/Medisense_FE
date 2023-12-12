@@ -142,6 +142,7 @@ function Agency() {
           id={deleteOpen}
           deleteApi={deleteAgency}
           refetchTable={refetch}
+          titleSucess="Agency Deleted"
         />
       </Container>
     </div>

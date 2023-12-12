@@ -14,6 +14,7 @@ function FailModal({
   id,
   deleteApi,
   refetchTable,
+  titleSucess
 }) {
   console.log(id);
 
@@ -41,7 +42,7 @@ function FailModal({
         });
         Toast.fire({
           icon: "success",
-          title: "Agency Deleted",
+          title: titleSucess,
         });
         await refetchTable();
         handleClose();

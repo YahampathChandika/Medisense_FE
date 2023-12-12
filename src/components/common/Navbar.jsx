@@ -36,7 +36,7 @@ const Navbar = () => {
       <div className="flex items-center">
         <div className="relative">
           <div className="ml-10 flex items-baseline space-x-4">
-            <Link to="/home" className="flex items-center">
+            <Link to="/home/dashboard" className="flex items-center">
               <p className="text-3xl font-bold text-blue-500">Medi</p>
               <p className="text-3xl font-bold text-black">sense</p>
             </Link>

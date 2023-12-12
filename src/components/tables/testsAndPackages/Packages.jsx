@@ -107,6 +107,8 @@ function SelectedPackages() {
         id={deleteOpen}
         deleteApi={deletePackage}
         refetchTable={refetch}
+        titleSucess="Package Deleted"
+
       />
     </div>
   );
