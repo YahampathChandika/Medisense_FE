@@ -14,11 +14,14 @@ import {
   useDeletePackageMutation,
   useGetAllPackagesQuery,
 } from "../../../store/api/testApi";
-import Swal from "sweetalert2";
+import FailModal from "../../modals/Fail";
+import { useState } from "react";
 
 function SelectedPackages() {
-  const data = mockData(15);
   const navigate = useNavigate();
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleDeleteOpen = (id) => setDeleteOpen(id);
+  const handleDeleteclose = () => setDeleteOpen(false);
   const [deletePackage] = useDeletePackageMutation();
   const {
     data: packageData,
@@ -27,42 +30,6 @@ function SelectedPackages() {
     refetch,
   } = useGetAllPackagesQuery();
 
-  const handleDelete = async (packageId) => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-
-      if (result.isConfirmed) {
-        await deletePackage(packageId);
-        await refetch();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Test Deleted",
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting test:", error);
-      Swal.fire("Error", "There was an error deleting the record.", "error");
-    }
-  };
 
   return (
     <div className="selectedpackages-main-con">
@@ -121,7 +88,7 @@ function SelectedPackages() {
                     <FontAwesomeIcon
                       icon={faTrash}
                       style={{ width: 15, height: 15 }}
-                      onClick={() => handleDelete(data.id)}
+                      onClick={() => handleDeleteOpen(data.id)}
                     />
                   </>
                 </td>
@@ -131,6 +98,16 @@ function SelectedPackages() {
         </Table>
       </div>
       <div className="selectedpackages-footer"></div>
+      <FailModal
+        open={deleteOpen !== false}
+        handleClose={handleDeleteclose}
+        headtxt="Delete Package"
+        bodytxt="Are you sure you want to delete this package? This action cannot be undone."
+        btntxt="Delete"
+        id={deleteOpen}
+        deleteApi={deletePackage}
+        refetchTable={refetch}
+      />
     </div>
   );
 }

@@ -10,10 +10,14 @@ import {
   RadioGroup,
 } from "rsuite";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { useEffect } from "react";
 
 function TestAndPackages() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Tests & Packages | Medisense";
+  }, []);
 
   return (
     <div style={{ width: "100%" }}>

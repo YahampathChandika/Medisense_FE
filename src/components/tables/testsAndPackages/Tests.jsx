@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
-import { mockData } from "../../../assets/mocks/mockData";
 import "../../../assets/css/Tests.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,54 +15,19 @@ import {
   useGetAllTestsQuery,
 } from "../../../store/api/testApi";
 import Swal from "sweetalert2";
+import FailModal from "../../modals/Fail";
 
 function SelectedPackages() {
-  const data = mockData(15);
   const [testOpen, setTestOpen] = useState(false);
   const [addTestOpen, setAddTestOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const handleAddTestOpen = () => setAddTestOpen(true);
   const handleTestOpen = (id) => setTestOpen(id);
-  const handleTestClose = () => setTestOpen(false);
+  const handleDeleteOpen = (id) => setDeleteOpen(id);
+  const handleDeleteclose = () => setDeleteOpen(false);
   const { data: testData, isLoading, error, refetch } = useGetAllTestsQuery();
   const [deleteTest] = useDeleteTestMutation();
   console.log("data", testData);
-
-  const handleDelete = async (testId) => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-
-      if (result.isConfirmed) {
-        await deleteTest(testId);
-        await refetch();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Test Deleted",
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting test:", error);
-      Swal.fire("Error", "There was an error deleting the record.", "error");
-    }
-  };
 
   return (
     <div className="selectedpackages-main-con">
@@ -122,7 +86,7 @@ function SelectedPackages() {
                     <FontAwesomeIcon
                       icon={faTrash}
                       style={{ width: 15, height: 15 }}
-                      onClick={() => handleDelete(test.id)}
+                      onClick={() => handleDeleteOpen(test.id)}
                     />
                   </>
                 </td>
@@ -146,6 +110,16 @@ function SelectedPackages() {
         headText={"Add Test"}
         bodyText={"Create a new test."}
         btnText={"Create"}
+      />
+      <FailModal
+        open={deleteOpen !== false}
+        handleClose={handleDeleteclose}
+        headtxt="Delete Test"
+        bodytxt="Are you sure you want to delete this test? This action cannot be undone."
+        btntxt="Delete"
+        id={deleteOpen}
+        deleteApi={deleteTest}
+        refetchTable={refetch}
       />
     </div>
   );
