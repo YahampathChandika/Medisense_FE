@@ -3,8 +3,54 @@ import React from "react";
 import { Modal, Button, Row, Col, FlexboxGrid, Input } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
-function FailModal({ open, handleClose, headtxt, bodytxt, btntxt }) {
+function FailModal({
+  open,
+  handleClose,
+  headtxt,
+  bodytxt,
+  btntxt,
+  id,
+  deleteApi,
+  refetchTable,
+}) {
+  console.log(id);
+
+  const handleDelete = async () => {
+    try {
+      const responce = await deleteApi(id);
+      if (responce.error) {
+        console.log("error");
+        Swal.fire({
+          title: "Oops...",
+          text: responce?.error?.data?.payload,
+          icon: "error",
+        });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: false,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Agency Deleted",
+        });
+        await refetchTable();
+        handleClose();
+      }
+    } catch {
+      console.log("Error Durring the Delete");
+    }
+  };
+
   return (
     <Modal
       style={{
@@ -23,8 +69,9 @@ function FailModal({ open, handleClose, headtxt, bodytxt, btntxt }) {
       <Row className="text-gray-500 text-md mt-3">{bodytxt}</Row>
       <Row className="w-full flex justify-between mt-4">
         <Button
-          onClick={handleClose}
+          // onClick={handleClose}
           className="w-2/5 bg-red-600 text-white hover:bg-red-700"
+          onClick={handleDelete}
         >
           {btntxt}
         </Button>
