@@ -8,6 +8,7 @@ import {
   faTrash,
   faCaretUp,
   faCaretDown,
+  faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import { FlexboxGrid, Input, InputGroup } from "rsuite";
 import { useNavigate } from "react-router";
@@ -111,39 +112,55 @@ function Packages() {
             <tr>
               <th onClick={() => handleSort("packageCode")}>
                 Package Code
-                {sorting.column === "packageCode" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "packageCode"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
               </th>
               <th onClick={() => handleSort("name")}>
                 Name
-                {sorting.column === "name" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "name"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
               </th>
               <th onClick={() => handleSort("discription")}>
                 Description
-                {sorting.column === "discription" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "discription"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
               </th>
               <th onClick={() => handleSort("price")}>
                 Price
-                {sorting.column === "price" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "price"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
               </th>
               <th></th>
             </tr>
@@ -190,7 +207,6 @@ function Packages() {
         id={deleteOpen}
         deleteApi={deletePackage}
         refetchTable={refetch}
-
       />
     </div>
   );

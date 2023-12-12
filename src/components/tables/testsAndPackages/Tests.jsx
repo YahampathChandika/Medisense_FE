@@ -7,6 +7,7 @@ import {
   faCaretUp,
   faPenToSquare,
   faSearch,
+  faSort,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FlexboxGrid, Input, InputGroup } from "rsuite";
@@ -24,7 +25,7 @@ function Tests() {
   const [searchValue, setSearchValue] = useState("");
   const [sorting, setSorting] = useState({
     column: null,
-    order: "asc",
+    order: null,
   });
 
   const handleAddTestOpen = () => setAddTestOpen(true);
@@ -68,7 +69,6 @@ function Tests() {
             : b[sorting.column];
 
         if (isNaN(aValue) || isNaN(bValue)) {
-          // If values are not numeric, fallback to string comparison
           return sorting.order === "asc"
             ? a[sorting.column].localeCompare(b[sorting.column])
             : b[sorting.column].localeCompare(a[sorting.column]);
@@ -121,43 +121,60 @@ function Tests() {
             <tr>
               <th onClick={() => handleSort("testCode")}>
                 Test Code
-                {sorting.column === "testCode" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "testCode"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
               </th>
               <th onClick={() => handleSort("description")}>
                 Description
-                {sorting.column === "description" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "description"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort 
+                  }
+                  className="ml-2"
+                />
               </th>
               <th onClick={() => handleSort("type")}>
                 Type
-                {sorting.column === "type" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "type"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort 
+                  }
+                  className="ml-2"
+                />
               </th>
               <th onClick={() => handleSort("price")}>
                 Price
-                {sorting.column === "price" && (
-                  <FontAwesomeIcon
-                    icon={sorting.order === "asc" ? faCaretUp : faCaretDown}
-                    className="ml-2"
-                  />
-                )}
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "price"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort 
+                  }
+                  className="ml-2"
+                />
               </th>
               <th></th>
             </tr>
           </thead>
+
           <tbody className="selectedpackages-table-body">
             {sortedData().map((test) => (
               <tr key={test.id}>
@@ -216,10 +233,11 @@ function Tests() {
         id={deleteOpen}
         deleteApi={deleteTest}
         refetchTable={refetch}
-
       />
     </div>
   );
 }
 
 export default Tests;
+
+
