@@ -4,17 +4,14 @@ import { Modal, Button, Row, Col, FlexboxGrid, Input } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEarthAmericas } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
-import { useAddCountryMutation } from "../../store/api/counctry";
 
 function AddCountryModal({ open, handleClose }) {
-  const { addCountry } = useAddCountryMutation();
 
   const form = useForm({
     mode: "onTouched",
   });
   const { register, handleSubmit, reset, setValue } = form;
 
-  const onSubmit = (data) => addCountry(data);
 
   return (
     <Modal
@@ -27,7 +24,7 @@ function AddCountryModal({ open, handleClose }) {
       open={open}
       onClose={handleClose}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit()}>
         <FlexboxGrid
           justify="space-between"
           className="flex justify-between items-center"
