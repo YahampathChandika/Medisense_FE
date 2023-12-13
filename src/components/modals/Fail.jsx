@@ -19,7 +19,7 @@ function FailModal({
   const handleDelete = async () => {
     try {
       const responce = await deleteApi(id);
-      console.log(responce)
+      console.log("Oops...",responce)
       if (responce.error) {
         console.log("error");
         Swal.fire({

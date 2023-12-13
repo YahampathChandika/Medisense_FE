@@ -35,7 +35,7 @@ function Login() {
         });
         Toast.fire({
           icon: "success",
-          title: "Signed in successfully",
+          title: "Welcome to the MediSense!",
         });
       } else {
         console.log("Login Error", response);

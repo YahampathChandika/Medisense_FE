@@ -27,6 +27,7 @@ export const agencyApi = api.injectEndpoints({
       }),
     }),
 
+
     deleteAgency: builder.mutation({
       query: (id) => ({
         url: `/agency/deleteAgency/${id}`,

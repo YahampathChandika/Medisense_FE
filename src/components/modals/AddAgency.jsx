@@ -16,13 +16,11 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
   const { refetch } = useGetAllAgencyQuery();
   const [updatteAgency] = useUpdateAgencyMutation();
 
-  console.log("id", id);
   const {
     data: getAGencybyId,
     isLoading,
     isError,
   } = useGetAgencyByIDQuery(id, { skip: !id });
-  console.log("id", getAGencybyId?.payload?.name);
 
   useEffect(() => {
     if (getAGencybyId) {
@@ -76,11 +74,7 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
     if (isNewPatient) {
       try {
         e.preventDefault();
-        console.log("data", inputData);
-
         const response = await addAgency(inputData);
-        console.log("Response:", response);
-
         if (response.error) {
           console.log("Add Agency Error", response);
           Swal.fire({
@@ -89,7 +83,6 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
             icon: "error",
           });
         } else {
-          console.log("Success");
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",

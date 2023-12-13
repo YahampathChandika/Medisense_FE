@@ -9,7 +9,7 @@ import {
 } from "rsuite";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AddAgency from "../components/modals/AddAgency";
 import {
   useDeleteAgencyMutation,
@@ -102,13 +102,12 @@ function Agency() {
                     <td>{agency.email}</td>
                     <td>
                       <FontAwesomeIcon
-                        icon={faPen}
+                        icon={faPenToSquare}
                         style={{ color: "#000000", marginRight: "20px" }}
                         onClick={() => handleUpdateOpen(agency.id)}
                       />
                       <FontAwesomeIcon
-                        icon={faTrashCan}
-                        style={{ color: "#A30D11" }}
+                        icon={faTrash}
                         onClick={() => {
                           handleDeleteOpen(agency.id);
                         }}
@@ -116,6 +115,13 @@ function Agency() {
                     </td>
                   </tr>
                 ))}
+                {/* {filteredData && filteredData.length === 0 && (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      <p className="text-gray-500">No data to display.</p>
+                    </td>
+                  </tr>
+                )} */}
               </tbody>
             </Table>
           </div>

@@ -3,6 +3,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useGetSignedUserQuery } from "../../store/api/userApi";
 
 const user = {
   name: "Tom Cook",
@@ -11,8 +12,11 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 
+
+
 const Navbar = () => {
   const navigate = useNavigate();
+  const {data:signedUser} = useGetSignedUserQuery();
 
   const handleLogout = () => {
     Swal.fire({
@@ -58,7 +62,7 @@ const Navbar = () => {
                   src={user.imageUrl}
                   alt=""
                 />
-                <p className="text-xl font-bold text-black ml-5">Admin</p>
+                <p className="text-xl font-bold text-black ml-5">{signedUser?.payload?.firstName}</p>
               </Menu.Button>
             </div>
             <Transition

@@ -20,7 +20,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Outlet } from "react-router-dom";
 import AddTest from "../components/modals/AddTest";
 import { useSelector } from "react-redux";
-import { useCreatePackageMutation } from "../store/api/testApi";
+import { useCreatePackageMutation, useGetAllPackagesQuery } from "../store/api/testApi";
 import Swal from "sweetalert2";
 
 function CreatePackage() {
@@ -31,11 +31,13 @@ function CreatePackage() {
   const totalPrice = useSelector((state) => state.selectedTests.price);
   const testList = useSelector((state) => state.selectedTests.tests);
   const [createPackage] = useCreatePackageMutation();
-  console.log("testList", testList);
+  const { refetch } = useGetAllPackagesQuery();
+
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -73,7 +75,9 @@ function CreatePackage() {
           icon: "success",
           title: "Package Created",
         });
+        refetch();
         reset();
+        navigate("/home/testAndPackages");
       }
     } catch (error) {
       console.log("Login Error", error);

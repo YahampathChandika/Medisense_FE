@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Content,
@@ -16,20 +16,47 @@ import { Button } from "react-bootstrap";
 import {
   useAddUserMutation,
   useGetAllUsersQuery,
+  useGetUserByIDQuery,
   useGetUserRolesQuery,
+  useUpdateUserMutation,
 } from "../../store/api/userApi";
 import Swal from "sweetalert2";
 
-function UserRegistration({ open, handleClose , userTitle , buttonName }) {
-  const [addUser, { isLoading, error }] = useAddUserMutation();
+function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
+  const [addUser] = useAddUserMutation();
   const { refetch } = useGetAllUsersQuery();
   const { data: roles } = useGetUserRolesQuery();
+  const [updateUser] = useUpdateUserMutation();
+  const {
+    data: getUserById,
+    isLoading,
+    isError,
+  } = useGetUserByIDQuery(id, { skip: !id });
   const [profilePic, setProfilePic] = useState("");
+
+  console.log("update", getUserById?.payload)
+
+  useEffect(() => {
+    if (getUserById) {
+      const defaultValues = getUserById.payload || {};
+      setInputData({
+        firstName: defaultValues.firstName || "",
+        lastName: defaultValues.lastName || "",
+        address: defaultValues.address || "",
+        email: defaultValues.email || "",
+        contactNo: defaultValues.contactNo || "",
+        username: defaultValues.username || "",
+        roleId: defaultValues.roleId || "",
+        // dob: defaultValues.dob || "",
+      });
+    }
+  }, [getUserById]);
+
   const [inputData, setInputData] = useState({
     firstName: "",
     lastName: "",
     roleId: "",
-    dateOfBirth: "",
+    dob: "",
     profilePhoto: "",
     address: "",
     email: "",
@@ -37,6 +64,7 @@ function UserRegistration({ open, handleClose , userTitle , buttonName }) {
     username: "",
     password: "",
   });
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -47,7 +75,7 @@ function UserRegistration({ open, handleClose , userTitle , buttonName }) {
     }));
   };
 
-  const formattedDate = formatDate(inputData.dateOfBirth);
+  const formattedDate = formatDate(inputData.dob);
 
   const roleData =
     roles?.payload?.map((item) => ({
@@ -68,7 +96,7 @@ function UserRegistration({ open, handleClose , userTitle , buttonName }) {
       firstName: "",
       lastName: "",
       roleId: "",
-      dateOfBirth: "",
+      dob: "",
       profilePhoto: "",
       address: "",
       email: "",
@@ -76,47 +104,88 @@ function UserRegistration({ open, handleClose , userTitle , buttonName }) {
       username: "",
       password: "",
     });
-    setProfilePic(""); 
+    setProfilePic("");
   }
 
   const updatedInputData = {
     ...inputData,
-    dateOfBirth: formattedDate,
+    dob: formattedDate,
   };
 
-  const handleSubmit = async () => {
-    try {
-      const response = await addUser(updatedInputData);
-      console.log("response", response);
-      if (response.data && !response.data.error) {
-        resetForm();
-        handleClose();
-        refetch();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "User Registered successfully",
-        });
-      } else {
-        console.log("User adding failed", response);
-        Swal.fire({
-          title: "Oops...",
-          text: response?.error?.data?.payload || response?.data?.payload,
-          icon: "error",
-        });
+  const isEditing = !!id;
+  const isNewUser = !isEditing;
+
+  const handleSubmit = async (e) => {
+    if (isNewUser) {
+      try {
+        e.preventDefault();
+        const response = await addUser(updatedInputData);
+        if (response.data && !response.data.error) {
+          resetForm();
+          handleClose();
+          refetch();
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+          });
+          Toast.fire({
+            icon: "success",
+            title: "User Registered successfully",
+          });
+        } else {
+          console.log("User adding failed", response);
+          Swal.fire({
+            title: "Oops...",
+            text: response?.error?.data?.payload || response?.data?.payload,
+            icon: "error",
+          });
+        }
+      } catch (error) {
+        console.log("User Reg Error", error);
       }
-    } catch (error) {
-      console.log("User Reg Error", error);
+    } else {
+      try {
+        
+        const response = await updateUser({ id, inputData });
+        console.log("User update", inputData);
+
+        if (response.error) {
+          console.log("User update Error", response);
+          Swal.fire({
+            title: "Oops...",
+            text: response?.error?.data?.payload,
+            icon: "error",
+          });
+        } else {
+          console.log("Success");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Test Updated",
+          });
+          await handleClose();
+          refetch();
+        }
+      } catch (error) {
+        console.log("Update Error", error);
+      }
     }
   };
 
@@ -204,11 +273,11 @@ function UserRegistration({ open, handleClose , userTitle , buttonName }) {
                       placeholder="YYYY-MM-DD"
                       format="yyyy-MM-dd"
                       autoComplete="off"
-                      value={inputData.dateOfBirth || null}
+                      value={inputData.dob || null}
                       onChange={(value) => {
                         setInputData((prev) => ({
                           ...prev,
-                          dateOfBirth: value,
+                          dob: value,
                         }));
                       }}
                     />
