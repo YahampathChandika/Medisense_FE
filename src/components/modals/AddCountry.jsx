@@ -13,7 +13,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEarthAmericas } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { useAddCountryMutation } from "../../store/api/countryApi";
+import {
+  useAddCountryMutation,
+  useGetAllCountriesQuery,
+  useGetGccCountriesQuery,
+  useGetNonGccCountriesQuery,
+} from "../../store/api/countryApi";
 import Swal from "sweetalert2";
 
 function AddCountryModal({ open, handleClose }) {
@@ -22,6 +27,9 @@ function AddCountryModal({ open, handleClose }) {
   });
 
   const [addCountry] = useAddCountryMutation();
+  const { refetch: allRefetch } = useGetAllCountriesQuery();
+  const { refetch: gccRefetch } = useGetGccCountriesQuery();
+  const { refetch: nonGccRefetch } = useGetNonGccCountriesQuery();
 
   const { register, handleSubmit, reset, setValue, watch } = form;
 
@@ -60,6 +68,9 @@ function AddCountryModal({ open, handleClose }) {
           title: response?.data?.payload || "Country Added",
         });
         reset();
+        allRefetch();
+        gccRefetch();
+        nonGccRefetch();
         handleClose();
       }
     } catch (error) {
