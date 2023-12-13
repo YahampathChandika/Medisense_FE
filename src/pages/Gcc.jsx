@@ -22,17 +22,13 @@ import AddJobModal from "../components/modals/AddJob";
 import AddCountryModal from "../components/modals/AddCountry";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useAddGccMutation } from "../store/api/addGcc";
-import { useDispatch } from "react-redux";
-import SuccsessModal from "../components/modals/Succsess";
-import FailModal from "../components/modals/Fail";
+import { useGetAllCountriesQuery } from "../store/api/countryApi";
 
 function Gcc() {
   const [jobOpen, setJobOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
-  const [gccData] = useAddGccMutation();
-  const dispatch = useDispatch();
+  const { data: countryData } = useGetAllCountriesQuery();
 
   const handleJobOpen = () => setJobOpen(true);
   const handleJobClose = () => setJobOpen(false);
@@ -60,7 +56,9 @@ function Gcc() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     console.log("data", data);
+    navigate("/home/test")
   };
+
   useEffect(() => {
     document.title = "GCC | Medisense";
   }, []);
@@ -228,7 +226,18 @@ function Gcc() {
           <FlexboxGrid.Item colspan={7}>
             <Row>Country</Row>
             <Row className="gcc-select">
-              <SelectPicker className="gcc-select-drop" />
+              <SelectPicker
+                className="gcc-select-drop"
+                style={{ width: "100%" }}
+                data={countryData?.payload.map(
+                  (item) => ({
+                    label: item.name,
+                    value: item.id,
+                  })
+                )}
+                {...register("country")}
+                onChange={(value) => setValue("country", value)}
+              />
               <Button
                 onClick={handleCountryOpen}
                 className="gcc-add-btn btn btn-outline-primary"
@@ -243,7 +252,6 @@ function Gcc() {
           <Button
             type="submit"
             className="w-40 h-10 bg-blue-800 text-white"
-            onClick={() => navigate("/home/test")}
           >
             Continue
           </Button>
@@ -251,13 +259,6 @@ function Gcc() {
       </form>
       <AddJobModal open={jobOpen} handleClose={handleJobClose} />
       <AddCountryModal open={countryOpen} handleClose={handleCountryClose} />
-      {/* <SuccsessModal
-        open={countryOpen}
-        handleClose={handleCountryClose}
-        headtxt={"Package Created"}
-        bodytxt={"The test package has been successfully created."}
-        btntxt={"Create"}
-      /> */}
     </Container>
   );
 }
