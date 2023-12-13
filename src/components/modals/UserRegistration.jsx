@@ -22,7 +22,14 @@ import {
 } from "../../store/api/userApi";
 import Swal from "sweetalert2";
 
-function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
+function UserRegistration({
+  open,
+  handleClose,
+  userTitle,
+  buttonName,
+  id,
+  isUpdate,
+}) {
   const [addUser] = useAddUserMutation();
   const { refetch } = useGetAllUsersQuery();
   const { data: roles } = useGetUserRolesQuery();
@@ -34,7 +41,7 @@ function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
   } = useGetUserByIDQuery(id, { skip: !id });
   const [profilePic, setProfilePic] = useState("");
 
-  console.log("update", getUserById?.payload)
+  console.log("update", getUserById?.payload);
 
   useEffect(() => {
     if (getUserById) {
@@ -47,7 +54,7 @@ function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
         contactNo: defaultValues.contactNo || "",
         username: defaultValues.username || "",
         roleId: defaultValues.roleId || "",
-        // dob: defaultValues.dob || "",
+        dob: defaultValues.dob || "",
       });
     }
   }, [getUserById]);
@@ -65,7 +72,6 @@ function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
     password: "",
   });
 
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setProfilePic(file);
@@ -75,6 +81,7 @@ function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
     }));
   };
 
+  console.log("defalt", inputData.dob);
   const formattedDate = formatDate(inputData.dob);
 
   const roleData =
@@ -152,7 +159,6 @@ function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
       }
     } else {
       try {
-        
         const response = await updateUser({ id, inputData });
         console.log("User update", inputData);
 
@@ -269,18 +275,34 @@ function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
                 <div className="userregistration-input-con-right">
                   <div className="userregistration-input-single">
                     <label>Date of Birth</label>
-                    <DatePicker
-                      placeholder="YYYY-MM-DD"
-                      format="yyyy-MM-dd"
-                      autoComplete="off"
-                      value={inputData.dob || null}
-                      onChange={(value) => {
-                        setInputData((prev) => ({
-                          ...prev,
-                          dob: value,
-                        }));
-                      }}
-                    />
+
+                    {isUpdate ? (
+                      <input
+                        type="text"
+                        className="rs-input"
+                        value={inputData.dob}
+                        onChange={(e) => {
+                          e.preventDefault();
+                          setInputData((pre) => ({
+                            ...pre,
+                            dob: e.target.value,
+                          }));
+                        }}
+                      />
+                    ) : (
+                      <DatePicker
+                        placeholder="YYYY-MM-DD"
+                        format="yyyy-MM-dd"
+                        autoComplete="off"
+                        value={inputData.dob || null}
+                        onChange={(value) => {
+                          setInputData((prev) => ({
+                            ...prev,
+                            dob: value,
+                          }));
+                        }}
+                      />
+                    )}
                   </div>
                   <div className="userregistration-input-single ">
                     <label>Role</label>
@@ -376,6 +398,7 @@ function UserRegistration({ open, handleClose, userTitle, buttonName, id }) {
                         password: e.target.value,
                       }));
                     }}
+                    disabled={isUpdate}
                   />
                 </div>
               </div>

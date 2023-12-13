@@ -274,6 +274,7 @@ function Users() {
           userTitle="Update User"
           buttonName="Update"
           id={updateOpen}
+          isUpdate={true} 
         />
         <FailModal
           open={deleteOpen !== false}
