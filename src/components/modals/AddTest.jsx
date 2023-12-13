@@ -36,7 +36,6 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
   const { register, handleSubmit, reset, setValue } = form;
   useEffect(() => {
     const setDefaultValues = async () => {
-
       if (id && testById) {
         const { description, testCode, price, type } = testById.payload;
         setValue("description", description);
@@ -46,7 +45,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
       }
     };
     setDefaultValues();
-  }, [id, testById, reset, setValue, open]); 
+  }, [id, testById, reset, setValue, open]);
 
   const isEditing = !!id;
   const isNewPatient = !isEditing;
@@ -207,15 +206,11 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={7}>
                 <Row>Type</Row>
-                <Input
-                  name="type"
-                  defaultValue="type"
-                  {...register("type")}
-                />
+                <Input name="type" defaultValue="type" {...register("type")} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </Row>
-          <Row className="w-full flex justify-between mt-2">
+          <Row className="w-full flex justify-between mt-2 space-x-8">
             <Button
               type="submit"
               className="w-2/5 bg-blue-700 text-white hover:bg-blue-800"
