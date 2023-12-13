@@ -118,16 +118,16 @@ function AddCountryModal({ open, handleClose }) {
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Row>
-        <Row className="w-full flex justify-between mt-2">
+        <Row className="w-full flex justify-between mt-2 space-x-8">
           <Button
             type="submit"
-            className="w-2/5 bg-blue-700 text-white hover:bg-blue-800"
+            className="w-1/2 bg-blue-700 text-white hover:bg-blue-800"
           >
             Create
           </Button>
           <Button
             onClick={handleClose}
-            className="w-2/5 border-solid border border-slate-700"
+            className="w-1/2 border-solid border border-slate-700"
           >
             Cancel
           </Button>
