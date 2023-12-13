@@ -4,6 +4,7 @@ import { addGccApi } from "./api/addGcc";
 import { agencyApi } from "./api/agencyApi";
 import { userApi } from "./api/userApi";
 import { authApi } from "./api/authApi";
+import { countryApi } from "./api/countryApi";
 import selectedTestsReducer from "./slice/testSlice";
 
 export const store = configureStore({
@@ -13,17 +14,19 @@ export const store = configureStore({
     [addGccApi.reducerPath]: addGccApi.reducer,
     [agencyApi.reducerPath]: agencyApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
-    
+    [countryApi.reducerPath]: countryApi.reducer,
+
     selectedTests: selectedTestsReducer,
   },
-  
+
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(
       api.middleware,
       authApi.middleware,
       addGccApi.middleware,
       agencyApi.middleware,
-      userApi.middleware
+      userApi.middleware,
+      countryApi.middleware,
     );
   },
 });
