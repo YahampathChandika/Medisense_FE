@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "../assets/css/Gcc.css";
 import {
   Container,
@@ -11,7 +12,6 @@ import {
   SelectPicker,
 } from "rsuite";
 
-import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
@@ -22,18 +22,37 @@ import AddJobModal from "../components/modals/AddJob";
 import AddCountryModal from "../components/modals/AddCountry";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useGetAllCountriesQuery } from "../store/api/countryApi";
+import {
+  useGetGccCountriesQuery,
+  useGetNonGccCountriesQuery,
+} from "../store/api/countryApi";
 
 function Gcc() {
+  const location = useLocation();
+  const [testType, setTestType] = useState(null);
   const [jobOpen, setJobOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
-  const { data: countryData } = useGetAllCountriesQuery();
+  const { data: gccData } = useGetGccCountriesQuery();
+  const { data: nonGccData } = useGetNonGccCountriesQuery();
 
   const handleJobOpen = () => setJobOpen(true);
   const handleJobClose = () => setJobOpen(false);
   const handleCountryOpen = () => setCountryOpen(true);
   const handleCountryClose = () => setCountryOpen(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const testTypeParam = params.get("testType");
+
+    if (testTypeParam !== null) {
+      const testTypeValue = testTypeParam === "true";
+      setTestType(testTypeValue);
+      document.title = testTypeValue
+        ? "GCC | Medisense"
+        : "Non GCC | Medisense";
+    }
+  }, [location]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -56,19 +75,15 @@ function Gcc() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     console.log("data", data);
-    navigate("/home/test")
+    navigate("/home/test");
   };
-
-  useEffect(() => {
-    document.title = "GCC | Medisense";
-  }, []);
 
   return (
     <Container className="gcc-con">
       <form onSubmit={handleSubmit(onSubmit)}>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11} className="main-title">
-            Applicant Details
+            {testType ? <p>GCC Register</p> : <p>Non GCC Register</p>}
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <InputGroup>
@@ -226,18 +241,29 @@ function Gcc() {
           <FlexboxGrid.Item colspan={7}>
             <Row>Country</Row>
             <Row className="gcc-select">
-              <SelectPicker
-                className="gcc-select-drop"
-                style={{ width: "100%" }}
-                data={countryData?.payload.map(
-                  (item) => ({
+              {testType ? (
+                <SelectPicker
+                  className="gcc-select-drop"
+                  style={{ width: "100%" }}
+                  data={gccData?.payload.map((item) => ({
                     label: item.name,
                     value: item.id,
-                  })
-                )}
-                {...register("country")}
-                onChange={(value) => setValue("country", value)}
-              />
+                  }))}
+                  {...register("country")}
+                  onChange={(value) => setValue("country", value)}
+                />
+              ) : (
+                <SelectPicker
+                  className="gcc-select-drop"
+                  style={{ width: "100%" }}
+                  data={nonGccData?.payload.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))}
+                  {...register("country")}
+                  onChange={(value) => setValue("country", value)}
+                />
+              )}
               <Button
                 onClick={handleCountryOpen}
                 className="gcc-add-btn btn btn-outline-primary"
@@ -249,10 +275,7 @@ function Gcc() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button
-            type="submit"
-            className="w-40 h-10 bg-blue-800 text-white"
-          >
+          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
             Continue
           </Button>
         </FlexboxGrid>

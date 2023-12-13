@@ -19,7 +19,7 @@ function Dashboard() {
       </Row>
       <div className="dash-main-content">
         <div className="dash-type-con">
-          <Link to="/home/gcc">
+          <Link to="/home/gcc?testType=true">
             <div className="dash-type gcc">
               <div className="dash-type-top gcc-top"></div>
               <div className="dash-type-img gcc-img">
@@ -28,7 +28,7 @@ function Dashboard() {
               <div className="dash-type-bot gcc-bot">GCC Medicals</div>
             </div>
           </Link>
-          <Link to="/home/gcc">
+          <Link to="/home/gcc?testType=false">
             <div className="dash-type ngcc">
               <div className="dash-type-top ngcc-top"></div>
               <div className="dash-type-img ngcc-img">
