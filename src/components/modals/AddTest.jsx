@@ -213,13 +213,13 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
           <Row className="w-full flex justify-between mt-2 space-x-8">
             <Button
               type="submit"
-              className="w-2/5 bg-blue-700 text-white hover:bg-blue-800"
+              className="w-3/6 bg-blue-700 text-white hover:bg-blue-800"
             >
               {btnText}
             </Button>
             <Button
               onClick={handleClose}
-              className="w-2/5 border-solid border border-slate-700"
+              className="w-3/6 border-solid border border-slate-700"
             >
               Cancel
             </Button>

@@ -36,16 +36,16 @@ function AddJobModal({ open, handleClose }) {
         <Row>Description</Row>
         <Input />
       </Row>
-      <Row className="w-full flex justify-between mt-2 space-x-8">
+      <Row className="w-full flex justify-between mt-2 ">
         <Button
           onClick={handleClose}
-          className="w-2/5 bg-blue-700 text-white hover:bg-blue-800"
+          className="w-3/6 bg-blue-700 text-white hover:bg-blue-800"
         >
           Create
         </Button>
         <Button
           onClick={handleClose}
-          className="w-2/5 border-solid border border-slate-700"
+          className="w-3/6 border-solid border border-slate-700"
         >
           Cancel
         </Button>
