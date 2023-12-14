@@ -3,6 +3,7 @@ import { Checkbox } from "rsuite";
 import { Button } from "react-bootstrap";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "../assets/css/Login.css";
+import image from "../assets/images/medisense.png"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
@@ -54,39 +55,35 @@ function Login() {
     document.title = "LogIn | Medisense";
   }, []);
 
-
   return (
     <div className="login-main">
-      <div className="login-main-con">
-        <div className="login-left-con">
-          <form className="login-left" onSubmit={handleSubmit(handleLogin)}>
-            <h1 className="login-head">Login</h1>
-            <input
-              type="text"
-              className="login-name"
-              placeholder="Username"
-              {...register("username")}
-            />
-            <input
-              type="password"
-              className="login-pass"
-              placeholder="Password"
-              {...register("password")}
-            />
-            <div className="login-left-mid">
-              <Checkbox>Remember Me</Checkbox>
-              <p className="login-left-mid-forgot">Forgot Password</p>
-            </div>
-            <Button
-              type="submit"
-              className="w-60 h-10 mt-10 hover:bg-slate-800 bg-gray-700 rounded-none	 text-white"
-            >
-              Login
-            </Button>
-          </form>
+      <form className="login-form" onSubmit={handleSubmit(handleLogin)}>
+        {/* <h1 className="login-head">Login</h1> */}
+        <img
+          src={image}
+          alt="Your Image"
+          className="login-image"
+        />
+        <input
+          type="text"
+          className="login-name"
+          placeholder="Username"
+          {...register("username")}
+        />
+        <input
+          type="password"
+          className="login-pass"
+          placeholder="Password"
+          {...register("password")}
+        />
+        <Button type="submit" className="login-btn">
+          Login
+        </Button>
+        <div className="login-form-bot">
+          {/* <Checkbox>Remember Me</Checkbox> */}
+          <p className="login-form-bot-forgot">Forgot Password</p>
         </div>
-        <div className="login-right"></div>
-      </div>
+      </form>
     </div>
   );
 }
