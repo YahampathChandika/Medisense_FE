@@ -94,6 +94,8 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
     }
     if (!inputData.email) {
       errors.email = "Email is required*";
+    } else if (!/\S+@\S+\.\S+/.test(inputData.email)) {
+      errors.email = "Invalid email address*";
     }
     if (!inputData.telephone) {
       errors.telephone = "Telephone is required*";
