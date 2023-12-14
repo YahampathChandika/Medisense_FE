@@ -67,17 +67,17 @@ function FailModal({
       </Row>
       <Row className="text-black font-bold text-lg mt-3">{headtxt}</Row>
       <Row className="text-gray-500 text-md mt-3">{bodytxt}</Row>
-      <Row className="w-full flex justify-between mt-4">
+      <Row className="w-full flex justify-between mt-4 space-x-8" >
         <Button
           // onClick={handleClose}
-          className="w-2/5 bg-red-600 text-white hover:bg-red-700"
+          className="w-3/6 bg-red-600 text-white hover:bg-red-700"
           onClick={handleDelete}
         >
           {btntxt}
         </Button>
         <Button
           onClick={handleClose}
-          className="w-2/5 border-solid border border-slate-700"
+          className="w-3/6 border-solid border border-slate-700"
         >
           Cancel
         </Button>

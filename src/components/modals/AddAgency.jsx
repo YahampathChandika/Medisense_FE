@@ -69,8 +69,51 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
 
   const isEditing = !!id;
   const isNewPatient = !isEditing;
+  const [validationErrors, setValidationErrors] = useState({});
+
+  const handleInputChange = (field, value) => {
+    setInputData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    // Clear validation error when the user types
+    setValidationErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
+  };
 
   const handleSubmit = async (e) => {
+    const errors = {};
+    if (!inputData.name) {
+      errors.name = "Name is required*";
+    }
+    if (!inputData.address) {
+      errors.address = "Address is required*";
+    }
+    if (!inputData.email) {
+      errors.email = "Email is required*";
+    } else if (!/\S+@\S+\.\S+/.test(inputData.email)) {
+      errors.email = "Invalid email address*";
+    }
+    if (!inputData.telephone) {
+      errors.telephone = "Telephone is required*";
+    }
+    if (!inputData.contactPerson) {
+      errors.contactPerson = "Contact Person is required*";
+    }
+    if (!inputData.labourLicence) {
+      errors.labourLicence = "Labour Liecence is required*";
+    }
+    if (!inputData.commision) {
+      errors.commision = "Commision is required**";
+    }
+
+    setValidationErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
     if (isNewPatient) {
       try {
         e.preventDefault();
@@ -96,7 +139,7 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
           });
           Toast.fire({
             icon: "success",
-            title: "Test Added",
+            title: response?.data?.payload,
           });
           resetForm();
           await refetch();
@@ -131,7 +174,7 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
           });
           Toast.fire({
             icon: "success",
-            title: "Test Updated",
+            title: response?.data?.payload,
           });
           await handleClose();
           refetch();
@@ -142,6 +185,12 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
     }
   };
 
+  const handleNewClose = () => {
+    handleClose();
+    setValidationErrors({});
+    resetForm();
+  };
+
   return (
     <Modal
       style={{
@@ -149,7 +198,7 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
         top: "2%",
       }}
       open={open}
-      onClose={handleClose}
+      onClose={handleNewClose}
     >
       <div className="addAgency-main-con">
         <Container>
@@ -169,14 +218,15 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                       type="text"
                       className="rs-input"
                       value={inputData.name}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setInputData((pre) => ({
-                          ...pre,
-                          name: e.target.value,
-                        }));
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("name", e.target.value)
+                      }
                     />
+                    {validationErrors.name && (
+                      <div className="validation-message">
+                        {validationErrors.name}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="addAgency-input-con">
@@ -186,14 +236,15 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                       type="text"
                       className="rs-input"
                       value={inputData.address}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setInputData((pre) => ({
-                          ...pre,
-                          address: e.target.value,
-                        }));
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("address", e.target.value)
+                      }
                     />
+                    {validationErrors.address && (
+                      <div className="validation-message">
+                        {validationErrors.address}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="addAgency-input-con">
@@ -203,14 +254,15 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                       type="text"
                       className="rs-input"
                       value={inputData.telephone}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setInputData((pre) => ({
-                          ...pre,
-                          telephone: e.target.value,
-                        }));
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("telephone", e.target.value)
+                      }
                     />
+                    {validationErrors.telephone && (
+                      <div className="validation-message">
+                        {validationErrors.telephone}
+                      </div>
+                    )}
                   </div>
                   <div className="addAgency-input-con-right">
                     <label>Fax</label>
@@ -236,14 +288,15 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                       type="text"
                       className="rs-input"
                       value={inputData.email}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setInputData((pre) => ({
-                          ...pre,
-                          email: e.target.value,
-                        }));
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
                     />
+                    {validationErrors.email && (
+                      <div className="validation-message">
+                        {validationErrors.email}
+                      </div>
+                    )}
                   </div>
                   <div className="addAgency-input">
                     <label>Contact Person</label>
@@ -251,14 +304,15 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                       type="text"
                       className="rs-input"
                       value={inputData.contactPerson}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setInputData((pre) => ({
-                          ...pre,
-                          contactPerson: e.target.value,
-                        }));
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("contactPerson", e.target.value)
+                      }
                     />
+                    {validationErrors.contactPerson && (
+                      <div className="validation-message">
+                        {validationErrors.contactPerson}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="addAgency-input-con-two">
@@ -268,14 +322,15 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                       type="text"
                       className="rs-input"
                       value={inputData.labourLicence}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setInputData((pre) => ({
-                          ...pre,
-                          labourLicence: e.target.value,
-                        }));
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("labourLicence", e.target.value)
+                      }
                     />
+                    {validationErrors.labourLicence && (
+                      <div className="validation-message">
+                        {validationErrors.labourLicence}
+                      </div>
+                    )}
                   </div>
                   <div className="addAgency-input">
                     <label>Commision</label>
@@ -283,14 +338,15 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
                       type="text"
                       className="rs-input"
                       value={inputData.commision}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        setInputData((pre) => ({
-                          ...pre,
-                          commision: e.target.value,
-                        }));
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("commision", e.target.value)
+                      }
                     />
+                    {validationErrors.commision && (
+                      <div className="validation-message">
+                        {validationErrors.commision}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -305,7 +361,7 @@ function AddAgency({ open, handleClose, agencyhead, buttonName, id }) {
             </Button>
             <Button
               className="w-40 h-10 bg-red-700 text-white border-none hover:bg-red-600"
-              onClick={handleClose}
+              onClick={handleNewClose}
             >
               Cancel
             </Button>
