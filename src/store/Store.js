@@ -5,6 +5,7 @@ import { agencyApi } from "./api/agencyApi";
 import { userApi } from "./api/userApi";
 import { authApi } from "./api/authApi";
 import { countryApi } from "./api/countryApi";
+import { jobApi } from "./api/jobApi";
 import selectedTestsReducer from "./slice/testSlice";
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     [agencyApi.reducerPath]: agencyApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [countryApi.reducerPath]: countryApi.reducer,
+    [jobApi.reducerPath]: jobApi.reducer,
 
     selectedTests: selectedTestsReducer,
   },
@@ -27,6 +29,7 @@ export const store = configureStore({
       agencyApi.middleware,
       userApi.middleware,
       countryApi.middleware,
+      jobApi.middleware,
     );
   },
 });
