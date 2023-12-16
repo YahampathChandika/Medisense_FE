@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useGetSignedUserQuery } from "../../store/api/userApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const user = {
   name: "Tom Cook",
@@ -12,11 +14,9 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 
-
-
 const Navbar = () => {
   const navigate = useNavigate();
-  const {data:signedUser} = useGetSignedUserQuery();
+  const { data: signedUser } = useGetSignedUserQuery();
 
   const handleLogout = () => {
     Swal.fire({
@@ -62,7 +62,9 @@ const Navbar = () => {
                   src={user.imageUrl}
                   alt=""
                 />
-                <p className="text-xl font-bold text-black ml-5">{signedUser?.payload?.firstName}</p>
+                <p className="text-xl font-bold text-black ml-5">
+                  {signedUser?.payload?.firstName}
+                </p>
               </Menu.Button>
             </div>
             <Transition
@@ -83,19 +85,8 @@ const Navbar = () => {
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
                     >
+                      <FontAwesomeIcon icon={faCircleUser} className="mr-2"/>
                       Your Profile
-                    </Link>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      to="#"
-                      className={`${
-                        active ? "bg-gray-100" : ""
-                      } block px-4 py-2 text-sm text-gray-700`}
-                    >
-                      Settings
                     </Link>
                   )}
                 </Menu.Item>
@@ -107,6 +98,7 @@ const Navbar = () => {
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
                     >
+                      <FontAwesomeIcon icon={faRightFromBracket} className="mr-2"/>
                       Sign out
                     </Link>
                   )}
