@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useGetSignedUserQuery } from "../../store/api/userApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import LogoutModal from "../modals/Logout";
 
 const user = {
@@ -14,6 +16,8 @@ const user = {
 };
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { data: signedUser } = useGetSignedUserQuery();
   const [LogoutOpen, setLogouOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
@@ -80,6 +84,7 @@ const Navbar = () => {
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
                     >
+                      <FontAwesomeIcon icon={faCircleUser} className="mr-2"/>
                       Your Profile
                     </Link>
                   )}
@@ -87,7 +92,7 @@ const Navbar = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <Link
-                      to="#"
+                    onClick={handleLogouOpen}
                       className={`${
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
@@ -104,6 +109,7 @@ const Navbar = () => {
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
                     >
+                      <FontAwesomeIcon icon={faRightFromBracket} className="mr-2"/>
                       Sign out
                     </Link>
                   )}

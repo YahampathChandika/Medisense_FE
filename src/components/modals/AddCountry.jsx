@@ -1,4 +1,3 @@
-// ModalComponent.jsx
 import React from "react";
 import {
   Modal,
@@ -74,7 +73,7 @@ function AddCountryModal({ open, handleClose }) {
         handleClose();
       }
     } catch (error) {
-      console.log("Login Error", error);
+      console.log("Country Error", error);
     }
   };
 

@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
+import AddAgency from "../components/modals/AddAgency";
 import AddJobModal from "../components/modals/AddJob";
 import AddCountryModal from "../components/modals/AddCountry";
 import { useNavigate } from "react-router-dom";
@@ -26,16 +27,23 @@ import {
   useGetGccCountriesQuery,
   useGetNonGccCountriesQuery,
 } from "../store/api/countryApi";
+import { useGetAllJobsQuery } from "../store/api/jobApi";
+import { useGetAllAgencyQuery } from "../store/api/agencyApi";
 
 function Gcc() {
   const location = useLocation();
   const [testType, setTestType] = useState(null);
+  const [agencyOpen, setAgencyOpen] = useState(false);
   const [jobOpen, setJobOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const { data: gccData } = useGetGccCountriesQuery();
   const { data: nonGccData } = useGetNonGccCountriesQuery();
+  const { data: jobData } = useGetAllJobsQuery();
+  const { data: agencyData } = useGetAllAgencyQuery();
 
+  const handleAgencyOpen = () => setAgencyOpen(true);
+  const handleAgencyClose = () => setAgencyOpen(false);
   const handleJobOpen = () => setJobOpen(true);
   const handleJobClose = () => setJobOpen(false);
   const handleCountryOpen = () => setCountryOpen(true);
@@ -229,12 +237,18 @@ function Gcc() {
             <Row>Agency</Row>
             <Row className="gcc-select">
               <SelectPicker
+                menuMaxHeight={120}
                 className="gcc-select-drop"
-                {...register("agency")}
-                onChange={(value) => setValue("agency", value)}
+                style={{ width: "100%" }}
+                data={agencyData?.payload.map((item) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
+                {...register("country")}
+                onChange={(value) => setValue("country", value)}
               />
               <Button
-                onClick={() => navigate("/home/addAgency")}
+                onClick={handleAgencyOpen}
                 className="gcc-add-btn btn btn-outline-primary"
               >
                 Add
@@ -244,7 +258,21 @@ function Gcc() {
           <FlexboxGrid.Item colspan={7}>
             <Row>Job</Row>
             <Row className="gcc-select">
-              <SelectPicker className="gcc-select-drop" />
+              <SelectPicker
+                menuMaxHeight={120}
+                className="gcc-select-drop"
+                style={{
+                  width: "100%",
+                  maxHeight: "100px",
+                  backgroundColor: "red",
+                }}
+                data={jobData?.payload.map((item) => ({
+                  label: item.job,
+                  value: item.id,
+                }))}
+                {...register("job")}
+                onChange={(value) => setValue("job", value)}
+              />
               <Button
                 onClick={handleJobOpen}
                 className="gcc-add-btn btn btn-outline-primary"
@@ -258,6 +286,7 @@ function Gcc() {
             <Row className="gcc-select">
               {testType ? (
                 <SelectPicker
+                  menuMaxHeight={120}
                   className="gcc-select-drop"
                   style={{ width: "100%" }}
                   data={gccData?.payload.map((item) => ({
@@ -269,6 +298,7 @@ function Gcc() {
                 />
               ) : (
                 <SelectPicker
+                  menuMaxHeight={100}
                   className="gcc-select-drop"
                   style={{ width: "100%" }}
                   data={nonGccData?.payload.map((item) => ({
@@ -295,6 +325,12 @@ function Gcc() {
           </Button>
         </FlexboxGrid>
       </form>
+      <AddAgency
+        open={agencyOpen !== false}
+        handleClose={handleAgencyClose}
+        agencyhead="Add Agency"
+        buttonName="Register"
+      />
       <AddJobModal open={jobOpen} handleClose={handleJobClose} />
       <AddCountryModal open={countryOpen} handleClose={handleCountryClose} />
     </Container>
