@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useGetSignedUserQuery } from "../../store/api/userApi";
+import LogoutModal from "../modals/Logout";
 
 const user = {
   name: "Tom Cook",
@@ -12,28 +13,22 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 
-
-
 const Navbar = () => {
-  const navigate = useNavigate();
-  const {data:signedUser} = useGetSignedUserQuery();
+  const [LogoutOpen, setLogouOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
-  const handleLogout = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      icon: "warning",
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: "Yes, Log out!",
-      confirmButtonColor: "#3f6212",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        navigate("/");
-        window.location.reload();
-      }
-    });
+  const handleLogouOpen = () => {
+    // Open the logout confirmation modal first
+    setLogoutModalOpen(true);
   };
+
+  const handleLogouClose = () => {
+    // Close both modals
+    setLogouOpen(false);
+    setLogoutModalOpen(false);
+  };
+
+  const { data: signedUser } = useGetSignedUserQuery();
 
   return (
     <div className="bg-white fixed z-50 border-b-2	w-full flex h-16 items-center justify-between">
@@ -62,7 +57,9 @@ const Navbar = () => {
                   src={user.imageUrl}
                   alt=""
                 />
-                <p className="text-xl font-bold text-black ml-5">{signedUser?.payload?.firstName}</p>
+                <p className="text-xl font-bold text-black ml-5">
+                  {signedUser?.payload?.firstName}
+                </p>
               </Menu.Button>
             </div>
             <Transition
@@ -102,7 +99,7 @@ const Navbar = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <Link
-                      onClick={handleLogout}
+                    onClick={handleLogouOpen}
                       className={`${
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
@@ -114,6 +111,7 @@ const Navbar = () => {
               </Menu.Items>
             </Transition>
           </Menu>
+          <LogoutModal open={logoutModalOpen} handleClose={handleLogouClose} />
         </div>
       </div>
     </div>

@@ -40,6 +40,7 @@ function UserRegistration({
     isError,
   } = useGetUserByIDQuery(id, { skip: !id });
   const [profilePic, setProfilePic] = useState("");
+  const [validationErrors, setValidationErrors] = useState({});
 
   console.log("update", getUserById?.payload);
 
@@ -81,6 +82,7 @@ function UserRegistration({
     }));
   };
 
+  
   console.log("defalt", inputData.dob);
   const formattedDate = formatDate(inputData.dob);
 
@@ -119,10 +121,34 @@ function UserRegistration({
     dob: formattedDate,
   };
 
+  const handleInputChange = (field, value) => {
+    setInputData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    // Clear validation error when the user types
+    setValidationErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
+  };
+
   const isEditing = !!id;
   const isNewUser = !isEditing;
 
   const handleSubmit = async (e) => {
+    const errors = {};
+    if (!inputData.firstName) {
+      errors.firstName = "Name is required*";
+    }
+
+     // Check if there are any validation errors
+  if (Object.keys(errors).length > 0) {
+    setValidationErrors(errors);
+    return;
+  }
+
     if (isNewUser) {
       try {
         e.preventDefault();
@@ -216,14 +242,15 @@ function UserRegistration({
                     type="text"
                     className="rs-input"
                     value={inputData.firstName}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setInputData((pre) => ({
-                        ...pre,
-                        firstName: e.target.value,
-                      }));
-                    }}
+                    onChange={(e) =>
+                      handleInputChange("firstName", e.target.value)
+                    }
                   />
+                  {validationErrors.firstName && (
+                    <div className="validation-message">
+                      {validationErrors.firstName}
+                    </div>
+                  )}
                 </div>
                 <div className="userregistration-input">
                   <label>Last Name</label>
