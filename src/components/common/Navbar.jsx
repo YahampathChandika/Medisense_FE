@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useGetSignedUserQuery } from "../../store/api/userApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleUser,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import LogoutModal from "../modals/Logout";
 
 const user = {
@@ -82,32 +85,24 @@ const Navbar = () => {
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
                     >
-                      <FontAwesomeIcon icon={faCircleUser} className="mr-2"/>
+                      <FontAwesomeIcon icon={faCircleUser} className="mr-2" />
                       Your Profile
                     </Link>
                   )}
                 </Menu.Item>
+
                 <Menu.Item>
                   {({ active }) => (
                     <Link
-                    onClick={handleLogouOpen}
+                      onClick={handleLogouOpen}
                       className={`${
                         active ? "bg-gray-100" : ""
                       } block px-4 py-2 text-sm text-gray-700`}
                     >
-                      Settings
-                    </Link>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                    onClick={handleLogouOpen}
-                      className={`${
-                        active ? "bg-gray-100" : ""
-                      } block px-4 py-2 text-sm text-gray-700`}
-                    >
-                      <FontAwesomeIcon icon={faRightFromBracket} className="mr-2"/>
+                      <FontAwesomeIcon
+                        icon={faRightFromBracket}
+                        className="mr-2"
+                      />
                       Sign out
                     </Link>
                   )}
