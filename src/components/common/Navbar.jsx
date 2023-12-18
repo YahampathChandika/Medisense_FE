@@ -32,8 +32,6 @@ const Navbar = () => {
     setLogoutModalOpen(false);
   };
 
-  const { data: signedUser } = useGetSignedUserQuery();
-
   return (
     <div className="bg-white fixed z-50 border-b-2	w-full flex h-16 items-center justify-between">
       <div className="flex items-center">
