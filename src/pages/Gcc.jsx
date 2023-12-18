@@ -77,8 +77,21 @@ function Gcc() {
     handleSubmit,
     setValue,
     watch,
+    getValues,
     formState: { errors },
   } = form;
+
+  const formattedDate = formatDate(getValues("dob"));
+
+  function formatDate(date) {
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    const month = String(formattedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(formattedDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  console.log("formattedDate",formattedDate)
 
   const navigate = useNavigate();
 
@@ -88,6 +101,8 @@ function Gcc() {
     addCustomer(data);
     // navigate("/home/test");
   };
+
+  console.log("rt", getValues("dob"));
 
   return (
     <Container className="gcc-con">
@@ -142,10 +157,10 @@ function Gcc() {
               oneTap
               format="MM-dd-yyyy"
               placeholder="MM-dd-yyyy"
-              id="dateOfBirth"
-              name="dateOfBirth"
-              value={watch("dateOfBirth")}
-              onChange={(value) => setValue("dateOfBirth", value)}
+              id="dob"
+              name="dob"
+              value={watch("dob")}
+              onChange={(value) => setValue("dob", value)}
             />
 
             <Row>Sex</Row>
