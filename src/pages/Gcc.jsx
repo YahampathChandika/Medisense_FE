@@ -29,6 +29,7 @@ import {
 } from "../store/api/countryApi";
 import { useGetAllJobsQuery } from "../store/api/jobApi";
 import { useGetAllAgencyQuery } from "../store/api/agencyApi";
+import { useAddCustomerMutation } from "../store/api/customer";
 
 function Gcc() {
   const location = useLocation();
@@ -41,6 +42,7 @@ function Gcc() {
   const { data: nonGccData } = useGetNonGccCountriesQuery();
   const { data: jobData } = useGetAllJobsQuery();
   const { data: agencyData } = useGetAllAgencyQuery();
+  const [addCustomer] = useAddCustomerMutation();
 
   const handleAgencyOpen = () => setAgencyOpen(true);
   const handleAgencyClose = () => setAgencyOpen(false);
@@ -83,7 +85,8 @@ function Gcc() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     console.log("data", data);
-    navigate("/home/test");
+    addCustomer(data);
+    // navigate("/home/test");
   };
 
   return (
@@ -107,7 +110,7 @@ function Gcc() {
         </FlexboxGrid>
         <Divider className="border-t-2 border-gray-300" />
         <Row>Full Name</Row>
-        <Input {...register("name")} />
+        <Input {...register("fullName")} />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Profile Photo</Row>
@@ -160,7 +163,7 @@ function Gcc() {
         </FlexboxGrid>
         <Row>
           <Row>Address</Row>
-          <Input {...register("address")} name="address" />
+          <Input {...register("address")} autoComplete="false"/>
         </Row>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
@@ -186,9 +189,9 @@ function Gcc() {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <Row>Mobile Number</Row>
-            <Input {...register("phone")} name="phone" />
+            <Input {...register("mobileNo")}/>
             <Row>NIC</Row>
-            <Input {...register("nic")} name="nic" />
+            <Input {...register("nic")}/>
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider />
@@ -203,17 +206,14 @@ function Gcc() {
                 block
                 oneTap
                 placeholder="Issued Date"
-                id="passportDate"
-                name="passportDate"
-                value={watch("passportDate")}
-                onChange={(value) => setValue("passportDate", value)}
+                id="issuedDate"
+                name="issuedDate"
+                value={watch("issuedDate")}
+                onChange={(value) => setValue("issuedDate", value)}
               />
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={7}>
-              <Input
-                {...register("passportPlace")}
-                placeholder="Issued Place"
-              />
+              <Input {...register("issuedPlace")} placeholder="Issued Place" />
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Row>
@@ -229,8 +229,8 @@ function Gcc() {
                   label: item.name,
                   value: item.id,
                 }))}
-                {...register("country")}
-                onChange={(value) => setValue("country", value)}
+                {...register("agencyId")}
+                onChange={(value) => setValue("agencyId", value)}
               />
               <Button
                 onClick={handleAgencyOpen}
@@ -255,8 +255,8 @@ function Gcc() {
                   label: item.job,
                   value: item.id,
                 }))}
-                {...register("job")}
-                onChange={(value) => setValue("job", value)}
+                {...register("jobId")}
+                onChange={(value) => setValue("jobId", value)}
               />
               <Button
                 onClick={handleJobOpen}
@@ -278,8 +278,8 @@ function Gcc() {
                     label: item.name,
                     value: item.id,
                   }))}
-                  {...register("country")}
-                  onChange={(value) => setValue("country", value)}
+                  {...register("countryId")}
+                  onChange={(value) => setValue("countryId", value)}
                 />
               ) : (
                 <SelectPicker
@@ -290,8 +290,8 @@ function Gcc() {
                     label: item.name,
                     value: item.id,
                   }))}
-                  {...register("country")}
-                  onChange={(value) => setValue("country", value)}
+                  {...register("countryId")}
+                  onChange={(value) => setValue("countryId", value)}
                 />
               )}
               <Button
