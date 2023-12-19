@@ -178,15 +178,16 @@ function Gcc() {
         </FlexboxGrid>
         <Row>
           <Row>Address</Row>
-          <Input {...register("address")} autoComplete="false"/>
+          <input {...register("address")} autoComplete="false" className="rs-input"/>
         </Row>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <Row>Email</Row>
-            <Input
+            <input
               {...register("email")}
               placeholder="john@example.com"
               name="email"
+              className="rs-input"
             />
             <Row>Civil Status</Row>
             <SelectPicker
