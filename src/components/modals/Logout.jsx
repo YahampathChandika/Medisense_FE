@@ -18,7 +18,7 @@ function LogoutModal({ open, handleClose, headtxt, bodytxt, btntxt }) {
     <Modal
       style={{
         top: "10%",
-        width: "30%",
+        width: "20%",
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -28,7 +28,7 @@ function LogoutModal({ open, handleClose, headtxt, bodytxt, btntxt }) {
       <Row className="border-double border-4 text-red-600 text-xl border-slate-100 bg-slate-200 rounded-full h-12 w-12 items-center flex justify-center">
         <FontAwesomeIcon icon={faExclamation} />
       </Row>
-      <Row className="text-black font-bold text-lg mt-3">Are you want logout</Row>
+      <Row className="text-black font-bold text-lg mt-3">Are you want logout?</Row>
       <Row className="text-gray-500 text-md mt-3">{bodytxt}</Row>
       <Row className="w-full flex justify-between mt-4 space-x-8">
         <Button

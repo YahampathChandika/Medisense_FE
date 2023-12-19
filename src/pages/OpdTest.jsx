@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import { useEffect } from "react";
-import { useAddOpdMutation  } from "../store/api/addGcc";
 
 
 function OpdTest() {
