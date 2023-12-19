@@ -8,7 +8,6 @@ import {
   InputGroup,
   Input,
   InputPicker,
-  DatePicker,
   DateRangePicker,
 } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

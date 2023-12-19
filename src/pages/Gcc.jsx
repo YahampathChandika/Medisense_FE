@@ -265,7 +265,6 @@ function Gcc() {
                 style={{
                   width: "100%",
                   maxHeight: "100px",
-                  backgroundColor: "red",
                 }}
                 data={jobData?.payload.map((item) => ({
                   label: item.job,
