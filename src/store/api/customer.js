@@ -13,7 +13,20 @@ export const customerApi = api.injectEndpoints({
         };
       },
     }),
+
+    getAllCustomers: builder.query({
+      query: () => "customer/getAllCustomers",
+    }),
+
+    getCustomerByID: builder.query({
+      query: (id) => `customer/getCustomerById/${id}`,
+    }),
+    
   }),
 });
 
-export const { useAddCustomerMutation } = customerApi;
+export const {
+  useAddCustomerMutation,
+  useGetAllCustomersQuery,
+  useGetCustomerByIDQuery,
+} = customerApi;

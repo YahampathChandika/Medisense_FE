@@ -5,12 +5,14 @@ import {
   faTrashCan,
   faPen,
   faCaretDown,
+  faCaretUp,
+  faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../../assets/css/Patients.css";
 import image from "../../../assets/images/dummy-profile-_new.jpg";
 
 function TablePatients({ data }) {
-  console.log(data);
+  console.log("cutomer", data);
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
 
   const handleSort = (key) => {
@@ -36,31 +38,41 @@ function TablePatients({ data }) {
     return data;
   };
   return (
-    <div
-      style={{ maxHeight: "450px", overflowY: "auto", width: "auto" }}
-    >
+    <div style={{ maxHeight: "450px", overflowY: "auto", width: "auto" }}>
       <Table striped hover className="text-left table-fixed">
         <thead>
           <tr>
             <th
               className="patient-table-head-name"
               style={{ width: "25%" }}
-              onClick={() => handleSort("name")}
+              onClick={() => handleSort("fullName")}
             >
               Name
               <FontAwesomeIcon
-                icon={faCaretDown}
+                icon={
+                  sortConfig.key === "fullName"
+                    ? sortConfig.order === "asc"
+                      ? faCaretUp
+                      : faCaretDown
+                    : faSort
+                }
                 style={{ paddingLeft: "5px" }}
               />
             </th>
             <th
               className="patient-table-head"
               style={{ width: "30%" }}
-              onClick={() => handleSort("contact")}
+              onClick={() => handleSort("mobileNo")}
             >
               Contact
               <FontAwesomeIcon
-                icon={faCaretDown}
+                icon={
+                  sortConfig.key === "mobileNo"
+                    ? sortConfig.order === "asc"
+                      ? faCaretUp
+                      : faCaretDown
+                    : faSort
+                }
                 style={{ paddingLeft: "5px" }}
               />
             </th>
@@ -71,7 +83,13 @@ function TablePatients({ data }) {
             >
               Status
               <FontAwesomeIcon
-                icon={faCaretDown}
+                icon={
+                  sortConfig.key === "status"
+                    ? sortConfig.order === "asc"
+                      ? faCaretUp
+                      : faCaretDown
+                    : faSort
+                }
                 style={{ paddingLeft: "5px" }}
               />
             </th>
@@ -82,7 +100,13 @@ function TablePatients({ data }) {
             >
               Medical
               <FontAwesomeIcon
-                icon={faCaretDown}
+                icon={
+                  sortConfig.key === "medical"
+                    ? sortConfig.order === "asc"
+                      ? faCaretUp
+                      : faCaretDown
+                    : faSort
+                }
                 style={{ paddingLeft: "5px" }}
               />
             </th>
@@ -90,44 +114,45 @@ function TablePatients({ data }) {
             <th className="patient-table-head " style={{ width: "20px" }}></th>
           </tr>
         </thead>
-        <tbody >
-          {sortedData().map((patient, index) => (
-            <tr key={index}>
-              <td
-                className=" "
-                style={{
-                  display: "flex ",
-                  flexDirection: "row",
-                  paddingLeft: "20%",
-                  border: "none",
-                }}
-              >
-                <img
-                  src={patient.img || image}
-                  alt="Patient"
-                  className="patient-image "
-                />
-                {patient.name}
-              </td>
-              <td className=" patient-table-data">{patient.contact}</td>
-              <td
-                className={` patient-table-data ${
-                  patient.status === "Paid"
-                    ? "class-for-status1"
-                    : "class-for-status2"
-                }`}
-              >
-                <p> {patient.status}</p>
-              </td>
-              <td className=" patient-table-data ">{patient.medical}</td>
-              <td className="patient-table-icon">
-                <FontAwesomeIcon icon={faPen} />
-              </td>
-              <td className="patient-table-icon-pen">
-                <FontAwesomeIcon icon={faTrashCan} />
-              </td>
-            </tr>
-          ))}
+        <tbody>
+          {data.length > 0 &&
+            sortedData().map((patient) => (
+              <tr key={patient.id}>
+                <td
+                  className=" "
+                  style={{
+                    display: "flex ",
+                    flexDirection: "row",
+                    paddingLeft: "20%",
+                    border: "none",
+                  }}
+                >
+                  <img
+                    src={patient.img || image}
+                    alt="Patient"
+                    className="patient-image "
+                  />
+                  {patient.fullName}
+                </td>
+                <td className=" patient-table-data">{patient.mobileNo}</td>
+                <td
+                  className={` patient-table-data ${
+                    patient.status === "Paid"
+                      ? "class-for-status1"
+                      : "class-for-status2"
+                  }`}
+                >
+                  <p> {patient.status}</p>
+                </td>
+                <td className=" patient-table-data ">{patient.medical}</td>
+                <td className="patient-table-icon">
+                  <FontAwesomeIcon icon={faPen} />
+                </td>
+                <td className="patient-table-icon-pen">
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </div>
