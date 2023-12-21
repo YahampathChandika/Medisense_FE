@@ -2,18 +2,31 @@ import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTrashCan,
-  faPen,
   faCaretDown,
   faCaretUp,
   faSort,
+  faTrash,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../../assets/css/Patients.css";
 import image from "../../../assets/images/dummy-profile-_new.jpg";
+import FailModal from "../../modals/Fail";
+import {
+  useDeleteCustomerMutation,
+  useGetAllCustomersQuery,
+} from "../../../store/api/customer";
+import { useNavigate } from "react-router-dom";
 
 function TablePatients({ data }) {
-  console.log("cutomer", data);
+  const { refetch } = useGetAllCustomersQuery();
+  const [deleteCustomer] = useDeleteCustomerMutation();
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
+  const handleDeleteOpen = (id) => {
+    setDeleteOpen(id), console.log("handleDelete", id);
+  };
+  const handleDeleteclose = () => setDeleteOpen(false);
+  const navigate = useNavigate();
 
   const handleSort = (key) => {
     let order = "asc";
@@ -146,15 +159,31 @@ function TablePatients({ data }) {
                 </td>
                 <td className=" patient-table-data ">{patient.medical}</td>
                 <td className="patient-table-icon">
-                  <FontAwesomeIcon icon={faPen} />
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    onClick={() => navigate("/home/gcc?testType=true")}
+                    />
                 </td>
                 <td className="patient-table-icon-pen">
-                  <FontAwesomeIcon icon={faTrashCan} />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    onClick={() => handleDeleteOpen(patient.id)}
+                  />
                 </td>
               </tr>
             ))}
         </tbody>
       </Table>
+      <FailModal
+        open={deleteOpen !== false}
+        handleClose={handleDeleteclose}
+        headtxt="Delete Customer"
+        bodytxt="Are you sure you want to delete this Customer? This action cannot be undone."
+        btntxt="Delete"
+        id={deleteOpen}
+        deleteApi={deleteCustomer}
+        refetchTable={refetch}
+      />
     </div>
   );
 }
