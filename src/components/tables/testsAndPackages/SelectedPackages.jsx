@@ -1,59 +1,110 @@
-import React from "react";
-import { Button, Table } from "react-bootstrap";
-import { mockData } from "../../../assets/mocks/mockData";
-import "../../../assets/css/Tests.css";
+import React, { useState } from "react";
+import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { FlexboxGrid, Input, InputGroup } from "rsuite";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FlexboxGrid, CheckPicker } from "rsuite";
+import { useGetAllPackagesQuery } from "../../../store/api/testApi";
+import { useForm } from "react-hook-form";
 
 function SelectedPackages() {
-  const data = mockData(15);
+  const { data: getAllPackage } = useGetAllPackagesQuery();
+  const [selectedData, setSelectedData] = useState([]);
+  console.log("data", getAllPackage);
+
+  const handleDataSelect = (selectedItems) => {
+    setSelectedData(selectedItems);
+    setValue("itemid", selectedItems);
+
+  };
+
+  const checkPickerData = getAllPackage?.payload.map((item) => ({
+    label: item.name,
+    value: item.id,
+  }));
+
+  const form = useForm({
+    mode: "onTouched",
+  });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    getValues,
+    formState: { errors },
+  } = form;
+
+
+  const onSubmit = () => {
+    const selectedItems = watch("itemid");
+    console.log(selectedItems);
+  };
+  
 
   return (
     <div className="selectedpackages-main-con">
-      <div className="selectedpackages-table-top">
-        <FlexboxGrid justify="space-between" className="m-3">
-          <FlexboxGrid.Item colspan={11}>
-            <InputGroup>
-              <Input placeholder="Search Tests ..." style={{ margin: 0 }} />
-              <InputGroup.Button>
-                <FontAwesomeIcon icon={faSearch} />
-              </InputGroup.Button>
-            </InputGroup>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={6} className="justify-end flex">
-            <Button className="w-40 h-10 bg-blue-800 text-white">
-              Add Test
-            </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-      </div>
-      <div style={{ maxHeight: "426px", overflowY: "auto", width: "auto" , minHeight:"426px" }}>
-        <Table >
-          <thead className="selectedpackages-table-head">
-            <tr>
-              <th>No</th>
-              <th>Package ID</th>
-              <th>Amount</th>
-              <th style={{paddingLeft:"7.5%"}}>Action</th>
-            </tr>
-          </thead>
-          <tbody className="selectedpackages-table-body">
-            {data.map((test, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{test.description}</td>
-                <td>{test.amount}</td>
-                <td style={{paddingLeft:"7.5%"}}>
-                  <FontAwesomeIcon icon={faTrashCan} style={{color:"#A30D11"}}/>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
-      <div className="selectedpackages-footer">
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="selectedpackages-table-top">
+          <FlexboxGrid justify="space-between" className="m-3">
+            <FlexboxGrid.Item colspan={11}>
+              <CheckPicker
+                data={checkPickerData}
+                value={selectedData}
+                style={{ width: "90%", zIndex: "150" }}
+                onChange={handleDataSelect}
+                // {...register("jobId")}
+              />
+            </FlexboxGrid.Item>
+          </FlexboxGrid>
+        </div>
+        {selectedData.length > 0 && (
+          <div
+            style={{
+              maxHeight: "426px",
+              overflowY: "auto",
+              width: "auto",
+              minHeight: "426px",
+            }}
+          >
+            <Table>
+              <thead className="selectedpackages-table-head">
+                <tr>
+                  <th>No</th>
+                  <th>Package ID</th>
+                  <th>Amount</th>
+                  <th style={{ paddingLeft: "7.5%" }}>Action</th>
+                </tr>
+              </thead>
+              <tbody className="selectedpackages-table-body">
+                {selectedData.map((selectedItem, index) => {
+                  const correspondingPackage = getAllPackage?.payload.find(
+                    (item) => item.id === selectedItem
+                  );
+
+                  if (correspondingPackage) {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{correspondingPackage.packageCode}</td>
+                        <td>{correspondingPackage.price}</td>
+                        <td style={{ paddingLeft: "7.5%" }}>
+                          <FontAwesomeIcon
+                            icon={faTrashCan}
+                            style={{ color: "#A30D11" }}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+              </tbody>
+            </Table>
+          </div>
+        )}
+        <div className="selectedpackages-footer"></div>
+      </form>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Checkbox } from "rsuite";
 import { Button } from "react-bootstrap";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "../assets/css/Login.css";
-import image from "../assets/images/medisense.png"
+import image from "../assets/images/medisense.png";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
@@ -59,11 +59,7 @@ function Login() {
     <div className="login-main">
       <form className="login-form" onSubmit={handleSubmit(handleLogin)}>
         {/* <h1 className="login-head">Login</h1> */}
-        <img
-          src={image}
-          alt="Your Image"
-          className="login-image"
-        />
+        <img src={image} alt="Your Image" className="login-image" />
         <input
           type="text"
           className="login-name"

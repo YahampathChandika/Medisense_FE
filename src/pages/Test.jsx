@@ -9,11 +9,14 @@ import {
   Radio,
   RadioGroup,
 } from "rsuite";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
+
 function Test() {
+  const { id } = useParams();
   const navigate = useNavigate();
+  console.log("id" ,id)
 
   return (
     <div style={{ width: "100%" }}>

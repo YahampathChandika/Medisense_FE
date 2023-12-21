@@ -91,18 +91,32 @@ function Gcc() {
     return `${year}-${month}-${day}`;
   }
 
-  console.log("formattedDate",formattedDate)
+  console.log("formattedDate", formattedDate);
 
   const navigate = useNavigate();
 
   const onSubmit = async (data, e) => {
+    try {
+      const response = await addCustomer(data);
+      console.log("Customer:", response);
+
+      if (!response.error) {
+        const customerId = response?.data?.customerId;
+        const admissionId = response?.data?.admissionId;
+        console.log("Customer ID:", customerId);
+        navigate(`/home/test/${customerId}/${admissionId}`);
+
+      } else {
+        console.error("Error registering customer:", response.payload);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  
     e.preventDefault();
     console.log("data", data);
-    addCustomer(data);
-    // navigate("/home/test");
   };
-
-  console.log("rt", getValues("dob"));
+  
 
   return (
     <Container className="gcc-con">
@@ -178,7 +192,11 @@ function Gcc() {
         </FlexboxGrid>
         <Row>
           <Row>Address</Row>
-          <input {...register("address")} autoComplete="false" className="rs-input"/>
+          <input
+            {...register("address")}
+            autoComplete="false"
+            className="rs-input"
+          />
         </Row>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
@@ -205,9 +223,9 @@ function Gcc() {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <Row>Mobile Number</Row>
-            <Input {...register("mobileNo")}/>
+            <Input {...register("mobileNo")} />
             <Row>NIC</Row>
-            <Input {...register("nic")}/>
+            <Input {...register("nic")} />
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider />

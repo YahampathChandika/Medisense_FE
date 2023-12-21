@@ -12,7 +12,6 @@ import {
   SelectPicker,
   Table,
 } from "rsuite";
-import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
@@ -91,7 +90,7 @@ function Lab() {
   };
 
   useEffect(() => {
-    document.title = 'Lab | Medisense';
+    document.title = "Lab | Medisense";
   }, []);
 
   return (

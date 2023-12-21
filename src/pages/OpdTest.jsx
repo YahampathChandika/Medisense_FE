@@ -7,12 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import { useEffect } from "react";
+import { useAddCustomerMutation } from "../store/api/customer";
 
 
 function OpdTest() {
-
-  const [addData] = useAddOpdMutation();
-
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
     fullName: "",
@@ -45,6 +43,7 @@ function OpdTest() {
     });
   };
 
+  const [ addCustomer ] = useAddCustomerMutation();
 
   const formattedDate = formatDate(inputData.dateOfBirth);
 
@@ -73,15 +72,15 @@ function OpdTest() {
   const handleSubmit = async () => {
     const updatedInputData = {
       ...inputData,
-      dateOfBirth: formattedDate, 
+      dateOfBirth: formattedDate,
     };
 
     try {
-      const  data = await addData(updatedInputData).unwrap();
-      console.log('Patient added successfully:', data);
-      resetForm(); 
+      const data = await addCustomer(updatedInputData).unwrap();
+      console.log("Patient added successfully:", data);
+      resetForm();
     } catch (error) {
-      console.error('Error adding patient:', error);
+      console.error("Error adding patient:", error);
     }
   };
 
