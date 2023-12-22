@@ -54,7 +54,7 @@
   .table-fixed thead {
     position: sticky;
     top: 0;
-    background-color: #fff; /* Add your desired background color */
+    background-color: #fff;
     z-index: 1;
   }
   
