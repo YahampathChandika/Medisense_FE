@@ -8,11 +8,9 @@ const selectPackageSlice = createSlice({
   },
   reducers: {
     addPackage: (state, action) => {
-      // Assuming action.payload is an array of selected package objects
       state.selectedPackages = action.payload;
     },
     addTest: (state, action) => {
-      // Assuming action.payload is an array of selected Test objects
       state.selectedTests = action.payload;
     },
   },

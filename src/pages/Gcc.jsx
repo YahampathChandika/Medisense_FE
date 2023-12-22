@@ -81,7 +81,7 @@ function Gcc() {
     formState: { errors },
   } = form;
 
-  const formattedDate = formatDate(getValues("dob"));
+  const formattedDate = formatDate(getValues("dateOfBirth"));
 
   function formatDate(date) {
     const formattedDate = new Date(date);
@@ -96,8 +96,12 @@ function Gcc() {
   const navigate = useNavigate();
 
   const onSubmit = async (data, e) => {
+    const updatedInputData = {
+      ...data,
+      dateOfBirth: formattedDate,
+    };
     try {
-      const response = await addCustomer(data);
+      const response = await addCustomer(updatedInputData);
       console.log("Customer:", response);
 
       if (!response.error) {
@@ -171,10 +175,10 @@ function Gcc() {
               oneTap
               format="MM-dd-yyyy"
               placeholder="MM-dd-yyyy"
-              id="dob"
-              name="dob"
-              value={watch("dob")}
-              onChange={(value) => setValue("dob", value)}
+              id="dateOfBirth"
+              name="dateOfBirth"
+              value={watch("dateOfBirth")}
+              onChange={(value) => setValue("dateOfBirth", value)}
             />
 
             <Row>Sex</Row>
