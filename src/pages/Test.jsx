@@ -13,13 +13,16 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { selectePackage, selecteTest } from "../store/slice/selectPackageSlice";
-import { useAddPackageAndTestMutation } from "../store/api/customer";
+import { useAddPackageAndTestMutation, useGetAllCustomersQuery } from "../store/api/customer";
+
+import Swal from "sweetalert2";
 
 function Test() {
   const { customerId, admissionId } = useParams();
   const navigate = useNavigate();
   console.log("id", customerId);
   console.log("id2", admissionId);
+  const { refetch } = useGetAllCustomersQuery();
   const [addPackage] = useAddPackageAndTestMutation();
   const selectedPackage = useSelector(selectePackage);
   const selectedTest = useSelector(selecteTest);
@@ -33,16 +36,40 @@ function Test() {
   const handleSubmit = async () => {
     const data = {
       packages: ids,
-      test:testId
+      tests: testId,
     };
 
     console.log("Data to be sent:", data);
 
     try {
       const response = await addPackage({ data, customerId, admissionId });
-      console.log("Response from the server:", response);
 
-      // Handle the response as needed (check for success, update state, etc.)
+      if (response.error) {
+        Swal.fire({
+          title: "Oops...",
+          text: response?.error?.data?.payload,
+          icon: "error",
+        });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: response?.data?.payload,
+        });
+        console.log("Response from the server:", response);
+        navigate("/home/dashboard");
+        refetch();
+      }
     } catch (error) {
       // Handle errors if the mutation fails
       console.error("Error adding package:", error);
