@@ -9,21 +9,21 @@ import "rsuite/dist/rsuite-no-reset.min.css";
 import { useEffect } from "react";
 import { useAddCustomerMutation } from "../store/api/customer";
 
-
 function OpdTest() {
+  const [registerCustomer] = useAddCustomerMutation();
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
     fullName: "",
     dateOfBirth: "",
     profilePhoto: "",
-    sevileStatus: "",
+    civilStatus: "",
     gender: "",
     address: "",
     mobileNo: "",
     email: "",
     nic: "",
     timeOfLastName: "",
-    referred: "",
+    referredBy: "",
   });
 
   const resetForm = () => {
@@ -32,18 +32,17 @@ function OpdTest() {
       fullName: "",
       dateOfBirth: "",
       profilePhoto: "",
-      sevileStatus: "",
+      civilStatus: "",
       gender: "",
       address: "",
       mobileNo: "",
       email: "",
       nic: "",
       timeOfLastName: "",
-      referred: "",
+      referredBy: "",
     });
   };
 
-  const [ addCustomer ] = useAddCustomerMutation();
 
   const formattedDate = formatDate(inputData.dateOfBirth);
 
@@ -75,9 +74,24 @@ function OpdTest() {
       dateOfBirth: formattedDate,
     };
 
+    const formData = new FormData();
+
+    formData.append("image", profilePic);
+    formData.append("fullName", inputData.fullName);
+    formData.append("sex", inputData.gender);
+    formData.append("address", inputData.address);
+    formData.append("email", inputData.email);
+    formData.append("mobileNo", inputData.mobileNo);
+    formData.append("civilStatus", inputData.civilStatus);
+    formData.append("nic", inputData.nic);
+    formData.append("timeOfLastName", inputData.timeOfLastName);
+    formData.append("referredBy", inputData.referredBy);
+    formData.append("medicalType", updatedInputData.medicalType);
+
     try {
-      const data = await addCustomer(updatedInputData).unwrap();
-      console.log("Patient added successfully:", data);
+      const response = await registerCustomer(formData);
+      console.log("response", response);
+
       resetForm();
     } catch (error) {
       console.error("Error adding patient:", error);
@@ -241,9 +255,9 @@ function OpdTest() {
                   value: item,
                 })
               )}
-              value={inputData.sevileStatus}
+              value={inputData.civilStatus}
               onChange={(value) => {
-                setInputData((prev) => ({ ...prev, sevileStatus: value }));
+                setInputData((prev) => ({ ...prev, civilStatus: value }));
               }}
             />
           </div>
@@ -285,12 +299,12 @@ function OpdTest() {
             <input
               type="text"
               className="rs-input"
-              value={inputData.referred}
+              value={inputData.referredBy}
               onChange={(e) => {
                 e.preventDefault();
                 setInputData((pre) => ({
                   ...pre,
-                  referred: e.target.value,
+                  referredBy: e.target.value,
                 }));
               }}
             />

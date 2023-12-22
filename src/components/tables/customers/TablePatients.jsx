@@ -155,7 +155,7 @@ function TablePatients({ data }) {
 
                   {patient.fullName}
                 </td>
-                <td className=" patient-table-data">{patient.mobileNo}</td>
+                <td className=" patient-table-data">{patient.email}</td>
                 <td
                   className={` patient-table-data ${
                     patient.status === "Paid"

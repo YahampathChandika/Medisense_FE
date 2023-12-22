@@ -174,7 +174,7 @@ function Gcc() {
 
   return (
     <Container className="gcc-con">
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+      <form onSubmit={handleSubmit(onSubmit)} >
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11} className="main-title">
             {testType ? <p>GCC Register</p> : <p>Non GCC Register</p>}
