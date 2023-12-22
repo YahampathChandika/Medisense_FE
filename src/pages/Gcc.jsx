@@ -91,8 +91,6 @@ function Gcc() {
     return `${year}-${month}-${day}`;
   }
 
-  console.log("formattedDate", formattedDate);
-
   const navigate = useNavigate();
 
   const onSubmit = async (data, e) => {
