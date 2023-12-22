@@ -111,17 +111,23 @@ function CashierList() {
       <Row className="flex items-center mt-5 mx-5">
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
           <FontAwesomeIcon icon={faUserFriends} className="h-12 w-12 py-1" />
-          <span className="font-bold text-2xl">0{cashierMatrices?.payload.customersWaiting || 0}</span>
+          <span className="font-bold text-2xl">
+            0{cashierMatrices?.payload.customersWaiting || 0}
+          </span>
           <span className="text-md font-semibold">Customers Waiting</span>
         </Col>
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4 mx-5">
           <FontAwesomeIcon icon={faCashRegister} className="h-12 w-12 py-1" />
-          <span className="font-bold text-2xl">0{cashierMatrices?.payload.customersPaid || 0}</span>
+          <span className="font-bold text-2xl">
+            0{cashierMatrices?.payload.customersPaid || 0}
+          </span>
           <span className="text-md font-semibold">Customers Cashed</span>
         </Col>
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
           <FontAwesomeIcon icon={faCoins} className="h-12 w-12 py-1" />
-          <span className="font-bold text-2xl">Rs. {cashierMatrices?.payload.todaysIncome || 0}.00</span>
+          <span className="font-bold text-2xl">
+            Rs. {cashierMatrices?.payload.todaysIncome || 0}.00
+          </span>
           <span className="text-md font-semibold">Today's Income</span>
         </Col>
       </Row>
@@ -249,10 +255,14 @@ function CashierList() {
                   <td className=" patient-table-data ">
                     {patient.medicalType}
                   </td>
-                  <td>
+                  <td style={{ borderStyle: "none" }}>
                     <FontAwesomeIcon
                       icon={faAngleRight}
-                      style={{ color: "black", paddingLeft: "40%" }}
+                      style={{
+                        color: "black",
+                        paddingLeft: "40%",
+                        borderStyle: "none",
+                      }}
                     />
                   </td>
                 </tr>
