@@ -9,7 +9,7 @@ import {
 } from "../../../store/api/testApi";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addPackage , addTest } from "../../../store/slice/selectPackageSlice";
+import { addPackage, addTest } from "../../../store/slice/selectPackageSlice";
 
 function SelectedPackages() {
   const { data: getAllPackage } = useGetAllPackagesQuery();
@@ -31,7 +31,6 @@ function SelectedPackages() {
         return {
           packageCode: correspondingPackage.packageCode,
           id: correspondingPackage.id,
-          // Add other properties as needed
         };
       }
 
@@ -47,14 +46,13 @@ function SelectedPackages() {
   const handleTestSelect = (selectedItems) => {
     const selectedTestItems = selectedItems.map((selectedItem) => {
       const correspondingTest = getAllTest?.payload.find(
-        (item) => item.testCode === selectedItem 
+        (item) => item.testCode === selectedItem
       );
 
       if (correspondingTest) {
         return {
           id: correspondingTest.id,
           testCode: correspondingTest.testCode,
-
 
           // Add other properties as needed
         };
@@ -95,6 +93,28 @@ function SelectedPackages() {
     console.log(selectedItems);
   };
 
+  const handleRemoveItem = (packageCode) => {
+    const updatedSelectedPackages = selectedPackages.filter(
+      (item) => item.packageCode !== packageCode
+    );
+    setSelectedPackages(updatedSelectedPackages);
+  };
+
+  const handleRemoveTestItem = (testCode) => {
+    const updatedSelectedTests = selectedTests.filter(
+      (item) => item.testCode !== testCode
+    );
+    setSelectedTests(updatedSelectedTests);
+  };
+
+  const getPackageCheckPickerValue = () => {
+    return selectedPackages.map((item) => item.packageCode);
+  };
+  
+  const getTestCheckPickerValue = () => {
+    return selectedTests.map((item) => item.testCode);
+  };
+
   return (
     <div className="selectedpackages-main-con">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,6 +127,7 @@ function SelectedPackages() {
                 style={{ width: "45%", zIndex: "150" }}
                 onChange={handlePackageSelect}
                 renderValue={() => <div>Select Package</div>}
+                value={getPackageCheckPickerValue()} // Set the selected values
               />
               <CheckPicker
                 data={checkTestPickerData}
@@ -114,6 +135,7 @@ function SelectedPackages() {
                 style={{ width: "45%", zIndex: "150", marginLeft: "25px" }}
                 onChange={handleTestSelect}
                 renderValue={() => <div>Select Test</div>}
+                value={getTestCheckPickerValue()} // Set the selected values
               />
             </FlexboxGrid.Item>
           </FlexboxGrid>
@@ -148,8 +170,12 @@ function SelectedPackages() {
                       );
 
                     if (correspondingItem) {
+                      const key =
+                        correspondingItem.packageCode ||
+                        correspondingItem.testCode;
+
                       return (
-                        <tr key={index}>
+                        <tr key={key}>
                           <td>{index + 1}</td>
                           <td>
                             {correspondingItem.packageCode ||
@@ -159,7 +185,16 @@ function SelectedPackages() {
                           <td style={{ paddingLeft: "7.5%" }}>
                             <FontAwesomeIcon
                               icon={faTrashCan}
-                              style={{ color: "#A30D11" }}
+                              style={{ color: "#A30D11", cursor: "pointer" }}
+                              onClick={() =>
+                                correspondingItem.packageCode
+                                  ? handleRemoveItem(
+                                      correspondingItem.packageCode
+                                    )
+                                  : handleRemoveTestItem(
+                                      correspondingItem.testCode
+                                    )
+                              }
                             />
                           </td>
                         </tr>
