@@ -40,6 +40,7 @@ function CashierList() {
       setCurrentDate(new Date());
     }, 1000);
 
+    setSortConfig({ key: "time", order: "asc" });
     return () => clearInterval(intervalId);
   }, []);
 
@@ -86,13 +87,13 @@ function CashierList() {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
 
-      if (aValue < bValue) {
-        return sortConfig.order === "asc" ? -1 : 1;
+      if (sortConfig.key === "time") {
+        return sortConfig.order === "asc"
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
       }
-      if (aValue > bValue) {
-        return sortConfig.order === "asc" ? 1 : -1;
-      }
-      return 0;
+
+      return sortConfig.order === "asc" ? aValue - bValue : bValue - aValue;
     });
 
     return sorted;
