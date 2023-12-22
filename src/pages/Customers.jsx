@@ -24,7 +24,7 @@ import { useGetAllCustomersQuery } from "../store/api/customer";
 
 function Customers() {
   const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();
-  const [activeButton, setActiveButton] = useState("GCC");
+  const [activeButton, setActiveButton] = useState("total");
   const navigate = useNavigate();
   const handleBtnSelect = (buttonId) => {
     setActiveButton(buttonId);
@@ -93,6 +93,23 @@ function Customers() {
         <Content>
           <div className="patient-select-btns">
             <button
+              className={`${activeButton === "total" ? "active" : ""}`}
+              onClick={() => handleBtnSelect("total")}
+            >
+              <div style={{ display: "flex" }}>
+                <p className="text-sm">Total</p>
+                <FontAwesomeIcon
+                  icon={faCaretRight}
+                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
+                />
+                <FontAwesomeIcon icon={faCaretDown} />
+              </div>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">300</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.485,125.00
+              </h6>
+            </button>
+            <button
               className={`${activeButton === "GCC" ? "active" : ""}`}
               onClick={() => handleBtnSelect("GCC")}
             >
@@ -141,23 +158,6 @@ function Customers() {
               <h4 className="md:text-lg lg:text-xl xl:text-2xl">170</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
                 Rs.385,125.00
-              </h6>
-            </button>
-            <button
-              className={`${activeButton === "total" ? "active" : ""}`}
-              onClick={() => handleBtnSelect("total")}
-            >
-              <div style={{ display: "flex" }}>
-                <p className="text-sm">Total</p>
-                <FontAwesomeIcon
-                  icon={faCaretRight}
-                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
-                />
-                <FontAwesomeIcon icon={faCaretDown} />
-              </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">300</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.485,125.00
               </h6>
             </button>
           </div>
