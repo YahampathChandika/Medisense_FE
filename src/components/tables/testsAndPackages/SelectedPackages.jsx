@@ -3,27 +3,32 @@ import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FlexboxGrid, CheckPicker } from "rsuite";
-import { useGetAllPackagesQuery } from "../../../store/api/testApi";
+import {
+  useGetAllPackagesQuery,
+  useGetAllTestsQuery,
+} from "../../../store/api/testApi";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addPackage } from "../../../store/slice/selectPackageSlice";
+import { addPackage , addTest } from "../../../store/slice/selectPackageSlice";
 
 function SelectedPackages() {
   const { data: getAllPackage } = useGetAllPackagesQuery();
-  const [selectedData, setSelectedData] = useState([]);
-  const dispatch = useDispatch();
-  console.log("data", getAllPackage);
+  const { data: getAllTest } = useGetAllTestsQuery();
+  const [selectedPackages, setSelectedPackages] = useState([]);
+  const [selectedTests, setSelectedTests] = useState([]);
+  console.log("getAllPackage", getAllPackage);
+  console.log("getAllTest", getAllTest);
 
-  const handleDataSelect = (selectedItems) => {
-    const selectedPackages = selectedItems.map((selectedItem) => {
+  const dispatch = useDispatch();
+
+  const handlePackageSelect = (selectedItems) => {
+    const selectedPackageItems = selectedItems.map((selectedItem) => {
       const correspondingPackage = getAllPackage?.payload.find(
         (item) => item.id === selectedItem
       );
 
       if (correspondingPackage) {
         return {
-          // id: selectedItem,
-          // packageCode: correspondingPackage.packageCode,
           id: correspondingPackage.id,
           // Add other properties as needed
         };
@@ -32,16 +37,44 @@ function SelectedPackages() {
       return null;
     });
 
-    // Filter out null values (in case a corresponding package is not found)
-    const filteredSelectedPackages = selectedPackages.filter(Boolean);
+    const filteredSelectedPackages = selectedPackageItems.filter(Boolean);
 
-    setSelectedData(selectedItems);
+    setSelectedPackages(filteredSelectedPackages);
     dispatch(addPackage(filteredSelectedPackages));
+  };
+
+  const handleTestSelect = (selectedItems) => {
+    const selectedTestItems = selectedItems.map((selectedItem) => {
+      const correspondingTest = getAllTest?.payload.find(
+        (item) => item.testCode === selectedItem 
+      );
+
+      if (correspondingTest) {
+        return {
+          testCode: correspondingTest.testCode,
+          id: correspondingTest.id,
+
+          // Add other properties as needed
+        };
+      }
+
+      return null;
+    });
+
+    const filteredSelectedTests = selectedTestItems.filter(Boolean);
+
+    setSelectedTests(filteredSelectedTests);
+    dispatch(addTest(filteredSelectedTests));
   };
 
   const checkPickerData = getAllPackage?.payload.map((item) => ({
     label: item.name,
     value: item.id,
+  }));
+
+  const checkTestPickerData = getAllTest?.payload.map((item) => ({
+    label: item.description,
+    value: item.testCode,
   }));
 
   const form = useForm({
@@ -68,28 +101,22 @@ function SelectedPackages() {
             <FlexboxGrid.Item colspan={11}>
               <CheckPicker
                 data={checkPickerData}
-                // value={selectedData}
                 placeholder="Select Package"
                 style={{ width: "45%", zIndex: "150" }}
-                onChange={handleDataSelect}
-                renderValue={() => {
-                  return <div>Select Package</div>;
-                }}
+                onChange={handlePackageSelect}
+                renderValue={() => <div>Select Package</div>}
               />
               <CheckPicker
-                data={checkPickerData}
-                // value={selectedData}
+                data={checkTestPickerData}
                 placeholder="Select Test"
                 style={{ width: "45%", zIndex: "150", marginLeft: "25px" }}
-                onChange={handleDataSelect}
-                renderValue={() => {
-                  return <div>Select Test</div>;
-                }}
+                onChange={handleTestSelect}
+                renderValue={() => <div>Select Test</div>}
               />
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </div>
-        {selectedData.length > 0 && (
+        {(selectedPackages.length > 0 || selectedTests.length > 0) && (
           <div
             style={{
               maxHeight: "426px",
@@ -108,29 +135,38 @@ function SelectedPackages() {
                 </tr>
               </thead>
               <tbody className="selectedpackages-table-body">
-                {selectedData.map((selectedItem, index) => {
-                  const correspondingPackage = getAllPackage?.payload.find(
-                    (item) => item.id === selectedItem
-                  );
+                {[...selectedPackages, ...selectedTests].map(
+                  (selectedItem, index) => {
+                    const correspondingItem =
+                      getAllPackage?.payload.find(
+                        (pkg) => pkg.id === selectedItem.id
+                      ) ||
+                      getAllTest?.payload.find(
+                        (test) => test.testCode === selectedItem.testCode
+                      );
 
-                  if (correspondingPackage) {
-                    return (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{correspondingPackage.packageCode}</td>
-                        <td>{correspondingPackage.price}</td>
-                        <td style={{ paddingLeft: "7.5%" }}>
-                          <FontAwesomeIcon
-                            icon={faTrashCan}
-                            style={{ color: "#A30D11" }}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  } else {
-                    return null;
+                    if (correspondingItem) {
+                      return (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>
+                            {correspondingItem.packageCode ||
+                              correspondingItem.testCode}
+                          </td>
+                          <td>{correspondingItem.price || "N/A"}</td>
+                          <td style={{ paddingLeft: "7.5%" }}>
+                            <FontAwesomeIcon
+                              icon={faTrashCan}
+                              style={{ color: "#A30D11" }}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    } else {
+                      return null;
+                    }
                   }
-                })}
+                )}
               </tbody>
             </Table>
           </div>
