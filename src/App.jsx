@@ -25,6 +25,7 @@ import UserRegistration from "./components/modals/UserRegistration";
 import Agency from "./pages/Agency";
 import AddAgency from "./components/modals/AddAgency";
 import TestAndPackages from "./pages/TestsAndPackages";
+import CashierList from "./pages/CashierList";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="tests" element={<Tests />} />
         </Route>
         <Route path="cashier" element={<Cashier />} />
+        <Route path="cashierList" element={<CashierList />} />
         <Route path="gcc" element={<Gcc />} />
         <Route path="opd" element={<OpdTest />} />
         <Route path="addAgency" element={<AddAgency />} />

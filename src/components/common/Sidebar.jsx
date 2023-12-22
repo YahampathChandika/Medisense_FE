@@ -117,10 +117,10 @@ function SidebarComp() {
           <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "cashier" ? "selected-menu-item" : ""
+                selectedMenuItem === "cashierList" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faCashRegister} />}
-              onClick={() => handleMenuItemClick("cashier")}
+              onClick={() => handleMenuItemClick("cashierList")}
             >
               Cashier
             </MenuItem>
