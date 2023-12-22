@@ -29,7 +29,10 @@ import {
 } from "../store/api/countryApi";
 import { useGetAllJobsQuery } from "../store/api/jobApi";
 import { useGetAllAgencyQuery } from "../store/api/agencyApi";
-import { useAddCustomerMutation } from "../store/api/customer";
+import {
+  useAddCustomerMutation,
+  useGetAllCustomersQuery,
+} from "../store/api/customer";
 
 function Gcc() {
   const location = useLocation();
@@ -43,6 +46,7 @@ function Gcc() {
   const { data: jobData } = useGetAllJobsQuery();
   const { data: agencyData } = useGetAllAgencyQuery();
   const [addCustomer] = useAddCustomerMutation();
+  const { refetch } = useGetAllCustomersQuery();
 
   const handleAgencyOpen = () => setAgencyOpen(true);
   const handleAgencyClose = () => setAgencyOpen(false);
@@ -93,36 +97,84 @@ function Gcc() {
 
   const navigate = useNavigate();
 
+  // const onSubmit = async (data, e) => {
+  //   console.log("data",data);
+  //   const formattedDate = formatDate(data.dateOfBirth);
+  //   const updatedInputData = {
+  //     ...data,
+  //     dateOfBirth: formattedDate,
+  //     medicalType: testType ? "GCC" : "Non GCC",
+  //   };
+
+  //   try {
+  //     const response = await addCustomer(updatedInputData);
+  //     console.log("Customer:", response);
+
+  //     if (!response.error) {
+  //       const customerId = response?.data?.customerId;
+  //       const admissionId = response?.data?.admissionId;
+  //       console.log("Customer ID:", customerId);
+  //       navigate(`/home/test/${customerId}/${admissionId}`);
+  //     } else {
+  //       console.error("Error registering customer:", response.payload);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error.message);
+  //   }
+
+  //   e.preventDefault();
+  //   console.log("data", updatedInputData);
+  // };
+
   const onSubmit = async (data, e) => {
+    const formattedDate = formatDate(data.dateOfBirth);
     const updatedInputData = {
       ...data,
       dateOfBirth: formattedDate,
+      medicalType: testType ? "GCC" : "Non GCC",
     };
+
+    const formData = new FormData();
+
+    formData.append("image", profilePic);
+    formData.append("fullName", data.fullName);
+    formData.append("dateOfBirth", updatedInputData.dateOfBirth);
+    formData.append("sex", data.sex);
+    formData.append("address", data.address);
+    formData.append("email", data.email);
+    formData.append("mobileNo", data.mobileNo);
+    formData.append("civilStatus", data.civilStatus);
+    formData.append("nic", data.nic);
+    formData.append("passportId", data.passportId);
+    formData.append("issuedDate", data.issuedDate);
+    formData.append("issuedPlace", data.issuedPlace);
+    formData.append("agencyId", data.agencyId);
+    formData.append("jobId", data.jobId);
+    formData.append("countryId", data.countryId);
+    formData.append("medicalType", updatedInputData.medicalType);
+
     try {
-      const response = await addCustomer(updatedInputData);
-      console.log("Customer:", response);
+      const response = await addCustomer(formData);
 
       if (!response.error) {
+        refetch();
         const customerId = response?.data?.customerId;
         const admissionId = response?.data?.admissionId;
-        console.log("Customer ID:", customerId);
         navigate(`/home/test/${customerId}/${admissionId}`);
-
       } else {
         console.error("Error registering customer:", response.payload);
       }
     } catch (error) {
       console.error("Error:", error.message);
     }
-  
+
     e.preventDefault();
-    console.log("data", data);
+    console.log("data", updatedInputData);
   };
-  
 
   return (
     <Container className="gcc-con">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11} className="main-title">
             {testType ? <p>GCC Register</p> : <p>Non GCC Register</p>}

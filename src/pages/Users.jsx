@@ -8,7 +8,7 @@ import {
   InputGroup,
 } from "rsuite";
 import { Button, Table } from "react-bootstrap";
-import image from "../assets/images/dummy-profile-_new.jpg";
+import image from "../assets/images/dummy.jpg";
 import "../assets/css/Users.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

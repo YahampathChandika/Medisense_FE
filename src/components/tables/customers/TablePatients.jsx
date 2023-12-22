@@ -9,7 +9,7 @@ import {
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../../assets/css/Patients.css";
-import image from "../../../assets/images/dummy-profile-_new.jpg";
+import dummyImg from "../../../assets/images/dummy.jpg";
 import FailModal from "../../modals/Fail";
 import {
   useDeleteCustomerMutation,
@@ -50,6 +50,9 @@ function TablePatients({ data }) {
     }
     return data;
   };
+
+  console.log("sortedData", sortedData());
+
   return (
     <div style={{ maxHeight: "450px", overflowY: "auto", width: "auto" }}>
       <Table striped hover className="text-left table-fixed">
@@ -141,10 +144,15 @@ function TablePatients({ data }) {
                   }}
                 >
                   <img
-                    src={patient.img || image}
+                    src={
+                      patient.image
+                        ? `http://localhost:3002/${patient.image}`
+                        : dummyImg
+                    }
                     alt="Patient"
-                    className="patient-image "
+                    className="patient-image"
                   />
+
                   {patient.fullName}
                 </td>
                 <td className=" patient-table-data">{patient.mobileNo}</td>
@@ -162,7 +170,7 @@ function TablePatients({ data }) {
                   <FontAwesomeIcon
                     icon={faPenToSquare}
                     onClick={() => navigate("/home/gcc?testType=true")}
-                    />
+                  />
                 </td>
                 <td className="patient-table-icon-pen">
                   <FontAwesomeIcon

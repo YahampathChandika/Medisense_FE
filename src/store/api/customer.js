@@ -4,12 +4,12 @@ export const customerApi = api.injectEndpoints({
   reducerPath: "customerApi",
   endpoints: (builder) => ({
     addCustomer: builder.mutation({
-      query: (data) => {
-        console.log("Data before making API call:", data);
+      query: (formData) => {
+        console.log("Data before making API call:", formData);
         return {
           url: "customer/registerCustomer",
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
     }),
