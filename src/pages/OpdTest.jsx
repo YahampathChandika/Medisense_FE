@@ -7,10 +7,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import { useEffect } from "react";
-import { useAddCustomerMutation } from "../store/api/customer";
+import {
+  useAddCustomerMutation,
+  useGetAllCustomersQuery,
+} from "../store/api/customer";
+import { useNavigate } from "react-router-dom";
 
 function OpdTest() {
   const [registerCustomer] = useAddCustomerMutation();
+  const { refetch } = useGetAllCustomersQuery();
+  const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState("");
   const [inputData, setInputData] = useState({
     fullName: "",
@@ -24,6 +30,7 @@ function OpdTest() {
     nic: "",
     timeOfLastName: "",
     referredBy: "",
+    medicalType: "OPD",
   });
 
   const resetForm = () => {
@@ -42,7 +49,6 @@ function OpdTest() {
       referredBy: "",
     });
   };
-
 
   const formattedDate = formatDate(inputData.dateOfBirth);
 
@@ -90,12 +96,20 @@ function OpdTest() {
 
     try {
       const response = await registerCustomer(formData);
-      console.log("response", response);
-
-      resetForm();
+      if (!response.error) {
+        refetch();
+        const customerId = response?.data?.customerId;
+        const admissionId = response?.data?.admissionId;
+        navigate(`/home/test/${customerId}/${admissionId}`);
+      } else {
+        console.error("Error registering customer:", response.payload);
+      }
     } catch (error) {
-      console.error("Error adding patient:", error);
+      console.error("Error:", error.message);
     }
+
+    e.preventDefault();
+    console.log("data", updatedInputData);
   };
 
   return (
