@@ -51,7 +51,7 @@ function App() {
         <Route path="users" element={<Users />} />
         <Route path="miniLab" element={<MiniLab />} />
         <Route path="lab" element={<Lab />} />
-        <Route path="test/:id/:id" element={<Test />}>
+        <Route path="test/:customerId/:admissionId" element={<Test />}>
           <Route index element={<SelectedPackages />} />
           <Route path="selectedPackages" element={<SelectedPackages />} />
         </Route>

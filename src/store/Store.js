@@ -6,6 +6,7 @@ import { authApi } from "./api/authApi";
 import { countryApi } from "./api/countryApi";
 import { jobApi } from "./api/jobApi";
 import selectedTestsReducer from "./slice/testSlice";
+import selectedPackageReducer from "./slice/selectPackageSlice"
 import { customerApi } from "./api/customer";
 
 export const store = configureStore({
@@ -19,6 +20,7 @@ export const store = configureStore({
     [jobApi.reducerPath]: jobApi.reducer,
 
     selectedTests: selectedTestsReducer,
+    selectPackage: selectedPackageReducer,
   },
 
   middleware: (getDefaultMiddleware) => {

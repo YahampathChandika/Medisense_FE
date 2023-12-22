@@ -13,7 +13,17 @@ export const customerApi = api.injectEndpoints({
         };
       },
     }),
+    addPackageAndTest: builder.mutation({
+      query: ({ data, customerId, admissionId }) => ({
+        url: `customer/addCustomerTestsAndPackages/${customerId}/${admissionId}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    
   }),
 });
 
-export const { useAddCustomerMutation } = customerApi;
+export const { useAddCustomerMutation, useAddPackageAndTestMutation } =
+  customerApi;
+

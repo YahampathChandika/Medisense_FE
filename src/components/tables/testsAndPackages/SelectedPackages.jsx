@@ -5,16 +5,38 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FlexboxGrid, CheckPicker } from "rsuite";
 import { useGetAllPackagesQuery } from "../../../store/api/testApi";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { addPackage, selectePackage } from "../../../store/slice/selectPackageSlice";
 
 function SelectedPackages() {
   const { data: getAllPackage } = useGetAllPackagesQuery();
   const [selectedData, setSelectedData] = useState([]);
+  const dispatch = useDispatch();
   console.log("data", getAllPackage);
 
   const handleDataSelect = (selectedItems) => {
+    const selectedPackages = selectedItems.map((selectedItem) => {
+      const correspondingPackage = getAllPackage?.payload.find(
+        (item) => item.id === selectedItem
+      );
+  
+      if (correspondingPackage) {
+        return {
+          // id: selectedItem,
+          // packageCode: correspondingPackage.packageCode,
+          id: correspondingPackage.id,
+          // Add other properties as needed
+        };
+      }
+  
+      return null;
+    });
+  
+    // Filter out null values (in case a corresponding package is not found)
+    const filteredSelectedPackages = selectedPackages.filter(Boolean);
+  
     setSelectedData(selectedItems);
-    setValue("itemid", selectedItems);
-
+    dispatch(addPackage(filteredSelectedPackages));
   };
 
   const checkPickerData = getAllPackage?.payload.map((item) => ({
@@ -30,7 +52,6 @@ function SelectedPackages() {
     handleSubmit,
     setValue,
     watch,
-    getValues,
     formState: { errors },
   } = form;
 
@@ -38,6 +59,7 @@ function SelectedPackages() {
   const onSubmit = () => {
     const selectedItems = watch("itemid");
     console.log(selectedItems);
+    
   };
   
 
