@@ -24,11 +24,12 @@ function SelectedPackages() {
   const handlePackageSelect = (selectedItems) => {
     const selectedPackageItems = selectedItems.map((selectedItem) => {
       const correspondingPackage = getAllPackage?.payload.find(
-        (item) => item.id === selectedItem
+        (item) => item.packageCode === selectedItem
       );
 
       if (correspondingPackage) {
         return {
+          packageCode: correspondingPackage.packageCode,
           id: correspondingPackage.id,
           // Add other properties as needed
         };
@@ -51,8 +52,9 @@ function SelectedPackages() {
 
       if (correspondingTest) {
         return {
-          testCode: correspondingTest.testCode,
           id: correspondingTest.id,
+          testCode: correspondingTest.testCode,
+
 
           // Add other properties as needed
         };
@@ -69,7 +71,7 @@ function SelectedPackages() {
 
   const checkPickerData = getAllPackage?.payload.map((item) => ({
     label: item.name,
-    value: item.id,
+    value: item.packageCode,
   }));
 
   const checkTestPickerData = getAllTest?.payload.map((item) => ({
@@ -139,7 +141,7 @@ function SelectedPackages() {
                   (selectedItem, index) => {
                     const correspondingItem =
                       getAllPackage?.payload.find(
-                        (pkg) => pkg.id === selectedItem.id
+                        (pkg) => pkg.packageCode === selectedItem.packageCode
                       ) ||
                       getAllTest?.payload.find(
                         (test) => test.testCode === selectedItem.testCode
