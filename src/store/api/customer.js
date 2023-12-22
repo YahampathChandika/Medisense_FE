@@ -21,9 +21,42 @@ export const customerApi = api.injectEndpoints({
       }),
     }),
     
+
+    getAllCustomers: builder.query({
+      query: () => "customer/getAllCustomers",
+    }),
+
+    getCustomerByID: builder.query({
+      query: (id) => `customer/getCustomerById/${id}`,
+    }),
+
+    deleteCustomer: builder.mutation({
+      query: (customerId) => ({
+        url: `customer/deleteCustomerById/${customerId}`,
+        method: "DELETE",
+      }),
+    }),
+
+    updateCustomer: builder.mutation({
+      query: ({ id, inputData }) => {
+        console.log("Data before making API call:", id, inputData);
+        return {
+          url: `customer/updateCustomer/${id}`,
+          method: "PATCH",
+          body: inputData,
+        };
+      },
+    }),
+
   }),
 });
 
-export const { useAddCustomerMutation, useAddPackageAndTestMutation } =
+export const {
+  useAddCustomerMutation, useAddPackageAndTestMutation,
+  useGetAllCustomersQuery,
+  useGetCustomerByIDQuery,
+  useDeleteCustomerMutation,
+  useUpdateCustomerMutation
+} =
   customerApi;
 

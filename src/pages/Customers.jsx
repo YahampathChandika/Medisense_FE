@@ -19,11 +19,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/customers/TablePatients";
-import mockData from "../assets/mocks/mock.js";
 import { useNavigate } from "react-router";
+import { useGetAllCustomersQuery } from "../store/api/customer";
 
 function Customers() {
-  const data = mockData;
+  const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();
   const [activeButton, setActiveButton] = useState("gcc");
   const navigate = useNavigate();
   const handleBtnSelect = (buttonId) => {
@@ -163,7 +163,7 @@ function Customers() {
           </div>
         </Content>
       </Container>
-      <TablePatients data={data} />
+      {!isLoading && !isError && <TablePatients data={customerData?.payload} />}
     </div>
   );
 }
