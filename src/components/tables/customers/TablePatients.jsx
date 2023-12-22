@@ -17,7 +17,7 @@ import {
 } from "../../../store/api/customer";
 import { useNavigate } from "react-router-dom";
 
-function TablePatients({ data }) {
+function TablePatients({ data, activeButton }) {
   const { refetch } = useGetAllCustomersQuery();
   const [deleteCustomer] = useDeleteCustomerMutation();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -52,6 +52,10 @@ function TablePatients({ data }) {
   };
 
   console.log("sortedData", sortedData());
+  console.log("act", activeButton);
+  const filteredData = data.filter((patient) => {
+    return patient.medical === activeButton;
+  });
 
   return (
     <div style={{ maxHeight: "450px", overflowY: "auto", width: "auto" }}>
@@ -131,8 +135,8 @@ function TablePatients({ data }) {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0 &&
-            sortedData().map((patient) => (
+          {(activeButton === "total" ? sortedData() : filteredData).map(
+            (patient) => (
               <tr key={patient.id}>
                 <td
                   className=" "
@@ -179,7 +183,8 @@ function TablePatients({ data }) {
                   />
                 </td>
               </tr>
-            ))}
+            )
+          )}
         </tbody>
       </Table>
       <FailModal

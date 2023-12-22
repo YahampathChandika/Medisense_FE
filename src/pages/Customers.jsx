@@ -24,7 +24,7 @@ import { useGetAllCustomersQuery } from "../store/api/customer";
 
 function Customers() {
   const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();
-  const [activeButton, setActiveButton] = useState("gcc");
+  const [activeButton, setActiveButton] = useState("GCC");
   const navigate = useNavigate();
   const handleBtnSelect = (buttonId) => {
     setActiveButton(buttonId);
@@ -93,8 +93,8 @@ function Customers() {
         <Content>
           <div className="patient-select-btns">
             <button
-              className={`${activeButton === "gcc" ? "active" : ""}`}
-              onClick={() => handleBtnSelect("gcc")}
+              className={`${activeButton === "GCC" ? "active" : ""}`}
+              onClick={() => handleBtnSelect("GCC")}
             >
               <div style={{ display: "flex" }}>
                 <p className="text-sm">GCC Medicals</p>
@@ -110,8 +110,8 @@ function Customers() {
               </h6>
             </button>
             <button
-              className={`${activeButton === "nongcc" ? "active" : ""}`}
-              onClick={() => handleBtnSelect("nongcc")}
+              className={`${activeButton === "Non GCC" ? "active" : ""}`}
+              onClick={() => handleBtnSelect("Non GCC")}
             >
               <div style={{ display: "flex" }}>
                 <p className="text-sm">Non GCC Medicals</p>
@@ -127,8 +127,8 @@ function Customers() {
               </h6>
             </button>
             <button
-              className={`${activeButton === "opd" ? "active" : ""}`}
-              onClick={() => handleBtnSelect("opd")}
+              className={`${activeButton === "OPD" ? "active" : ""}`}
+              onClick={() => handleBtnSelect("OPD")}
             >
               <div style={{ display: "flex" }}>
                 <p className="text-sm">OPD Tests</p>
@@ -163,7 +163,12 @@ function Customers() {
           </div>
         </Content>
       </Container>
-      {!isLoading && !isError && <TablePatients data={customerData?.payload} />}
+      {!isLoading && !isError && (
+        <TablePatients
+          data={customerData?.payload}
+          activeButton={activeButton}
+        />
+      )}
     </div>
   );
 }
