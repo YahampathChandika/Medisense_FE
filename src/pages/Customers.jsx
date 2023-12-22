@@ -24,7 +24,7 @@ import { useGetAllCustomersQuery } from "../store/api/customer";
 
 function Customers() {
   const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();
-  const [activeButton, setActiveButton] = useState("gcc");
+  const [activeButton, setActiveButton] = useState("total");
   const navigate = useNavigate();
   const handleBtnSelect = (buttonId) => {
     setActiveButton(buttonId);
@@ -93,57 +93,6 @@ function Customers() {
         <Content>
           <div className="patient-select-btns">
             <button
-              className={`${activeButton === "gcc" ? "active" : ""}`}
-              onClick={() => handleBtnSelect("gcc")}
-            >
-              <div style={{ display: "flex" }}>
-                <p className="text-sm">GCC Medicals</p>
-                <FontAwesomeIcon
-                  icon={faCaretRight}
-                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
-                />
-                <FontAwesomeIcon icon={faCaretDown} />
-              </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">120</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.85,125.00
-              </h6>
-            </button>
-            <button
-              className={`${activeButton === "nongcc" ? "active" : ""}`}
-              onClick={() => handleBtnSelect("nongcc")}
-            >
-              <div style={{ display: "flex" }}>
-                <p className="text-sm">Non GCC Medicals</p>
-                <FontAwesomeIcon
-                  icon={faCaretRight}
-                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
-                />
-                <FontAwesomeIcon icon={faCaretDown} />
-              </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">110</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.185,125.00
-              </h6>
-            </button>
-            <button
-              className={`${activeButton === "opd" ? "active" : ""}`}
-              onClick={() => handleBtnSelect("opd")}
-            >
-              <div style={{ display: "flex" }}>
-                <p className="text-sm">OPD Tests</p>
-                <FontAwesomeIcon
-                  icon={faCaretRight}
-                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
-                />
-                <FontAwesomeIcon icon={faCaretDown} />
-              </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">170</h4>
-              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.385,125.00
-              </h6>
-            </button>
-            <button
               className={`${activeButton === "total" ? "active" : ""}`}
               onClick={() => handleBtnSelect("total")}
             >
@@ -160,10 +109,66 @@ function Customers() {
                 Rs.485,125.00
               </h6>
             </button>
+            <button
+              className={`${activeButton === "GCC" ? "active" : ""}`}
+              onClick={() => handleBtnSelect("GCC")}
+            >
+              <div style={{ display: "flex" }}>
+                <p className="text-sm">GCC Medicals</p>
+                <FontAwesomeIcon
+                  icon={faCaretRight}
+                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
+                />
+                <FontAwesomeIcon icon={faCaretDown} />
+              </div>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">120</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.85,125.00
+              </h6>
+            </button>
+            <button
+              className={`${activeButton === "Non GCC" ? "active" : ""}`}
+              onClick={() => handleBtnSelect("Non GCC")}
+            >
+              <div style={{ display: "flex" }}>
+                <p className="text-sm">Non GCC Medicals</p>
+                <FontAwesomeIcon
+                  icon={faCaretRight}
+                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
+                />
+                <FontAwesomeIcon icon={faCaretDown} />
+              </div>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">110</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.185,125.00
+              </h6>
+            </button>
+            <button
+              className={`${activeButton === "OPD" ? "active" : ""}`}
+              onClick={() => handleBtnSelect("OPD")}
+            >
+              <div style={{ display: "flex" }}>
+                <p className="text-sm">OPD Tests</p>
+                <FontAwesomeIcon
+                  icon={faCaretRight}
+                  style={{ marginTop: "7.8px", marginLeft: "3px " }}
+                />
+                <FontAwesomeIcon icon={faCaretDown} />
+              </div>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">170</h4>
+              <h6 className="md:text-lg lg:text-xl xl:text-2xl">
+                Rs.385,125.00
+              </h6>
+            </button>
           </div>
         </Content>
       </Container>
-      {!isLoading && !isError && <TablePatients data={customerData?.payload} />}
+      {!isLoading && !isError && (
+        <TablePatients
+          data={customerData?.payload}
+          activeButton={activeButton}
+        />
+      )}
     </div>
   );
 }
