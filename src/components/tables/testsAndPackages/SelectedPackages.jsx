@@ -5,8 +5,8 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FlexboxGrid, CheckPicker } from "rsuite";
 import { useGetAllPackagesQuery } from "../../../store/api/testApi";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { addPackage, selectePackage } from "../../../store/slice/selectPackageSlice";
+import { useDispatch } from "react-redux";
+import { addPackage } from "../../../store/slice/selectPackageSlice";
 
 function SelectedPackages() {
   const { data: getAllPackage } = useGetAllPackagesQuery();
@@ -19,7 +19,7 @@ function SelectedPackages() {
       const correspondingPackage = getAllPackage?.payload.find(
         (item) => item.id === selectedItem
       );
-  
+
       if (correspondingPackage) {
         return {
           // id: selectedItem,
@@ -28,13 +28,13 @@ function SelectedPackages() {
           // Add other properties as needed
         };
       }
-  
+
       return null;
     });
-  
+
     // Filter out null values (in case a corresponding package is not found)
     const filteredSelectedPackages = selectedPackages.filter(Boolean);
-  
+
     setSelectedData(selectedItems);
     dispatch(addPackage(filteredSelectedPackages));
   };
@@ -55,13 +55,10 @@ function SelectedPackages() {
     formState: { errors },
   } = form;
 
-
   const onSubmit = () => {
     const selectedItems = watch("itemid");
     console.log(selectedItems);
-    
   };
-  
 
   return (
     <div className="selectedpackages-main-con">
@@ -71,10 +68,23 @@ function SelectedPackages() {
             <FlexboxGrid.Item colspan={11}>
               <CheckPicker
                 data={checkPickerData}
-                value={selectedData}
-                style={{ width: "90%", zIndex: "150" }}
+                // value={selectedData}
+                placeholder="Select Package"
+                style={{ width: "45%", zIndex: "150" }}
                 onChange={handleDataSelect}
-                // {...register("jobId")}
+                renderValue={() => {
+                  return <div>Select Package</div>;
+                }}
+              />
+              <CheckPicker
+                data={checkPickerData}
+                // value={selectedData}
+                placeholder="Select Test"
+                style={{ width: "45%", zIndex: "150", marginLeft: "25px" }}
+                onChange={handleDataSelect}
+                renderValue={() => {
+                  return <div>Select Test</div>;
+                }}
               />
             </FlexboxGrid.Item>
           </FlexboxGrid>
