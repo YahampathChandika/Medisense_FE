@@ -12,26 +12,27 @@ import {
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { selectePackage, selecteTest } from "../store/slice/selectPackageSlice";
+import {  selectePackage, selecteTest } from "../store/slice/selectPackageSlice";
 import { useAddPackageAndTestMutation, useGetAllCustomersQuery } from "../store/api/customer";
+
 
 import Swal from "sweetalert2";
 
 function Test() {
   const { customerId, admissionId } = useParams();
   const navigate = useNavigate();
-  console.log("id", customerId);
-  console.log("id2", admissionId);
+  // console.log("id", customerId);
+  // console.log("id2", admissionId);
   const { refetch } = useGetAllCustomersQuery();
   const [addPackage] = useAddPackageAndTestMutation();
   const selectedPackage = useSelector(selectePackage);
   const selectedTest = useSelector(selecteTest);
-  console.log("selectedTest from Redux store:", selectedTest);
+  // console.log("selectedTest from Redux store:", selectedTest);
   const ids = selectedPackage.map((item) => item.id);
-  console.log("IDs from Redux store:", ids);
-
+  // console.log("IDs from Redux store:", ids);
+ 
   const testId = selectedTest.map((item) => item.id);
-  console.log("testId from Redux store:", testId);
+  // console.log("testId from Redux store:", testId);
 
   const handleSubmit = async () => {
     const data = {
@@ -39,7 +40,7 @@ function Test() {
       tests: testId,
     };
 
-    console.log("Data to be sent:", data);
+    // console.log("Data to be sent:", data);
 
     try {
       const response = await addPackage({ data, customerId, admissionId });
@@ -86,7 +87,7 @@ function Test() {
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Header>
-        <Divider className="border-t-2 border-gray-300 mb-1 mt-2" />
+        <Divider className="border-t-2 border-gray-300 mb-1 mt-1" />
         <FlexboxGrid justify="space-between" style={{ marginTop: "15px" }}>
           <FlexboxGrid.Item colspan={7}>
             <RadioGroup
@@ -111,7 +112,7 @@ function Test() {
             </RadioGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider className="mt-0 mb-7" />
+        <Divider className="mt-0 " />
         <Content>
           <Outlet />
         </Content>

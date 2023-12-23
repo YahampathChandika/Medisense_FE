@@ -41,3 +41,8 @@
   border-radius: 0px 0px 8px 8px;
   border-bottom: 1px solid #d5daec;
 }
+
+.selectedpackages-amount {
+  display: flex;
+  justify-content: end;
+}
