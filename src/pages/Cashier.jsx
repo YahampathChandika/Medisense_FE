@@ -10,17 +10,37 @@ import {
   SelectPicker,
   Table,
   DatePicker,
+  Col,
 } from "rsuite";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useGetCustomerQuery } from "../store/api/cashier";
+import { useGetPaymentMethodsQuery } from "../store/api/dropdownsApi";
 
 function Cashier() {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
+  const { customerId, admissionId } = useParams();
+  const { data: paymentMethods } = useGetPaymentMethodsQuery();
+
+  console.log("Cashier", customerId, admissionId);
+
+  const {
+    data: cutomerData,
+    error,
+    isLoading,
+    isError,
+  } = useGetCustomerQuery({
+    customerId: Number(customerId),
+    admissionId: Number(admissionId),
+  });
+
+  console.log("cutomerData", cutomerData?.payload);
 
   const form = useForm({
     mode: "onTouched",
@@ -91,7 +111,7 @@ function Cashier() {
   };
 
   useEffect(() => {
-    document.title = 'Cashier | Medisense';
+    document.title = "Cashier | Medisense";
   }, []);
 
   return (
@@ -107,18 +127,76 @@ function Cashier() {
           justify="space-between"
           className="flex items-center justify-between"
         >
-          <FlexboxGrid.Item colspan={16}>
-            <Row>Full Name</Row>
-            <Input {...register("name")} />
-            <Row>ID</Row>
-            <Input {...register("id")} />
-          </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={6}>
             <img
               className="h-40 w-40 rounded-full"
               src="https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt=""
             />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={6}>
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Name
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.fullName}
+            </Row>
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Age
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Gender
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={6}>
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Agency
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
+
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Country
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
+
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Job Title
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={6}>
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Medical Type{" "}
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
+
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              NIC
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
+
+            <Row className="text-black text-opacity-50 text-base font-semibold">
+              Passport
+            </Row>
+            <Row className="text-black text-lg font-medium">
+              {cutomerData?.payload?.agency}
+            </Row>
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Table
@@ -163,12 +241,13 @@ function Cashier() {
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
             <SelectPicker
+              menuMaxHeight={120}
               searchable={false}
               placeholder="Payment Method"
               style={{ width: "100%" }}
-              data={["Cash", "Cheque", "Credit"].map((item) => ({
-                label: item,
-                value: item,
+              data={paymentMethods?.payload.map((item) => ({
+                label: item.method,
+                value: item.id,
               }))}
               {...register("payment")}
               onChange={(value) => setValue("payment", value)}

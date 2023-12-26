@@ -43,6 +43,7 @@ function App() {
           <Route path="packages" element={<Packages />} />
           <Route path="tests" element={<Tests />} />
         </Route>
+        <Route path="cashier/:customerId/:admissionId" element={<Cashier />} />
         <Route path="cashier" element={<Cashier />} />
         <Route path="cashierList" element={<CashierList />} />
         <Route path="gcc" element={<Gcc />} />

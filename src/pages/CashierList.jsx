@@ -7,10 +7,7 @@ import {
   faUserFriends,
   faCaretDown,
   faCaretUp,
-  faPenToSquare,
-  faSearch,
   faSort,
-  faTrash,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import dummyImg from "../assets/images/dummy.jpg";
@@ -19,6 +16,7 @@ import {
   useGetCashierListMatricesQuery,
   useGetCashierListQuery,
 } from "../store/api/cashier";
+import { useNavigate } from "react-router-dom";
 
 function CashierList() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -34,6 +32,8 @@ function CashierList() {
     useGetCashierListMatricesQuery();
 
   const cashierData = cashierList?.payload;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -57,7 +57,7 @@ function CashierList() {
       <div className="flex items-top">
         <span className="text-xl">{day}</span>
         <span className="text-sm inline-block align-top mr-1">{suffix}</span>
-        <span className="text-xl mr-7">
+        <span className="text-xl">
           {" "}
           {month} {year}
         </span>
@@ -256,7 +256,15 @@ function CashierList() {
                   <td className=" patient-table-data ">
                     {patient.medicalType}
                   </td>
-                  <td style={{ borderStyle: "none" }}>
+                  <td
+                    style={{ borderStyle: "none", cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(
+                        `/home/cashier/${patient.customerId}/${patient.admissionId}`
+                        // '/home/cashier'
+                      )
+                    }
+                  >
                     <FontAwesomeIcon
                       icon={faAngleRight}
                       style={{

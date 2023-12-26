@@ -10,10 +10,16 @@ export const cashierApi = api.injectEndpoints({
     getCashierListMatrices: builder.query({
       query: () => "cashier/getCashierListMatrices",
     }),
+
+    getCustomer: builder.query({
+      query: ({ customerId, admissionId }) =>
+        `cashier/getCustomerWithTestsAndPackages/${customerId}/${admissionId}`,
+    }),
   }),
 });
 
 export const {
   useGetCashierListQuery,
   useGetCashierListMatricesQuery,
+  useGetCustomerQuery,
 } = cashierApi;
