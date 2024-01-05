@@ -7,10 +7,10 @@ export const api = createApi({
         // baseUrl: 'http://44.208.32.102:3001/',
 
         prepareHeaders: (headers) => {
-            const token = localStorage.getItem('token'); 
-            // console.log("hello "+token)         
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`)
+            const accessToken = localStorage.getItem('accessToken'); 
+            // console.log("hello "+accessToken)         
+            if (accessToken) {
+                headers.set('Authorization', `Bearer ${accessToken}`)
             }
             return headers;
         }
