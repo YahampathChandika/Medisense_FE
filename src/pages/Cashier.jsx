@@ -1,6 +1,15 @@
-import React, { useState } from "react";
-import "../assets/css/Gcc.css";
-import { mockData } from "../assets/mocks/mockData";
+import React, { useState, useEffect } from "react";
+import { Button, Table } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { useGetCustomerQuery } from "../store/api/cashier";
+import { useGetPaymentMethodsQuery } from "../store/api/dropdownsApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCaretDown,
+  faCaretUp,
+  faSort,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Container,
   Divider,
@@ -8,30 +17,22 @@ import {
   Row,
   FlexboxGrid,
   SelectPicker,
-  Table,
   DatePicker,
-  Col,
 } from "rsuite";
-import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useGetCustomerQuery } from "../store/api/cashier";
-import { useGetPaymentMethodsQuery } from "../store/api/dropdownsApi";
+import "../assets/css/Gcc.css";
 
 function Cashier() {
-  const [sortColumn, setSortColumn] = useState();
-  const [sortType, setSortType] = useState();
-  const [loading, setLoading] = useState(false);
   const { customerId, admissionId } = useParams();
   const { data: paymentMethods } = useGetPaymentMethodsQuery();
-
-  console.log("Cashier", customerId, admissionId);
+  const [sorting, setSorting] = useState({
+    column: null,
+    order: null,
+  });
 
   const {
-    data: cutomerData,
+    data: customerData,
     error,
     isLoading,
     isError,
@@ -39,8 +40,6 @@ function Cashier() {
     customerId: Number(customerId),
     admissionId: Number(admissionId),
   });
-
-  console.log("cutomerData", cutomerData?.payload);
 
   const form = useForm({
     mode: "onTouched",
@@ -57,62 +56,53 @@ function Cashier() {
 
   const watchAllFields = watch("payment");
 
-  const { Column, HeaderCell, Cell } = Table;
-  const data = mockData(8);
-
-  const CustomHeaderCell = ({ children, className, ...props }) => {
-    const headerClasses = "text-black font-bold text-sm";
-
-    return (
-      <Table.HeaderCell {...props} className={`${className} ${headerClasses}`}>
-        {children}
-      </Table.HeaderCell>
-    );
-  };
-
-  const getData = () => {
-    if (sortColumn && sortType) {
-      return data.sort((a, b) => {
-        let x = a[sortColumn];
-        let y = b[sortColumn];
-
-        if (typeof x === "string") {
-          x = x.toLowerCase();
-        }
-        if (typeof y === "string") {
-          y = y.toLowerCase();
-        }
-
-        if (x < y) {
-          return sortType === "asc" ? -1 : 1;
-        }
-        if (x > y) {
-          return sortType === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return data;
-  };
-
-  const handleSortColumn = (sortColumn, sortType) => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSortColumn(sortColumn);
-      setSortType(sortType);
-    }, 500);
+  const handleSort = (column) => {
+    setSorting((prevSorting) => ({
+      column,
+      order:
+        prevSorting.column === column && prevSorting.order === "asc"
+          ? "desc"
+          : "asc",
+    }));
   };
 
   const onSubmit = (data) => {
-    // console.log('register', data.payment);
     console.log("registeeee", getValues("name"));
     console.log("register", data.name);
+  };
+
+  const sortedData = () => {
+    if (sorting.column && customerData?.payload?.tests) {
+      const sorted = [...customerData.payload.tests];
+      sorted.sort((a, b) => {
+        const aValue =
+          sorting.column === "price"
+            ? parseFloat(a[sorting.column])
+            : a[sorting.column];
+        const bValue =
+          sorting.column === "price"
+            ? parseFloat(b[sorting.column])
+            : b[sorting.column];
+
+        if (isNaN(aValue) || isNaN(bValue)) {
+          return sorting.order === "asc"
+            ? a[sorting.column].localeCompare(b[sorting.column])
+            : b[sorting.column].localeCompare(a[sorting.column]);
+        }
+
+        return sorting.order === "asc" ? aValue - bValue : bValue - aValue;
+      });
+      return sorted;
+    }
+    return customerData?.payload?.tests || [];
   };
 
   useEffect(() => {
     document.title = "Cashier | Medisense";
   }, []);
+
+  console.log("paymentMethods", paymentMethods);
+  console.log("payment", getValues("payment"));
 
   return (
     <Container className="gcc-con">
@@ -138,92 +128,140 @@ function Cashier() {
             <Row className="text-black text-opacity-50 text-base font-semibold">
               Name
             </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.fullName}
+            <Row className="text-black text-lg font-medium mb-2">
+              {customerData?.payload?.customer?.fullName}
             </Row>
             <Row className="text-black text-opacity-50 text-base font-semibold">
               Age
             </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
+            <Row className="text-black text-lg font-medium mb-2">
+              {customerData?.payload?.customer?.age}
             </Row>
             <Row className="text-black text-opacity-50 text-base font-semibold">
               Gender
             </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
+            <Row className="text-black text-lg font-medium mb-2">
+              {customerData?.payload?.customer?.gender}
             </Row>
           </FlexboxGrid.Item>
+          {customerData?.payload?.customer?.medicalType != "OPD" && (
+            <FlexboxGrid.Item colspan={6}>
+              <Row className="text-black text-opacity-50 text-base font-semibold">
+                Agency
+              </Row>
+              <Row className="text-black text-lg font-medium mb-2">
+                {customerData?.payload?.customer?.agency}
+              </Row>
+
+              <Row className="text-black text-opacity-50 text-base font-semibold">
+                Country
+              </Row>
+              <Row className="text-black text-lg font-medium mb-2">
+                {customerData?.payload?.customer?.country}
+              </Row>
+
+              <Row className="text-black text-opacity-50 text-base font-semibold">
+                Job Title
+              </Row>
+              <Row className="text-black text-lg font-medium mb-2">
+                {customerData?.payload?.customer?.job}
+              </Row>
+            </FlexboxGrid.Item>
+          )}
           <FlexboxGrid.Item colspan={6}>
             <Row className="text-black text-opacity-50 text-base font-semibold">
-              Agency
+              Medical Type
             </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
-            </Row>
-
-            <Row className="text-black text-opacity-50 text-base font-semibold">
-              Country
-            </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
-            </Row>
-
-            <Row className="text-black text-opacity-50 text-base font-semibold">
-              Job Title
-            </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
-            </Row>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={6}>
-            <Row className="text-black text-opacity-50 text-base font-semibold">
-              Medical Type{" "}
-            </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
+            <Row className="text-black text-lg font-medium mb-2">
+              {customerData?.payload?.customer?.medicalType}
             </Row>
 
             <Row className="text-black text-opacity-50 text-base font-semibold">
               NIC
             </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
+            <Row className="text-black text-lg font-medium mb-2">
+              {customerData?.payload?.customer?.nic}
             </Row>
+            {customerData?.payload?.customer?.medicalType != "OPD" && (
+              <>
+                <Row className="text-black text-opacity-50 text-base font-semibold">
+                  Passport
+                </Row>
 
-            <Row className="text-black text-opacity-50 text-base font-semibold">
-              Passport
-            </Row>
-            <Row className="text-black text-lg font-medium">
-              {cutomerData?.payload?.agency}
-            </Row>
+                <Row className="text-black text-lg font-medium mb-2">
+                  {customerData?.payload?.customer?.passport}
+                </Row>
+              </>
+            )}
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Table
-          autoHeight
-          minHeight={200}
-          bordered
-          data={getData()}
-          sortColumn={sortColumn}
-          sortType={sortType}
-          onSortColumn={handleSortColumn}
-          loading={loading}
-          style={{ margin: "25px 0 40px" }}
-        >
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>ID</CustomHeaderCell>
-            <Table.Cell dataKey="no" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Package ID</CustomHeaderCell>
-            <Table.Cell dataKey="type" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Amount</CustomHeaderCell>
-            <Table.Cell dataKey="amount" />
-          </Table.Column>
+        <Table className="mt-5">
+          <thead className="selectedpackages-table-head">
+            <tr>
+              <th>#</th>
+              <th onClick={() => handleSort("code")}>
+                Code
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "code"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
+              </th>
+              <th onClick={() => handleSort("description")}>
+                Description
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "description"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
+              </th>
+              <th onClick={() => handleSort("price")}>
+                Price
+                <FontAwesomeIcon
+                  icon={
+                    sorting.column === "price"
+                      ? sorting.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  className="ml-2"
+                />
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody className="selectedpackages-table-body">
+            {sortedData().map((test, index) => (
+              <tr key={test.id}>
+                <td>{index + 1}</td>
+                <td>{test.code}</td>
+                <td>{test.description}</td>
+                <td>{test.price}</td>
+              </tr>
+            ))}
+
+            {customerData?.payload?.tests?.length === 0 && (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  <p className="text-gray-500">No data to display.</p>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </Table>
-        <FlexboxGrid justify="space-between">
+        <FlexboxGrid justify="space-between" className="mt-5">
           <FlexboxGrid.Item colspan={11}>
             <Row>Commision</Row>
             <Input {...register("commision")} name="commision" />
@@ -245,15 +283,17 @@ function Cashier() {
               searchable={false}
               placeholder="Payment Method"
               style={{ width: "100%" }}
-              data={paymentMethods?.payload.map((item) => ({
-                label: item.method,
-                value: item.id,
-              }))}
+              data={
+                paymentMethods?.payload.map((item) => ({
+                  label: item.label,
+                  value: item.label,
+                })) || []
+              }
               {...register("payment")}
-              onChange={(value) => setValue("payment", value)}
+              onChange={(label) => setValue("payment", label)}
             />
           </FlexboxGrid.Item>
-          {getValues("payment") == "Cheque" && (
+          {getValues("payment") == "Check" && (
             <FlexboxGrid.Item colspan={11}>
               <Input
                 {...register("chequeNo")}
