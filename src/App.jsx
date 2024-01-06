@@ -19,42 +19,198 @@ import TablePatients from "./components/tables/customers/TablePatients";
 import Test from "./pages/Test";
 import SelectedPackages from "./components/tables/testsAndPackages/SelectedPackages";
 import Packages from "./components/tables/testsAndPackages/Packages";
-import Tests  from "./components/tables/testsAndPackages/Tests";
+import Tests from "./components/tables/testsAndPackages/Tests";
 import Users from "./pages/Users";
 import UserRegistration from "./components/modals/UserRegistration";
 import Agency from "./pages/Agency";
 import AddAgency from "./components/modals/AddAgency";
 import TestAndPackages from "./pages/TestsAndPackages";
 import CashierList from "./pages/CashierList";
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./components/common/NotFound";
+
+// function App() {
+//   return (
+//     <Routes>
+//       <Route path="/" element={<Login />} />
+//       <Route path="tablePatients" element={<TablePatients />} />
+//       <Route path="userRegistration" element={<UserRegistration />} />
+//       <Route path="/home" element={<Home />}>
+//         <Route index path="dashboard" element={<Dashboard />} />
+//         <Route path="opdTest" element={<OpdTest />} />
+//         <Route path="reception" element={<Reception />} />
+//         <Route path="customers" element={<Customers />} />
+//         <Route path="testAndPackages" element={<TestAndPackages />}>
+//           <Route index element={<Packages />} />
+//           <Route path="packages" element={<Packages />} />
+//           <Route path="tests" element={<Tests />} />
+//         </Route>
+//         <Route path="cashier/:customerId/:admissionId" element={<Cashier />} />
+//         <Route path="cashier" element={<Cashier />} />
+//         <Route path="cashierList" element={<CashierList />} />
+//         <Route path="gcc" element={<Gcc />} />
+//         <Route path="opd" element={<OpdTest />} />
+//         <Route path="addAgency" element={<AddAgency />} />
+//         <Route path="agency" element={<Agency />} />
+//         <Route path="xray" element={<Xray />} />
+//         <Route path="users" element={<Users />} />
+//         <Route path="miniLab" element={<MiniLab />} />
+//         <Route path="lab" element={<Lab />} />
+//         <Route path="test/:customerId/:admissionId" element={<Test />}>
+//           <Route index element={<SelectedPackages />} />
+//           <Route path="selectedPackages" element={<SelectedPackages />} />
+//         </Route>
+//         <Route path="createPackage" element={<CreatePackage />}>
+//           <Route index element={<All />} />
+//           <Route path="allTests" element={<All />} />
+//           <Route path="availableTests" element={<Available />} />
+//           <Route path="selectedTests" element={<Selected />} />
+//         </Route>
+//       </Route>
+//     </Routes>
+//   );
+// }
+
+const ROLES = {
+  Admin: 1,
+  Reception: 2,
+  Cashier: 3,
+  Accounts: 4,
+  Lab: 5,
+  MiniLAb: 6,
+  Doctor: 7,
+  XRay: 8,
+};
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="*" element={<NotFound />} />
       <Route path="tablePatients" element={<TablePatients />} />
-      <Route path="userRegistration" element={<UserRegistration />} />
+      <Route
+        path="userRegistration"
+        element={
+          <ProtectedRoute
+            element={<UserRegistration />}
+            requiredRoles={[ROLES.Admin]}
+          />
+        }
+      />
       <Route path="/home" element={<Home />}>
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="opdTest" element={<OpdTest />} />
-        <Route path="reception" element={<Reception />} />
+        <Route index path="dashboard" element={<Dashboard />} />
+        <Route
+          path="reception"
+          element={
+            <ProtectedRoute
+              element={<Reception />}
+              requiredRoles={[ROLES.Admin, ROLES.Reception]}
+            />
+          }
+        />
+        <Route
+          path="gcc"
+          element={
+            <ProtectedRoute
+              element={<Gcc />}
+              requiredRoles={[ROLES.Admin, ROLES.Reception]}
+            />
+          }
+        />
+        <Route
+          path="opd"
+          element={
+            <ProtectedRoute
+              element={<OpdTest />}
+              requiredRoles={[ROLES.Admin, ROLES.Reception]}
+            />
+          }
+        />
         <Route path="customers" element={<Customers />} />
-        <Route path="testAndPackages" element={<TestAndPackages />}>
+        <Route
+          path="testAndPackages"
+          element={
+            <ProtectedRoute
+              element={<TestAndPackages />}
+              requiredRoles={[ROLES.Admin, ROLES.Reception]}
+            />
+          }
+        >
           <Route index element={<Packages />} />
           <Route path="packages" element={<Packages />} />
           <Route path="tests" element={<Tests />} />
         </Route>
-        <Route path="cashier/:customerId/:admissionId" element={<Cashier />} />
-        <Route path="cashier" element={<Cashier />} />
-        <Route path="cashierList" element={<CashierList />} />
-        <Route path="gcc" element={<Gcc />} />
-        <Route path="opd" element={<OpdTest />} />
+        <Route
+          path="cashier/:customerId/:admissionId"
+          element={
+            <ProtectedRoute
+              element={<Cashier />}
+              requiredRoles={[ROLES.Admin, ROLES.Cashier]}
+            />
+          }
+        />
+        <Route
+          path="cashier"
+          element={
+            <ProtectedRoute
+              element={<Cashier />}
+              requiredRoles={[ROLES.Admin, ROLES.Cashier]}
+            />
+          }
+        />
+        <Route
+          path="cashierList"
+          element={
+            <ProtectedRoute
+              element={<CashierList />}
+              requiredRoles={[ROLES.Admin, ROLES.Cashier]}
+            />
+          }
+        />
         <Route path="addAgency" element={<AddAgency />} />
         <Route path="agency" element={<Agency />} />
-        <Route path="xray" element={<Xray />} />
-        <Route path="users" element={<Users />} />
-        <Route path="miniLab" element={<MiniLab />} />
-        <Route path="lab" element={<Lab />} />
-        <Route path="test/:customerId/:admissionId" element={<Test />}>
+        <Route
+          path="xray"
+          element={
+            <ProtectedRoute
+              element={<Xray />}
+              requiredRoles={[ROLES.Admin, ROLES.XRay]}
+            />
+          }
+        />
+        <Route
+          path="users"
+          element={
+            <ProtectedRoute element={<Users />} requiredRoles={[ROLES.Admin]} />
+          }
+        />
+        <Route
+          path="miniLab"
+          element={
+            <ProtectedRoute
+              element={<MiniLab />}
+              requiredRoles={[ROLES.Admin, ROLES.MiniLAb]}
+            />
+          }
+        />
+        <Route
+          path="lab"
+          element={
+            <ProtectedRoute
+              element={<Lab />}
+              requiredRoles={[ROLES.Admin, ROLES.Lab]}
+            />
+          }
+        />
+        <Route
+          path="test/:customerId/:admissionId"
+          element={
+            <ProtectedRoute
+              element={<Test />}
+              requiredRoles={[ROLES.Admin, ROLES.Reception]}
+            />
+          }
+        >
           <Route index element={<SelectedPackages />} />
           <Route path="selectedPackages" element={<SelectedPackages />} />
         </Route>
