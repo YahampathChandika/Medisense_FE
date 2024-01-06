@@ -18,10 +18,12 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await loginUser(getValues());
-      console.log("res", response);
+      console.log("loginUser", response);
       if (response.data && !response.data.error) {
-        const token = response.data.payload;
-        localStorage.setItem("token", token);
+        const accessToken = response.data.payload.accessToken;
+        const roleId = response.data.payload.roleId;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("roleId", roleId);
         navigate("home/dashboard");
         const Toast = Swal.mixin({
           toast: true,
@@ -58,7 +60,6 @@ function Login() {
   return (
     <div className="login-main">
       <form className="login-form" onSubmit={handleSubmit(handleLogin)}>
-        {/* <h1 className="login-head">Login</h1> */}
         <img src={image} alt="Your Image" className="login-image" />
         <input
           type="text"
@@ -76,7 +77,6 @@ function Login() {
           Login
         </Button>
         <div className="login-form-bot">
-          {/* <Checkbox>Remember Me</Checkbox> */}
           <p className="login-form-bot-forgot">Forgot Password</p>
         </div>
       </form>

@@ -6,8 +6,11 @@ import { authApi } from "./api/authApi";
 import { countryApi } from "./api/countryApi";
 import { jobApi } from "./api/jobApi";
 import selectedTestsReducer from "./slice/testSlice";
-import selectedPackageReducer from "./slice/selectPackageSlice"
+import selectedPackageReducer from "./slice/selectPackageSlice";
 import { customerApi } from "./api/customer";
+import { dropdownApi } from "./api/dropdownsApi";
+import { cashierApi } from "./api/cashier";
+import { testApi } from "./api/testApi";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +21,9 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [countryApi.reducerPath]: countryApi.reducer,
     [jobApi.reducerPath]: jobApi.reducer,
+    [dropdownApi.reducerPath]: dropdownApi.reducer,
+    [cashierApi.reducerPath]: cashierApi.reducer,
+    [testApi.reducerPath]: testApi.reducer,
 
     selectedTests: selectedTestsReducer,
     selectPackage: selectedPackageReducer,
@@ -32,6 +38,9 @@ export const store = configureStore({
       userApi.middleware,
       countryApi.middleware,
       jobApi.middleware,
+      dropdownApi.middleware,
+      testApi.middleware,
+      cashierApi.middleware
     );
   },
 });

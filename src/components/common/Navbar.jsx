@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useGetSignedUserQuery } from "../../store/api/userApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
