@@ -238,7 +238,6 @@ function Cashier() {
                   className="ml-2"
                 />
               </th>
-              <th></th>
             </tr>
           </thead>
 
