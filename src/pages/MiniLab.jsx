@@ -1,231 +1,295 @@
-import React, { useState } from "react";
-import "../assets/css/Gcc.css";
-import { mockData } from "../assets/mocks/mockData";
-import {
-  Container,
-  Divider,
-  Input,
-  InputGroup,
-  Row,
-  FlexboxGrid,
-  Uploader,
-  SelectPicker,
-  Table,
-} from "rsuite";
-import { format } from "date-fns";
+import React, { useState, useEffect } from "react";
+import { Col, Container, Row } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useForm } from "react-hook-form";
-import "rsuite/dist/rsuite-no-reset.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
-import { useEffect } from "react";
+import {
+  faCashRegister,
+  faCoins,
+  faUserFriends,
+  faCaretDown,
+  faCaretUp,
+  faSort,
+  faAngleRight,
+} from "@fortawesome/free-solid-svg-icons";
+import dummyImg from "../assets/images/dummy.jpg";
+import { Table } from "react-bootstrap";
+import {
+  useGetCashierListMatricesQuery,
+  useGetCashierListQuery,
+} from "../store/api/cashier";
+import { useNavigate } from "react-router-dom";
+import { useGetMinilabListQuery } from "../store/api/minilabApi";
 
-function MiniLab() {
-  const [sortColumn, setSortColumn] = useState();
-  const [sortType, setSortType] = useState();
-  const [loading, setLoading] = useState(false);
+function Minilab() {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
+  const {
+    data: Minilab,
+    isLoading,
+    isError,
+    refetch: Minilabrefetch,
+  } = useGetMinilabListQuery();
 
-  const { Column, HeaderCell, Cell } = Table;
-  const data = mockData(8);
+  const { data: cashierMatrices, refetch: cashierMatricesrefetch } =
+  useGetCashierListMatricesQuery();
 
-  const CustomHeaderCell = ({ children, className, ...props }) => {
-    // Add your Tailwind CSS classes to the className
-    const headerClasses = "text-blue-500 bg-black-400 font-bold text-sm";
+  const cashierData = Minilab?.payload;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    setSortConfig({ key: "time", order: "asc" });
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const formatDate = (date) => {
+    const day = date.getDate();
+    const suffix =
+      day >= 11 && day <= 13
+        ? "th"
+        : ["st", "nd", "rd"][(day % 10) - 1] || "th";
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
 
     return (
-      <Table.HeaderCell {...props} className={`${className} ${headerClasses}`}>
-        {children}
-      </Table.HeaderCell>
+      <div className="flex items-top">
+        <span className="text-xl">{day}</span>
+        <span className="text-sm inline-block align-top mr-1">{suffix}</span>
+        <span className="text-xl">
+          {" "}
+          {month} {year}
+        </span>
+      </div>
     );
   };
 
-  const getData = () => {
-    if (sortColumn && sortType) {
-      return data.sort((a, b) => {
-        let x = a[sortColumn];
-        let y = b[sortColumn];
+  const formattedDate = formatDate(currentDate);
+  const formattedDayAndTime = `${currentDate.toLocaleDateString(undefined, {
+    weekday: "long",
+  })} | ${currentDate.toLocaleTimeString()}`;
 
-        if (typeof x === "string") {
-          x = x.toLowerCase();
-        }
-        if (typeof y === "string") {
-          y = y.toLowerCase();
-        }
-
-        if (x < y) {
-          return sortType === "asc" ? -1 : 1;
-        }
-        if (x > y) {
-          return sortType === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
+  const handleSort = (key) => {
+    let order = "asc";
+    if (sortConfig.key === key && sortConfig.order === "asc") {
+      order = "desc";
     }
-    return data;
+    setSortConfig({ key, order });
   };
 
-  const handleSortColumn = (sortColumn, sortType) => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSortColumn(sortColumn);
-      setSortType(sortType);
-    }, 500);
+  const sortedData = () => {
+    if (!sortConfig.key) {
+      return cashierData;
+    }
+
+    const sorted = [...cashierData].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+
+      if (sortConfig.key === "time") {
+        return sortConfig.order === "asc"
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
+
+      return sortConfig.order === "asc" ? aValue - bValue : bValue - aValue;
+    });
+
+    return sorted;
   };
-
-  const form = useForm({
-    mode: "onTouched",
-  });
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  useEffect(() => {
-    document.title = 'Mini Lab | Medisense';
-  }, []);
 
   return (
-    <Container className="gcc-con">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={11} className="main-title">
-            Mini Lab
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={11}>
-            <InputGroup>
-              <Input
-                placeholder="Search by ID or name..."
-                style={{ margin: 0 }}
-              />
-              <InputGroup.Button>
-                <FontAwesomeIcon icon={faSearch} />
-              </InputGroup.Button>
-            </InputGroup>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <Divider className="border-t-2 border-gray-300" />
-        <FlexboxGrid
-          justify="space-between"
-          className="flex items-center justify-between"
-        >
-          <FlexboxGrid.Item colspan={16}>
-            <Row>Full Name</Row>
-            <Input {...register("name")} />
-            <Row>ID</Row>
-            <Input {...register("id")} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={6}>
-            <img
-              className="h-40 w-40 rounded-full"
-              src="https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
-              alt=""
-            />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <Table
-          autoHeight
-          minHeight={200}
-          bordered
-          data={getData()}
-          sortColumn={sortColumn}
-          sortType={sortType}
-          onSortColumn={handleSortColumn}
-          loading={loading}
-          style={{ margin: "25px 0 40px" }}
-        >
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>No</CustomHeaderCell>
-            <Table.Cell dataKey="no" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Type</CustomHeaderCell>
-            <Table.Cell dataKey="type" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Code</CustomHeaderCell>
-            <Table.Cell dataKey="code" />
-          </Table.Column>
-          <Table.Column sortable flexGrow fullText>
-            <CustomHeaderCell>Description</CustomHeaderCell>
-            <Table.Cell dataKey="description" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Result</CustomHeaderCell>
-            <Table.Cell dataKey="result" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Unit</CustomHeaderCell>
-            <Table.Cell dataKey="unit" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Status</CustomHeaderCell>
-            <Table.Cell dataKey="status" />
-          </Table.Column>
+    <Container className="pt-10">
+      <Row>
+        <Col className="text-gray-800 text-2xl font-bold mx-5">
+          {formattedDate}
+        </Col>
+        <Col className="text-gray-700 text-lg font-light">
+          {formattedDayAndTime}
+        </Col>
+      </Row>
+      <Row className="flex items-center mt-5 mx-5">
+        <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
+          <FontAwesomeIcon icon={faUserFriends} className="h-12 w-12 py-1" />
+          <span className="font-bold text-2xl">
+            0{cashierMatrices?.payload.customersWaiting || 0}
+          </span>
+          <span className="text-md font-semibold">Customers Waiting</span>
+        </Col>
+        <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4 mx-5">
+          <FontAwesomeIcon icon={faCashRegister} className="h-12 w-12 py-1" />
+          <span className="font-bold text-2xl">
+            0{cashierMatrices?.payload.customersPaid || 0}
+          </span>
+          <span className="text-md font-semibold">Customers Blood Extracted</span>
+        </Col>
+        <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
+          <FontAwesomeIcon icon={faCoins} className="h-12 w-12 py-1" />
+          <span className="font-bold text-2xl">
+            Rs. {cashierMatrices?.payload.todaysIncome || 0}.00
+          </span>
+          <span className="text-md font-semibold">Today's Income</span>
+        </Col>
+      </Row>
+      <Row className="text-gray-700 text-2xl font-bold mt-5 mx-5">
+        Waiting List
+      </Row>
+      <Row className="">
+        <Table striped hover className="text-left table-fixed mt-4">
+          <thead>
+            <tr>
+              <th
+                className="patient-table-head-name"
+                style={{ width: "15%" }}
+                onClick={() => handleSort("time")}
+              >
+                Time
+                <FontAwesomeIcon
+                  icon={
+                    sortConfig.key === "time"
+                      ? sortConfig.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  style={{ paddingLeft: "8px" }}
+                />
+              </th>
+
+              <th
+                className="patient-table-head"
+                style={{ width: "30%" }}
+                onClick={() => handleSort("fullName")}
+              >
+                Name
+                <FontAwesomeIcon
+                  icon={
+                    sortConfig.key === "fullName"
+                      ? sortConfig.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  style={{ paddingLeft: "8px" }}
+                />
+              </th>
+
+              <th
+                className="patient-table-head"
+                style={{ width: "25%" }}
+                onClick={() => handleSort("contactNo")}
+              >
+                Contact
+                <FontAwesomeIcon
+                  icon={
+                    sortConfig.key === "contactNo"
+                      ? sortConfig.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  style={{ paddingLeft: "8px" }}
+                />
+              </th>
+
+              <th
+                className="patient-table-head"
+                style={{ width: "20%" }}
+                onClick={() => handleSort("medicalType")}
+              >
+                Medical
+                <FontAwesomeIcon
+                  icon={
+                    sortConfig.key === "medicalType"
+                      ? sortConfig.order === "asc"
+                        ? faCaretUp
+                        : faCaretDown
+                      : faSort
+                  }
+                  style={{ paddingLeft: "8px" }}
+                />
+              </th>
+
+              <th className="patient-table-head"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  <p className="text-gray-500">Loading...</p>
+                </td>
+              </tr>
+            ) : (
+              sortedData().map((patient) => (
+                <tr key={patient.customerId}>
+                  <td
+                    className="patientf-table-data"
+                    style={{ paddingLeft: "5%", borderStyle: "none" }}
+                  >
+                    {patient.time.substring(0, 5)}
+                  </td>
+
+                  <td
+                    className=" "
+                    style={{
+                      display: "flex ",
+                      flexDirection: "row",
+                      border: "none",
+                      paddingLeft: "10%",
+                    }}
+                  >
+                    <img
+                      src={
+                        patient.image
+                          ? `http://localhost:3002/${patient.image}`
+                          : dummyImg
+                      }
+                      alt="Patient"
+                      className="patient-image"
+                    />
+
+                    {patient.fullName}
+                  </td>
+                  <td className=" patient-table-data">{patient.contactNo}</td>
+                  <td className=" patient-table-data ">
+                    {patient.medicalType}
+                  </td>
+                  <td
+                    style={{ borderStyle: "none", cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(
+                        `/home/cashier/${patient.customerId}/${patient.admissionId}`
+                        // '/home/cashier'
+                      )
+                    }
+                  >
+                    <FontAwesomeIcon
+                      icon={faAngleRight}
+                      style={{
+                        color: "black",
+                        paddingLeft: "40%",
+                        borderStyle: "none",
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))
+            )}
+            {cashierData?.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  <p className="text-gray-500">No data to display.</p>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </Table>
-        <Table
-          autoHeight
-          minHeight={200}
-          bordered
-          data={getData()}
-          sortColumn={sortColumn}
-          sortType={sortType}
-          onSortColumn={handleSortColumn}
-          loading={loading}
-          style={{ margin: "25px 0 40px" }}
-        >
-          <Table.Column sortable flexGrow align="center">
-            <CustomHeaderCell>No</CustomHeaderCell>
-            <Table.Cell dataKey="no" />
-          </Table.Column>
-          <Table.Column sortable flexGrow align="center">
-            <CustomHeaderCell>Package</CustomHeaderCell>
-            <Table.Cell dataKey="package" />
-          </Table.Column>
-          <Table.Column sortable flexGrow align="center">
-            <CustomHeaderCell>Description</CustomHeaderCell>
-            <Table.Cell dataKey="description" />
-          </Table.Column>
-        </Table>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={11}>
-            <Row>Status</Row>
-            <SelectPicker
-              searchable={false}
-              style={{ width: "100%" }}
-              data={["Pass", "Fail"].map((item) => ({
-                label: item,
-                value: item,
-              }))}
-              {...register("xrayResults")}
-              onChange={(value) => setValue("xrayResults", value)}
-            />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <Divider />
-        <FlexboxGrid justify="end">
-          <Button
-            type="submit"
-            className="w-40 h-10 mr-10 bg-blue-800 text-white"
-          >
-            Save
-          </Button>
-          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
-            New
-          </Button>
-        </FlexboxGrid>
-      </form>
+      </Row>
     </Container>
   );
 }
 
-export default MiniLab;
+export default Minilab;
