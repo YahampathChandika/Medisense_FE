@@ -26,6 +26,12 @@
   top: 0; /* Stick to the top of the container */
 }
 
+.cashier-table-head th {
+  background-color: #f2f4ff;
+  cursor: pointer;
+  text-align: center;
+}
+
 
 .selectedpackages-table-body td {
   height: 55px;

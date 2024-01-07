@@ -119,76 +119,76 @@ function Cashier() {
         >
           <FlexboxGrid.Item colspan={6}>
             <img
-              className="h-40 w-40 rounded-full"
+              className="w-40 h-40 rounded-full"
               src="https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt=""
             />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={6}>
-            <Row className="text-black text-opacity-50 text-base font-semibold">
+            <Row className="text-base font-semibold text-black text-opacity-50">
               Name
             </Row>
-            <Row className="text-black text-lg font-medium mb-2">
+            <Row className="mb-2 text-lg font-medium text-black">
               {customerData?.payload?.customer?.fullName}
             </Row>
-            <Row className="text-black text-opacity-50 text-base font-semibold">
+            <Row className="text-base font-semibold text-black text-opacity-50">
               Age
             </Row>
-            <Row className="text-black text-lg font-medium mb-2">
+            <Row className="mb-2 text-lg font-medium text-black">
               {customerData?.payload?.customer?.age}
             </Row>
-            <Row className="text-black text-opacity-50 text-base font-semibold">
+            <Row className="text-base font-semibold text-black text-opacity-50">
               Gender
             </Row>
-            <Row className="text-black text-lg font-medium mb-2">
+            <Row className="mb-2 text-lg font-medium text-black">
               {customerData?.payload?.customer?.gender}
             </Row>
           </FlexboxGrid.Item>
           {customerData?.payload?.customer?.medicalType != "OPD" && (
             <FlexboxGrid.Item colspan={6}>
-              <Row className="text-black text-opacity-50 text-base font-semibold">
+              <Row className="text-base font-semibold text-black text-opacity-50">
                 Agency
               </Row>
-              <Row className="text-black text-lg font-medium mb-2">
+              <Row className="mb-2 text-lg font-medium text-black">
                 {customerData?.payload?.customer?.agency}
               </Row>
 
-              <Row className="text-black text-opacity-50 text-base font-semibold">
+              <Row className="text-base font-semibold text-black text-opacity-50">
                 Country
               </Row>
-              <Row className="text-black text-lg font-medium mb-2">
+              <Row className="mb-2 text-lg font-medium text-black">
                 {customerData?.payload?.customer?.country}
               </Row>
 
-              <Row className="text-black text-opacity-50 text-base font-semibold">
+              <Row className="text-base font-semibold text-black text-opacity-50">
                 Job Title
               </Row>
-              <Row className="text-black text-lg font-medium mb-2">
+              <Row className="mb-2 text-lg font-medium text-black">
                 {customerData?.payload?.customer?.job}
               </Row>
             </FlexboxGrid.Item>
           )}
           <FlexboxGrid.Item colspan={6}>
-            <Row className="text-black text-opacity-50 text-base font-semibold">
+            <Row className="text-base font-semibold text-black text-opacity-50">
               Medical Type
             </Row>
-            <Row className="text-black text-lg font-medium mb-2">
+            <Row className="mb-2 text-lg font-medium text-black">
               {customerData?.payload?.customer?.medicalType}
             </Row>
 
-            <Row className="text-black text-opacity-50 text-base font-semibold">
+            <Row className="text-base font-semibold text-black text-opacity-50">
               NIC
             </Row>
-            <Row className="text-black text-lg font-medium mb-2">
+            <Row className="mb-2 text-lg font-medium text-black">
               {customerData?.payload?.customer?.nic}
             </Row>
             {customerData?.payload?.customer?.medicalType != "OPD" && (
               <>
-                <Row className="text-black text-opacity-50 text-base font-semibold">
+                <Row className="text-base font-semibold text-black text-opacity-50">
                   Passport
                 </Row>
 
-                <Row className="text-black text-lg font-medium mb-2">
+                <Row className="mb-2 text-lg font-medium text-black">
                   {customerData?.payload?.customer?.passport}
                 </Row>
               </>
@@ -196,7 +196,7 @@ function Cashier() {
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Table className="mt-5">
-          <thead className="selectedpackages-table-head">
+          <thead className="cashier-table-head">
             <tr>
               <th>#</th>
               <th onClick={() => handleSort("code")}>
@@ -335,7 +335,7 @@ function Cashier() {
         </FlexboxGrid>
 
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
+          <Button type="submit" className="w-40 h-10 text-white bg-blue-800">
             Save
           </Button>
         </FlexboxGrid>

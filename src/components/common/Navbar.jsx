@@ -35,10 +35,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-white fixed z-50 border-b-2	w-full flex h-16 items-center justify-between">
+    <div className="fixed z-50 flex items-center justify-between w-full h-16 bg-white border-b-2">
       <div className="flex items-center">
         <div className="relative">
-          <div className="ml-10 flex items-baseline space-x-4">
+          <div className="flex items-baseline ml-10 space-x-4">
             <Link to="/home/dashboard" className="flex items-center">
               <p className="text-3xl font-bold text-blue-500">Medi</p>
               <p className="text-3xl font-bold text-black">sense</p>
@@ -49,19 +49,19 @@ const Navbar = () => {
         </div>
       </div>
       <div className="relative mr-16">
-        <div className="ml-4 flex items-center">
+        <div className="flex items-center ml-4">
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
             <div>
-              <Menu.Button className="relative flex max-w-xs items-center rounded-full text-sm focus:outline-none">
+              <Menu.Button className="relative flex items-center max-w-xs text-sm rounded-full focus:outline-none">
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">Open user menu</span>
                 <img
-                  className="h-10 w-10 rounded-full"
+                  className="w-10 h-10 rounded-full"
                   src={user.imageUrl}
                   alt=""
                 />
-                <p className="text-xl font-bold text-black ml-5">
+                <p className="ml-5 text-xl font-bold text-black">
                   {signedUser?.payload?.firstName}
                 </p>
               </Menu.Button>
@@ -75,7 +75,7 @@ const Navbar = () => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute  z-50 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute z-50 w-40 py-1 mt-2 origin-top-right bg-white rounded-md shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
                     <Link
