@@ -85,16 +85,16 @@ function AddJobModal({ open, handleClose }) {
           <Row>Description</Row>
           <Input {...register("description")}/>
         </Row>
-        <Row className="w-full flex justify-between mt-2 ">
+        <Row className="w-full flex justify-between mt-2 space-x-8">
           <Button
             type="submit"
-            className="w-3/6 bg-blue-700 text-white hover:bg-blue-800"
+            className="w-1/2 bg-blue-700 text-white hover:bg-blue-800"
           >
             Create
           </Button>
           <Button
             onClick={handleClose}
-            className="w-3/6 border-solid border border-slate-700"
+            className="w-1/2 border-solid border border-slate-700"
           >
             Cancel
           </Button>

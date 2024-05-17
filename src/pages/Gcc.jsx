@@ -7,6 +7,7 @@ import {
   Input,
   InputGroup,
   Row,
+  Button,
   FlexboxGrid,
   DatePicker,
   SelectPicker,
@@ -17,7 +18,7 @@ import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
+// import { Button } from "react-bootstrap";
 import AddAgency from "../components/modals/AddAgency";
 import AddJobModal from "../components/modals/AddJob";
 import AddCountryModal from "../components/modals/AddCountry";
@@ -392,7 +393,7 @@ function Gcc() {
         </FlexboxGrid>
         <Divider />
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 bg-blue-800 text-white">
+          <Button type="submit" className="w-40 h-10 btn btn-primary">
             Continue
           </Button>
         </FlexboxGrid>
