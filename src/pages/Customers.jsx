@@ -82,6 +82,7 @@ function Customers() {
             <FlexboxGrid.Item>
               <DateRangePicker
                 showOneCalendar
+                id="dateRangePicker"
                 placeholder="Select Date Range"
                 style={{ width: 250 }}
                 autoComplete="off"
