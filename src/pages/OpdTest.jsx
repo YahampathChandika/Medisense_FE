@@ -185,6 +185,7 @@ function OpdTest() {
                 placeholder="YYYY-MM-DD"
                 format="yyyy-MM-dd"
                 autoComplete="off"
+                id="dateOfBirth"
                 value={inputData.dateOfBirth || null}
                 onChange={(value) => {
                   setInputData((prev) => ({ ...prev, dateOfBirth: value }));

@@ -320,6 +320,7 @@ function UserRegistration({
                       <DatePicker
                         placeholder="YYYY-MM-DD"
                         format="yyyy-MM-dd"
+                        id="dateOfBirth"
                         autoComplete="off"
                         value={inputData.dob || null}
                         onChange={(value) => {
