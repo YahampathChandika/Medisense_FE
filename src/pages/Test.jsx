@@ -16,13 +16,13 @@ import { selectePackage, selecteTest } from "../store/slice/selectPackageSlice";
 import {
   useAddPackageAndTestMutation,
   useGetAllCustomersQuery,
-} from "../store/api/customer";
+} from "../store/api/customerApi";
 
 import Swal from "sweetalert2";
 import {
   useGetCashierListMatricesQuery,
   useGetCashierListQuery,
-} from "../store/api/cashier";
+} from "../store/api/cashierApi";
 
 function Test() {
   const { customerId, admissionId } = useParams();

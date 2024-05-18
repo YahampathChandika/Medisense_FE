@@ -20,7 +20,7 @@ import {
 import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/customers/TablePatients";
 import { useNavigate } from "react-router";
-import { useGetAllCustomersQuery } from "../store/api/customer";
+import { useGetAllCustomersQuery } from "../store/api/customerApi";
 
 function Customers() {
   const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();

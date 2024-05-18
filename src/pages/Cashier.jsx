@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,9 +7,10 @@ import {
   useGetCashierListMatricesQuery,
   useGetCashierListQuery,
   useGetCustomerQuery,
-} from "../store/api/cashier";
+} from "../store/api/cashierApi";
 import {
   useGetBanksQuery,
+  useGetCreditApproversQuery,
   useGetPaymentMethodsQuery,
 } from "../store/api/dropdownsApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +24,9 @@ import {
   Container,
   Divider,
   Input,
+  Col,
   Row,
+  Header,
   FlexboxGrid,
   SelectPicker,
   DatePicker,
@@ -32,11 +35,13 @@ import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/Gcc.css";
 import Swal from "sweetalert2";
+import { useReactToPrint } from "react-to-print";
 
 function Cashier() {
   const { customerId, admissionId } = useParams();
   const { data: paymentMethods } = useGetPaymentMethodsQuery();
   const { data: banks } = useGetBanksQuery();
+  const { data: creditApprovers } = useGetCreditApproversQuery();
   const [addPayment] = useAddPaymentMutation();
   const { refetch: cashierListrefetch } = useGetCashierListQuery();
   const { refetch: cashierMatricesrefetch } = useGetCashierListMatricesQuery();
@@ -58,6 +63,10 @@ function Cashier() {
   const [discount, setDiscount] = useState(0);
   const [amount, setAmount] = useState(null);
 
+  const now = new Date();
+  const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const date = now.toLocaleDateString([], { day: '2-digit', month: '2-digit', year: 'numeric' });
+
   const form = useForm({
     mode: "onTouched",
   });
@@ -73,7 +82,13 @@ function Cashier() {
     formState: { errors },
   } = useForm();
 
-  const watchAllFields = watch("payment");
+  const contentToPrint = useRef(null);
+  const handlePrint = useReactToPrint({
+    documentTitle: "Invoice",
+    onBeforePrint: () => console.log("before printing..."),
+    onAfterPrint: () => console.log("after printing..."),
+    removeAfterPrint: true,
+  });
 
   const handleSort = (column) => {
     setSorting((prevSorting) => ({
@@ -94,7 +109,7 @@ function Cashier() {
         console.log("Add Payment Error", response);
         Swal.fire({
           title: "Oops...",
-          text: response?.error?.data?.payload,
+          text: response?.error?.data?.payload?.name,
           icon: "error",
         });
       } else {
@@ -360,6 +375,7 @@ function Cashier() {
                 {...register("discount")}
                 name="discount"
                 placeholder="%"
+                defaultValue={0}
                 onChange={(value) => setDiscount(value)}
               />
             </FlexboxGrid.Item>
@@ -433,21 +449,156 @@ function Cashier() {
             )}
             {getValues("paymentMethodId") == 22 && (
               <FlexboxGrid.Item colspan={11}>
-                <Input
-                  {...register("creditAproverId")}
-                  name="credit"
+                <SelectPicker
+                  searchable={false}
                   placeholder="Credit Approved By"
+                  style={{ width: "100%" }}
+                  data={
+                    creditApprovers.payload.map((item) => ({
+                      label: item.label,
+                      value: item.id,
+                    })) || []
+                  }
+                  {...register("creditAproverId")}
+                  value={watch("creditAproverId")}
+                  onChange={(label) => setValue("creditAproverId", label)}
                 />
               </FlexboxGrid.Item>
             )}
           </FlexboxGrid>
 
           <FlexboxGrid justify="end">
-            <Button type="submit" className="w-40 h-10 text-white bg-blue-800">
-              Save
+            <Button
+              type="submit"
+              className="w-40 h-10 text-white bg-blue-800 mb-96"
+              onClick={() => {
+                handlePrint(null, () => contentToPrint.current);
+              }}
+            >
+              Print
             </Button>
           </FlexboxGrid>
         </form>
+        <div style={{ width: "100%" }} ref={contentToPrint}>
+          <Container className="gcc-con">
+            <Header>
+              <FlexboxGrid justify="start">
+                <FlexboxGrid.Item colspan={12} className="flex-col">
+                  <p className="main-title">Invoice</p>
+                  <Col className="mt-3">
+                    <p className="text-xl font-medium">Billed To:</p>
+                    <Row className="flex mt-2">
+                      <p className="w-28">Name:</p>
+                      <p className="ml-2">
+                        {customerData?.payload?.customer?.fullName}
+                      </p>
+                    </Row>
+                    <Row className="flex">
+                      <p className="w-28">Age:</p>
+                      <p className="ml-2">
+                        {customerData?.payload?.customer?.age}
+                      </p>
+                    </Row>
+                    <Row className="flex">
+                      <p className="w-28">Customer ID:</p>
+                      <p className="ml-2">{customerId}</p>
+                    </Row>
+                  </Col>
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item colspan={12} className="flex justify-end">
+                  <Col>
+                    <Row className="flex">
+                      <p className="text-3xl font-bold text-blue-500">Medi</p>
+                      <p className="text-3xl font-bold text-black">sense</p>
+                    </Row>
+                    <p className="text-xl font-medium mt-3">Invoice Details:</p>
+                    <Row className="flex mt-2">
+                      <p className="w-28">Invoice No:</p>
+                      <p className="ml-2">{customerId}{admissionId}</p>
+                    </Row>
+                    <Row className="flex">
+                      <p className="w-28">Invoice Time:</p>
+                      <p className="ml-2">{time}</p>
+                    </Row>
+                    <Row className="flex">
+                      <p className="w-28">Invoice Date:</p>
+                      <p className="ml-2">{date}</p>
+                    </Row>
+                  </Col>
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            </Header>
+            <Divider className="border-t-2 border-gray-300 mb-5 mt-4" />
+            <div className="selectedpackages-main-con h-full">
+              <div
+                style={{ overflowY: "auto", width: "auto", minHeight: "150px" }}
+              >
+                <Table responsive>
+                  <thead className="selectedpackages-table-head">
+                    <tr>
+                      <th>Tests</th>
+                      <th>Description</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody className="selectedpackages-table-body">
+                    {sortedData().map((test, index) => (
+                      <tr key={test.code}>
+                        <td>{test.code}</td>
+                        <td>{test.description}</td>
+                        <td>{test.price}</td>
+                      </tr>
+                    ))}
+
+                    {customerData?.payload?.tests?.length === 0 && (
+                      <tr>
+                        <td colSpan="5" className="text-center">
+                          <p className="text-gray-500">No data to display.</p>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
+
+            <Divider className="border-t-2 border-gray-300 mb-5 mt-4" />
+            <FlexboxGrid justify="start">
+              <FlexboxGrid.Item
+                colspan={10}
+              ></FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={14} className="flex justify-end">
+                <Col className="w-1/2">
+                  <FlexboxGrid className="flex justify-between">
+                    <FlexboxGrid.Item colspan={10}>
+                      <p>Sub Total</p>
+                    </FlexboxGrid.Item>
+                    <FlexboxGrid.Item colspan={10}>
+                      <p>{customerData?.payload?.totalAmount}</p>
+                    </FlexboxGrid.Item>
+                  </FlexboxGrid>
+                  <FlexboxGrid className="flex justify-between">
+                    <FlexboxGrid.Item colspan={10}>
+                      <p>Discount</p>
+                    </FlexboxGrid.Item>
+                    <FlexboxGrid.Item colspan={10}>
+                      <p>{discount} %</p>
+                    </FlexboxGrid.Item>
+                  </FlexboxGrid>
+                  <Divider className="border-t-2 border-gray-300 mt-1 mb-1" />
+                  <FlexboxGrid className="flex justify-between">
+                    <FlexboxGrid.Item colspan={10}>
+                      <p className="text-xl font-semibold">Total</p>
+                    </FlexboxGrid.Item>
+                    <FlexboxGrid.Item colspan={10}>
+                      <p className="text-xl font-semibold">{amount}</p>
+                    </FlexboxGrid.Item>
+                  </FlexboxGrid>
+                </Col>
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+          </Container>
+        </div>
       </Container>
     )
   );

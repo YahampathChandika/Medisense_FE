@@ -33,7 +33,7 @@ import { useGetAllAgencyQuery } from "../store/api/agencyApi";
 import {
   useAddCustomerMutation,
   useGetAllCustomersQuery,
-} from "../store/api/customer";
+} from "../store/api/customerApi";
 
 function Gcc() {
   const location = useLocation();

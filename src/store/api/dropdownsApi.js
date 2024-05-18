@@ -9,7 +9,14 @@ export const dropdownApi = api.injectEndpoints({
     getBanks: builder.query({
       query: () => "dropdown/getBanks",
     }),
+    getCreditApprovers: builder.query({
+      query: () => "dropdown/getCreditApprovers",
+    }),
   }),
 });
 
-export const { useGetPaymentMethodsQuery, useGetBanksQuery } = dropdownApi;
+export const {
+  useGetPaymentMethodsQuery,
+  useGetBanksQuery,
+  useGetCreditApproversQuery,
+} = dropdownApi;

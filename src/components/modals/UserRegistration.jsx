@@ -83,7 +83,6 @@ function UserRegistration({
   };
 
   
-  console.log("defalt", inputData.dob);
   const formattedDate = formatDate(inputData.dob);
 
   const roleData =

@@ -15,7 +15,7 @@ import { Table } from "react-bootstrap";
 import {
   useGetCashierListMatricesQuery,
   useGetCashierListQuery,
-} from "../store/api/cashier";
+} from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
 import { useGetMinilabListQuery } from "../store/api/minilabApi";
 

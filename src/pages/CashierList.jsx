@@ -15,7 +15,7 @@ import { Table } from "react-bootstrap";
 import {
   useGetCashierListMatricesQuery,
   useGetCashierListQuery,
-} from "../store/api/cashier";
+} from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
 
 function CashierList() {
@@ -156,7 +156,6 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
-
               <th
                 className="patient-table-head"
                 style={{ width: "30%" }}
@@ -174,7 +173,6 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
-
               <th
                 className="patient-table-head"
                 style={{ width: "25%" }}
@@ -192,7 +190,6 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
-
               <th
                 className="patient-table-head"
                 style={{ width: "20%" }}
@@ -210,7 +207,6 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
-
               <th className="patient-table-head"></th>
             </tr>
           </thead>
@@ -223,18 +219,22 @@ function CashierList() {
               </tr>
             ) : (
               sortedData().map((patient) => (
-                <tr key={patient.customerId}>
-                  <td
-                    className="patientf-table-data"
-                    style={{ paddingLeft: "5%", borderStyle: "none" }}
-                  >
+                <tr
+                  key={patient.customerId}
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    navigate(
+                      `/home/cashier/${patient.customerId}/${patient.admissionId}`
+                    )
+                  }
+                >
+                  <td style={{ paddingLeft: "5%", borderStyle: "none" }}>
                     {patient.time.substring(0, 5)}
                   </td>
-
                   <td
-                    className=" "
+                    className=""
                     style={{
-                      display: "flex ",
+                      display: "flex",
                       flexDirection: "row",
                       border: "none",
                       paddingLeft: "10%",
@@ -249,29 +249,18 @@ function CashierList() {
                       alt="Patient"
                       className="patient-image"
                     />
-
                     {patient.fullName}
                   </td>
-                  <td className=" patient-table-data">{patient.contactNo}</td>
-                  <td className=" patient-table-data ">
+                  <td style={{ paddingLeft: "3%", borderStyle: "none" }}>
+                    {patient.contactNo}
+                  </td>
+                  <td style={{ paddingLeft: "3%", borderStyle: "none" }}>
                     {patient.medicalType}
                   </td>
-                  <td
-                    style={{ borderStyle: "none", cursor: "pointer" }}
-                    onClick={() =>
-                      navigate(
-                        `/home/cashier/${patient.customerId}/${patient.admissionId}`
-                        // '/home/cashier'
-                      )
-                    }
-                  >
+                  <td style={{ borderStyle: "none" }}>
                     <FontAwesomeIcon
                       icon={faAngleRight}
-                      style={{
-                        color: "black",
-                        paddingLeft: "40%",
-                        borderStyle: "none",
-                      }}
+                      style={{ color: "black", paddingLeft: "40%" }}
                     />
                   </td>
                 </tr>
