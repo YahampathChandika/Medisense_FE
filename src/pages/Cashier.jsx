@@ -64,8 +64,15 @@ function Cashier() {
   const [amount, setAmount] = useState(null);
 
   const now = new Date();
-  const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const date = now.toLocaleDateString([], { day: '2-digit', month: '2-digit', year: 'numeric' });
+  const time = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const date = now.toLocaleDateString([], {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 
   const form = useForm({
     mode: "onTouched",
@@ -83,10 +90,13 @@ function Cashier() {
   } = useForm();
 
   const contentToPrint = useRef(null);
+  const [isPrinting, setIsPrinting] = useState(false);
+
   const handlePrint = useReactToPrint({
-    documentTitle: "Invoice",
-    onBeforePrint: () => console.log("before printing..."),
-    onAfterPrint: () => console.log("after printing..."),
+    documentTitle: `Invoice${customerId}${admissionId}`,
+    onBeforePrint: () => setIsPrinting(true),
+    onAfterPrint: () => setIsPrinting(false),
+    content: () => contentToPrint.current,
     removeAfterPrint: true,
   });
 
@@ -470,16 +480,17 @@ function Cashier() {
           <FlexboxGrid justify="end">
             <Button
               type="submit"
-              className="w-40 h-10 text-white bg-blue-800 mb-96"
-              onClick={() => {
-                handlePrint(null, () => contentToPrint.current);
-              }}
+              className="w-40 h-10 text-white bg-blue-800"
+              onClick={handlePrint}
             >
               Print
             </Button>
           </FlexboxGrid>
         </form>
-        <div style={{ width: "100%" }} ref={contentToPrint}>
+        <div
+          style={{ width: "100%", display: isPrinting ? "block" : "none" }}
+          ref={contentToPrint}
+        >
           <Container className="gcc-con">
             <Header>
               <FlexboxGrid justify="start">
@@ -514,7 +525,10 @@ function Cashier() {
                     <p className="text-xl font-medium mt-3">Invoice Details:</p>
                     <Row className="flex mt-2">
                       <p className="w-28">Invoice No:</p>
-                      <p className="ml-2">{customerId}{admissionId}</p>
+                      <p className="ml-2">
+                        {customerId}
+                        {admissionId}
+                      </p>
                     </Row>
                     <Row className="flex">
                       <p className="w-28">Invoice Time:</p>
@@ -564,9 +578,7 @@ function Cashier() {
 
             <Divider className="border-t-2 border-gray-300 mb-5 mt-4" />
             <FlexboxGrid justify="start">
-              <FlexboxGrid.Item
-                colspan={10}
-              ></FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={10}></FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={14} className="flex justify-end">
                 <Col className="w-1/2">
                   <FlexboxGrid className="flex justify-between">
@@ -598,6 +610,15 @@ function Cashier() {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </Container>
+          <style>
+            {`
+          @media print {
+            [style*="display: none"] {
+              display: block !important;
+            }
+          }
+        `}
+          </style>
         </div>
       </Container>
     )
