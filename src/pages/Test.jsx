@@ -132,7 +132,7 @@ function Test() {
         <FlexboxGrid justify="end" style={{ paddingRight: "5%" }}>
           <Button
             onClick={handleSubmit}
-            className="w-40 h-10 bg-blue-800 text-white"
+            className="w-40 h-10 bg-blue-800 text-white mb-4"
           >
             Save
           </Button>
