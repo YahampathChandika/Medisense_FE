@@ -74,7 +74,6 @@ function Users() {
     return filtered;
   };
 
-  console.log("DD", getAllUsers)
 
   const sortedData = () => {
     if (sortConfig.key) {

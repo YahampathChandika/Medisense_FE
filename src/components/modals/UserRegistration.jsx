@@ -82,7 +82,6 @@ function UserRegistration({
     }));
   };
 
-  
   const formattedDate = formatDate(inputData.dob);
 
   const roleData =
@@ -142,11 +141,11 @@ function UserRegistration({
       errors.firstName = "Name is required*";
     }
 
-     // Check if there are any validation errors
-  if (Object.keys(errors).length > 0) {
-    setValidationErrors(errors);
-    return;
-  }
+    // Check if there are any validation errors
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
 
     if (isNewUser) {
       try {

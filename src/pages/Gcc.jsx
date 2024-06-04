@@ -155,6 +155,8 @@ function Gcc() {
     formData.append("medicalType", updatedInputData.medicalType);
 
     try {
+      console.log("data",data);
+      console.log("formData", formData);
       const response = await addCustomer(formData);
 
       if (!response.error) {
@@ -175,7 +177,7 @@ function Gcc() {
 
   return (
     <Container className="gcc-con">
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11} className="main-title">
             {testType ? <p>GCC Register</p> : <p>Non GCC Register</p>}
