@@ -18,7 +18,7 @@ import {
 } from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
 
-function CashierList() {
+function LabList() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
   const {
@@ -133,7 +133,7 @@ function CashierList() {
         </Col>
       </Row>
       <Row className="text-gray-700 text-2xl font-bold mt-5 mx-5">
-        Cashier Waiting List
+        Lab Waiting List
       </Row>
       <Row className="">
         <Table striped hover className="text-left table-fixed mt-4">
@@ -280,4 +280,4 @@ function CashierList() {
   );
 }
 
-export default CashierList;
+export default LabList;

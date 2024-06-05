@@ -19,7 +19,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useGetMinilabListQuery } from "../store/api/minilabApi";
 
-function Minilab() {
+function XrayList() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
   const {
@@ -134,7 +134,7 @@ function Minilab() {
         </Col>
       </Row>
       <Row className="text-gray-700 text-2xl font-bold mt-5 mx-5">
-        Waiting List
+        X-Ray Waiting List
       </Row>
       <Row className="">
         <Table striped hover className="text-left table-fixed mt-4">
@@ -292,4 +292,4 @@ function Minilab() {
   );
 }
 
-export default Minilab;
+export default XrayList;
