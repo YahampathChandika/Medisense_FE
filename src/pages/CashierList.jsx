@@ -224,7 +224,7 @@ function CashierList() {
                   style={{ cursor: "pointer" }}
                   onClick={() =>
                     navigate(
-                      `/home/minilabById/${patient.customerId}/${patient.admissionId}`
+                      `/home/cashier/${patient.customerId}/${patient.admissionId}`
                     )
                   }
                 >
