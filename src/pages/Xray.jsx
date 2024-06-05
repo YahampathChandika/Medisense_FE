@@ -15,6 +15,7 @@ import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/Gcc.css";
 import {
+  useGetCustomerListXrayQuery,
   useGetRadioGraphersQuery,
   useGetXrayDropdownQuery,
   useGetXrayListQuery,
@@ -37,16 +38,19 @@ function MinilabById() {
     column: null,
     order: null,
   });
-  const {
-    data: customerData,
-    error,
-    isLoading,
-    isError,
-  } = useGetCustomerQuery({
+  // const {
+  //   data: xtratTable,
+  //   error,
+  //   isLoading,
+  //   isError,
+  // } = useGetCustomerQuery();
+
+  const { data: xtratTable } = useGetCustomerListXrayQuery({
     customerId: Number(customerId),
     admissionId: Number(admissionId),
   });
 
+  console.log("data" , xtratTable)
   const {
     register,
     handleSubmit,
@@ -110,8 +114,8 @@ function MinilabById() {
   };
 
   const sortedData = () => {
-    if (sorting.column && customerData?.payload?.tests) {
-      const sorted = [...customerData.payload.tests];
+    if (sorting.column && xtratTable?.payload?.tests) {
+      const sorted = [...xtratTable.payload.tests];
       sorted.sort((a, b) => {
         const aValue =
           sorting.column === "price"
@@ -132,7 +136,7 @@ function MinilabById() {
       });
       return sorted;
     }
-    return customerData?.payload?.tests || [];
+    return xtratTable?.payload?.tests || [];
   };
 
   useEffect(() => {
@@ -160,8 +164,11 @@ function MinilabById() {
           <FlexboxGrid.Item colspan={6}>
             <img
               className="w-40 h-40 rounded-full"
-              src="https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
-              alt=""
+              src={
+                xtratTable?.payload?.customer?.image
+                  ? `http://localhost:3002/${xtratTable?.payload?.customer?.image}`
+                  : "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
+              }
             />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={6}>
@@ -169,42 +176,42 @@ function MinilabById() {
               Name
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.fullName}
+              {xtratTable?.payload?.customer?.fullName}
             </Row>
             <Row className="text-base font-semibold text-black text-opacity-50">
               Age
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.age}
+              {xtratTable?.payload?.customer?.age}
             </Row>
             <Row className="text-base font-semibold text-black text-opacity-50">
               Gender
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.gender}
+              {xtratTable?.payload?.customer?.gender}
             </Row>
           </FlexboxGrid.Item>
-          {customerData?.payload?.customer?.medicalType != "OPD" && (
+          {xtratTable?.payload?.customer?.medicalType != "OPD" && (
             <FlexboxGrid.Item colspan={6}>
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Agency
               </Row>
               <Row className="mb-2 text-lg font-medium text-black">
-                {customerData?.payload?.customer?.agency}
+                {xtratTable?.payload?.customer?.agency}
               </Row>
 
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Country
               </Row>
               <Row className="mb-2 text-lg font-medium text-black">
-                {customerData?.payload?.customer?.country}
+                {xtratTable?.payload?.customer?.country}
               </Row>
 
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Job Title
               </Row>
               <Row className="mb-2 text-lg font-medium text-black">
-                {customerData?.payload?.customer?.job}
+                {xtratTable?.payload?.customer?.job}
               </Row>
             </FlexboxGrid.Item>
           )}
@@ -213,38 +220,36 @@ function MinilabById() {
               Medical Type
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.medicalType}
+              {xtratTable?.payload?.customer?.medicalType}
             </Row>
 
             <Row className="text-base font-semibold text-black text-opacity-50">
               NIC
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.nic}
+              {xtratTable?.payload?.customer?.nic}
             </Row>
-            {customerData?.payload?.customer?.medicalType != "OPD" && (
+            {xtratTable?.payload?.customer?.medicalType != "OPD" && (
               <>
                 <Row className="text-base font-semibold text-black text-opacity-50">
                   Passport
                 </Row>
-
                 <Row className="mb-2 text-lg font-medium text-black">
-                  {customerData?.payload?.customer?.passport}
+                  {xtratTable?.payload?.customer?.passport}
                 </Row>
               </>
             )}
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <div>Tests</div>
         <Table className="mt-5">
           <thead className="cashier-table-head">
             <tr>
               <th>#</th>
-              <th onClick={() => handleSort("code")}>
+              <th onClick={() => handleSort("testCode")}>
                 Code
                 <FontAwesomeIcon
                   icon={
-                    sorting.column === "code"
+                    sorting.column === "testCode"
                       ? sorting.order === "asc"
                         ? faCaretUp
                         : faCaretDown
@@ -286,13 +291,13 @@ function MinilabById() {
             {sortedData().map((test, index) => (
               <tr key={test.id}>
                 <td>{index + 1}</td>
-                <td>{test.code}</td>
+                <td>{test.testCode}</td>
                 <td>{test.description}</td>
                 <td>{test.price}</td>
               </tr>
             ))}
 
-            {customerData?.payload?.tests?.length === 0 && (
+            {xtratTable?.payload?.tests?.length === 0 && (
               <tr>
                 <td colSpan="5" className="text-center">
                   <p className="text-gray-500">No data to display.</p>
