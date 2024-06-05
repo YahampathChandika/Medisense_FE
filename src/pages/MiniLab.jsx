@@ -261,7 +261,7 @@ function Minilab() {
                     style={{ borderStyle: "none", cursor: "pointer" }}
                     onClick={() =>
                       navigate(
-                        `/home/cashier/${patient.customerId}/${patient.admissionId}`
+                        `/home/MinilabById/${patient.customerId}/${patient.admissionId}`
                         // '/home/cashier'
                       )
                     }

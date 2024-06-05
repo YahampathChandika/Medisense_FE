@@ -28,6 +28,7 @@ import TestAndPackages from "./pages/TestsAndPackages";
 import CashierList from "./pages/CashierList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./components/common/NotFound";
+import MinilabById from "./pages/MinilabById";
 
 // function App() {
 //   return (
@@ -117,6 +118,15 @@ function App() {
             />
           }
         />
+         <Route
+          path="gcc/:customerId"
+          element={
+            <ProtectedRoute
+              element={<Gcc />}
+              requiredRoles={[ROLES.Admin, ROLES.Reception]}
+            />
+          }
+        />
         <Route
           path="opd"
           element={
@@ -190,6 +200,15 @@ function App() {
             <ProtectedRoute
               element={<MiniLab />}
               requiredRoles={[ROLES.Admin, ROLES.MiniLAb]}
+            />
+          }
+        />
+         <Route
+          path="MinilabById/:customerId/:admissionId"
+          element={
+            <ProtectedRoute
+              element={<MinilabById />}
+              requiredRoles={[ROLES.Admin, ROLES.MinilabById]}
             />
           }
         />
