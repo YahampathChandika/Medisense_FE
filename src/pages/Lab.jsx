@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/Gcc.css";
 import { mockData } from "../assets/mocks/mockData";
 import {
@@ -8,30 +8,27 @@ import {
   InputGroup,
   Row,
   FlexboxGrid,
-  Uploader,
   SelectPicker,
   Table,
+  Button as RsuiteButton
 } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
-import { useEffect } from "react";
 
 function Lab() {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(mockData(8));
 
   const { Column, HeaderCell, Cell } = Table;
-  const data = mockData(8);
 
   const CustomHeaderCell = ({ children, className, ...props }) => {
-    // Add your Tailwind CSS classes to the className
     const headerClasses = "text-black font-bold text-sm";
-
     return (
       <Table.HeaderCell {...props} className={`${className} ${headerClasses}`}>
         {children}
@@ -41,7 +38,7 @@ function Lab() {
 
   const getData = () => {
     if (sortColumn && sortType) {
-      return data.sort((a, b) => {
+      return [...data].sort((a, b) => {
         let x = a[sortColumn];
         let y = b[sortColumn];
 
@@ -73,20 +70,68 @@ function Lab() {
     }, 500);
   };
 
+  const handleChange = (id, key, value) => {
+    const nextData = data.map(item => {
+      if (item.id === id) {
+        return { ...item, [key]: value };
+      }
+      return item;
+    });
+    setData(nextData);
+  };
+
+  const handleEditState = id => {
+    const nextData = data.map(item => {
+      if (item.id === id) {
+        return { ...item, status: item.status === 'EDIT' ? null : 'EDIT' };
+      }
+      return item;
+    });
+    setData(nextData);
+  };
+
+  const EditableCell = ({ rowData, dataKey, onChange, ...props }) => {
+    const editing = rowData.status === 'EDIT';
+    return (
+      <Cell {...props} className={editing ? 'table-content-editing' : ''}>
+        {editing ? (
+          <input
+            className="rs-input"
+            defaultValue={rowData[dataKey]}
+            onChange={event => {
+              onChange && onChange(rowData.id, dataKey, event.target.value);
+            }}
+          />
+        ) : (
+          <span className="table-content-edit-span">{rowData[dataKey]}</span>
+        )}
+      </Cell>
+    );
+  };
+
+  const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
+    return (
+      <Cell {...props} style={{ padding: '6px' }}>
+        <RsuiteButton
+          appearance="link"
+          onClick={() => {
+            onClick(rowData.id);
+          }}
+        >
+          {rowData.status === 'EDIT' ? 'Save' : 'Edit'}
+        </RsuiteButton>
+      </Cell>
+    );
+  };
+
   const form = useForm({
     mode: "onTouched",
   });
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, setValue } = form;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (formData) => {
+    console.log(formData);
   };
 
   useEffect(() => {
@@ -140,36 +185,43 @@ function Lab() {
           sortType={sortType}
           onSortColumn={handleSortColumn}
           loading={loading}
+          rowHeight={70}
           style={{ margin: "25px 0 40px" }}
         >
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>No</CustomHeaderCell>
-            <Table.Cell dataKey="no" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
-            <CustomHeaderCell>Type</CustomHeaderCell>
-            <Table.Cell dataKey="type" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
+          <Column sortable flexGrow>
+            <CustomHeaderCell>#</CustomHeaderCell>
+            <Cell dataKey="no" />
+          </Column>
+
+          <Column sortable flexGrow>
             <CustomHeaderCell>Code</CustomHeaderCell>
-            <Table.Cell dataKey="code" />
-          </Table.Column>
-          <Table.Column sortable flexGrow fullText>
+            <Cell dataKey="code" />
+          </Column>
+
+          <Column sortable flexGrow fullText>
             <CustomHeaderCell>Description</CustomHeaderCell>
-            <Table.Cell dataKey="description" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
+            <Cell dataKey="description" />
+          </Column>
+
+          <Column sortable flexGrow>
             <CustomHeaderCell>Result</CustomHeaderCell>
-            <Table.Cell dataKey="result" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
+            <EditableCell dataKey="result" onChange={handleChange} />
+          </Column>
+
+          <Column sortable flexGrow>
             <CustomHeaderCell>Unit</CustomHeaderCell>
-            <Table.Cell dataKey="unit" />
-          </Table.Column>
-          <Table.Column sortable flexGrow>
+            <Cell dataKey="unit" />
+          </Column>
+
+          <Column sortable flexGrow>
             <CustomHeaderCell>Status</CustomHeaderCell>
-            <Table.Cell dataKey="status" />
-          </Table.Column>
+            <EditableCell dataKey="status" onChange={handleChange} />
+          </Column>
+
+          <Column flexGrow={1}>
+            <HeaderCell>Action</HeaderCell>
+            <ActionCell dataKey="id" onClick={handleEditState} />
+          </Column>
         </Table>
         <FlexboxGrid
           justify="space-between"

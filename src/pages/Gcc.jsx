@@ -34,7 +34,7 @@ import {
   useAddCustomerMutation,
   useGetAllCustomersQuery,
   useGetCustomerByIDQuery,
-} from "../store/api/customer";
+} from "../store/api/customerApi";
 import { useParams } from "react-router-dom";
 import { useGetCustomerQuery } from "../store/api/cashier";
 
@@ -170,6 +170,8 @@ function Gcc() {
     formData.append("medicalType", updatedInputData.medicalType);
 
     try {
+      console.log("data",data);
+      console.log("formData", formData);
       const response = await addCustomer(formData);
 
       if (!response.error) {

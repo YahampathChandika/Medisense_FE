@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import {
   useAddCustomerMutation,
   useGetAllCustomersQuery,
-} from "../store/api/customer";
+} from "../store/api/customerApi";
 import { useNavigate } from "react-router-dom";
 
 function OpdTest() {
@@ -63,7 +63,6 @@ function OpdTest() {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setProfilePic(file);
-
     setInputData((prev) => ({
       ...prev,
       profilePhoto: URL.createObjectURL(file),

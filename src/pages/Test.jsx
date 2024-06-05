@@ -12,25 +12,33 @@ import {
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import {  selectePackage, selecteTest } from "../store/slice/selectPackageSlice";
-import { useAddPackageAndTestMutation, useGetAllCustomersQuery } from "../store/api/customer";
-
+import { selectePackage, selecteTest } from "../store/slice/selectPackageSlice";
+import {
+  useAddPackageAndTestMutation,
+  useGetAllCustomersQuery,
+} from "../store/api/customerApi";
 
 import Swal from "sweetalert2";
+import {
+  useGetCashierListMatricesQuery,
+  useGetCashierListQuery,
+} from "../store/api/cashierApi";
 
 function Test() {
   const { customerId, admissionId } = useParams();
   const navigate = useNavigate();
   // console.log("id", customerId);
   // console.log("id2", admissionId);
-  const { refetch } = useGetAllCustomersQuery();
+  const { refetch: getAllCustomersrefetch } = useGetAllCustomersQuery();
   const [addPackage] = useAddPackageAndTestMutation();
   const selectedPackage = useSelector(selectePackage);
   const selectedTest = useSelector(selecteTest);
+  const { refetch: cashierListrefetch } = useGetCashierListQuery();
+  const { refetch: cashierMatricesrefetch } = useGetCashierListMatricesQuery();
   // console.log("selectedTest from Redux store:", selectedTest);
   const ids = selectedPackage.map((item) => item.id);
   // console.log("IDs from Redux store:", ids);
- 
+
   const testId = selectedTest.map((item) => item.id);
   // console.log("testId from Redux store:", testId);
 
@@ -69,7 +77,9 @@ function Test() {
         });
         console.log("Response from the server:", response);
         navigate("/home/dashboard");
-        refetch();
+        getAllCustomersrefetch();
+        cashierMatricesrefetch();
+        cashierListrefetch();
       }
     } catch (error) {
       // Handle errors if the mutation fails
@@ -122,7 +132,7 @@ function Test() {
         <FlexboxGrid justify="end" style={{ paddingRight: "5%" }}>
           <Button
             onClick={handleSubmit}
-            className="w-40 h-10 bg-blue-800 text-white"
+            className="w-40 h-10 bg-blue-800 text-white mb-4"
           >
             Save
           </Button>

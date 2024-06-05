@@ -17,21 +17,22 @@ import {
   useGetCashierListQuery,
 } from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
+import { useGetMinilabListQuery } from "../store/api/minilabApi";
 
-function CashierList() {
+function XrayList() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
   const {
-    data: cashierList,
+    data: Minilab,
     isLoading,
     isError,
-    refetch: cashierListrefetch,
-  } = useGetCashierListQuery();
+    refetch: Minilabrefetch,
+  } = useGetMinilabListQuery();
 
   const { data: cashierMatrices, refetch: cashierMatricesrefetch } =
-    useGetCashierListMatricesQuery();
+  useGetCashierListMatricesQuery();
 
-  const cashierData = cashierList?.payload;
+  const cashierData = Minilab?.payload;
 
   const navigate = useNavigate();
 
@@ -122,7 +123,7 @@ function CashierList() {
           <span className="font-bold text-2xl">
             0{cashierMatrices?.payload.customersPaid || 0}
           </span>
-          <span className="text-md font-semibold">Customers Cashed</span>
+          <span className="text-md font-semibold">Customers Blood Extracted</span>
         </Col>
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
           <FontAwesomeIcon icon={faCoins} className="h-12 w-12 py-1" />
@@ -133,7 +134,7 @@ function CashierList() {
         </Col>
       </Row>
       <Row className="text-gray-700 text-2xl font-bold mt-5 mx-5">
-        Cashier Waiting List
+        X-Ray Waiting List
       </Row>
       <Row className="">
         <Table striped hover className="text-left table-fixed mt-4">
@@ -156,6 +157,7 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
+
               <th
                 className="patient-table-head"
                 style={{ width: "30%" }}
@@ -173,6 +175,7 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
+
               <th
                 className="patient-table-head"
                 style={{ width: "25%" }}
@@ -190,6 +193,7 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
+
               <th
                 className="patient-table-head"
                 style={{ width: "20%" }}
@@ -207,6 +211,7 @@ function CashierList() {
                   style={{ paddingLeft: "8px" }}
                 />
               </th>
+
               <th className="patient-table-head"></th>
             </tr>
           </thead>
@@ -219,22 +224,18 @@ function CashierList() {
               </tr>
             ) : (
               sortedData().map((patient) => (
-                <tr
-                  key={patient.customerId}
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    navigate(
-                      `/home/cashier/${patient.customerId}/${patient.admissionId}`
-                    )
-                  }
-                >
-                  <td style={{ paddingLeft: "5%", borderStyle: "none" }}>
+                <tr key={patient.customerId}>
+                  <td
+                    className="patientf-table-data"
+                    style={{ paddingLeft: "5%", borderStyle: "none" }}
+                  >
                     {patient.time.substring(0, 5)}
                   </td>
+
                   <td
-                    className=""
+                    className=" "
                     style={{
-                      display: "flex",
+                      display: "flex ",
                       flexDirection: "row",
                       border: "none",
                       paddingLeft: "10%",
@@ -249,18 +250,29 @@ function CashierList() {
                       alt="Patient"
                       className="patient-image"
                     />
+
                     {patient.fullName}
                   </td>
-                  <td style={{ paddingLeft: "3%", borderStyle: "none" }}>
-                    {patient.contactNo}
-                  </td>
-                  <td style={{ paddingLeft: "3%", borderStyle: "none" }}>
+                  <td className=" patient-table-data">{patient.contactNo}</td>
+                  <td className=" patient-table-data ">
                     {patient.medicalType}
                   </td>
-                  <td style={{ borderStyle: "none" }}>
+                  <td
+                    style={{ borderStyle: "none", cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(
+                        `/home/MinilabById/${patient.customerId}/${patient.admissionId}`
+                        // '/home/cashier'
+                      )
+                    }
+                  >
                     <FontAwesomeIcon
                       icon={faAngleRight}
-                      style={{ color: "black", paddingLeft: "40%" }}
+                      style={{
+                        color: "black",
+                        paddingLeft: "40%",
+                        borderStyle: "none",
+                      }}
                     />
                   </td>
                 </tr>
@@ -280,4 +292,4 @@ function CashierList() {
   );
 }
 
-export default CashierList;
+export default XrayList;

@@ -20,7 +20,7 @@ import {
 import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/customers/TablePatients";
 import { useNavigate } from "react-router";
-import { useGetAllCustomersQuery } from "../store/api/customer";
+import { useGetAllCustomersQuery } from "../store/api/customerApi";
 
 function Customers() {
   const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();
@@ -82,6 +82,7 @@ function Customers() {
             <FlexboxGrid.Item>
               <DateRangePicker
                 showOneCalendar
+                id="dateRangePicker"
                 placeholder="Select Date Range"
                 style={{ width: 250 }}
                 autoComplete="off"

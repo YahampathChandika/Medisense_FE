@@ -125,7 +125,7 @@ function SidebarComp() {
               Cashier
             </MenuItem>
           </div>
-          <div className="sidebar-link">
+          {/* <div className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "accounts" ? "selected-menu-item" : ""
@@ -135,23 +135,23 @@ function SidebarComp() {
             >
               Accounts
             </MenuItem>
-          </div>
+          </div> */}
           <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "xray" ? "selected-menu-item" : ""
+                selectedMenuItem === "xrayList" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faXRay} />}
-              onClick={() => handleMenuItemClick("xray")}
+              onClick={() => handleMenuItemClick("xrayList")}
             >
               X-Ray
             </MenuItem>
           </div>
           <div className="sidebar-link">
             <MenuItem
-              className={selectedMenuItem === "lab" ? "selected-menu-item" : ""}
+              className={selectedMenuItem === "labList" ? "selected-menu-item" : ""}
               icon={<FontAwesomeIcon icon={faFlaskVial} />}
-              onClick={() => handleMenuItemClick("lab")}
+              onClick={() => handleMenuItemClick("labList")}
             >
               Lab
             </MenuItem>
@@ -159,15 +159,15 @@ function SidebarComp() {
           <div className="sidebar-link">
             <MenuItem
               className={
-                selectedMenuItem === "miniLab" ? "selected-menu-item" : ""
+                selectedMenuItem === "miniLabList" ? "selected-menu-item" : ""
               }
               icon={<FontAwesomeIcon icon={faFlask} />}
-              onClick={() => handleMenuItemClick("miniLab")}
+              onClick={() => handleMenuItemClick("miniLabList")}
             >
               Mini-lab
             </MenuItem>
           </div>
-          <div to="test" className="sidebar-link">
+          {/* <div to="test" className="sidebar-link">
             <MenuItem
               className={
                 selectedMenuItem === "test" ? "selected-menu-item" : ""
@@ -177,7 +177,7 @@ function SidebarComp() {
             >
               Doctor
             </MenuItem>
-          </div>
+          </div> */}
         </Menu>
       </Sidebar>
     </>

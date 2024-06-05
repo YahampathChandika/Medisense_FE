@@ -1,7 +1,7 @@
 .selectedpackages-main-con {
   border: 1px solid #d5daec;
   border-radius: 8px;
-  height: 550px;
+  min-height: 250px;
 }
 
 .selectedpackages-table-top {

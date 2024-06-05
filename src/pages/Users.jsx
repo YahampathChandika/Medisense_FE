@@ -74,6 +74,7 @@ function Users() {
     return filtered;
   };
 
+
   const sortedData = () => {
     if (sortConfig.key) {
       const sorted = [...filteredData()].sort((a, b) => {

@@ -12,7 +12,6 @@ import All from "./components/tables/createPackage/All";
 import Available from "./components/tables/createPackage/Available";
 import Selected from "./components/tables/createPackage/Selected";
 import Xray from "./pages/Xray";
-import MiniLab from "./pages/MiniLab";
 import Lab from "./pages/Lab";
 import Customers from "./pages/Customers";
 import TablePatients from "./components/tables/customers/TablePatients";
@@ -28,6 +27,9 @@ import TestAndPackages from "./pages/TestsAndPackages";
 import CashierList from "./pages/CashierList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./components/common/NotFound";
+import MiniLabList from "./pages/MiniLabList";
+import LabList from "./pages/LabList";
+import XrayList from "./pages/XrayList";
 import MinilabById from "./pages/MinilabById";
 
 // function App() {
@@ -180,10 +182,10 @@ function App() {
         <Route path="addAgency" element={<AddAgency />} />
         <Route path="agency" element={<Agency />} />
         <Route
-          path="xray"
+          path="xrayList"
           element={
             <ProtectedRoute
-              element={<Xray />}
+              element={<XrayList />}
               requiredRoles={[ROLES.Admin, ROLES.XRay]}
             />
           }
@@ -195,10 +197,10 @@ function App() {
           }
         />
         <Route
-          path="miniLab"
+          path="miniLabList"
           element={
             <ProtectedRoute
-              element={<MiniLab />}
+              element={<MiniLabList />}
               requiredRoles={[ROLES.Admin, ROLES.MiniLAb]}
             />
           }
@@ -213,10 +215,10 @@ function App() {
           }
         />
         <Route
-          path="lab"
+          path="labList"
           element={
             <ProtectedRoute
-              element={<Lab />}
+              element={<LabList />}
               requiredRoles={[ROLES.Admin, ROLES.Lab]}
             />
           }

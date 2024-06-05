@@ -160,7 +160,7 @@ function SelectedPackages() {
                 maxHeight: "426px",
                 overflowY: "auto",
                 width: "auto",
-                minHeight: "426px",
+                minHeight: "250px",
               }}
             >
               <Table>

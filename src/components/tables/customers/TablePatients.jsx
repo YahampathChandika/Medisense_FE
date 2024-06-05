@@ -14,7 +14,7 @@ import FailModal from "../../modals/Fail";
 import {
   useDeleteCustomerMutation,
   useGetAllCustomersQuery,
-} from "../../../store/api/customer";
+} from "../../../store/api/customerApi";
 import { useNavigate } from "react-router-dom";
 
 function TablePatients({ data, activeButton }) {
@@ -51,8 +51,7 @@ function TablePatients({ data, activeButton }) {
     return data;
   };
 
-  console.log("sortedData", sortedData());
-  console.log("act", activeButton);
+  console.log("DD", data)
   const filteredData = data.filter((patient) => {
     return patient.medical === activeButton;
   });

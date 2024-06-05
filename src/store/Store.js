@@ -7,9 +7,9 @@ import { countryApi } from "./api/countryApi";
 import { jobApi } from "./api/jobApi";
 import selectedTestsReducer from "./slice/testSlice";
 import selectedPackageReducer from "./slice/selectPackageSlice";
-import { customerApi } from "./api/customer";
+import { customerApi } from "./api/customerApi";
 import { dropdownApi } from "./api/dropdownsApi";
-import { cashierApi } from "./api/cashier";
+import { cashierApi } from "./api/cashierApi";
 import { testApi } from "./api/testApi";
 import { minilabApi } from "./api/minilabApi";
 
