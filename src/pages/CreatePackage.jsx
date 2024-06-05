@@ -125,12 +125,12 @@ function CreatePackage() {
               <Radio value="allTests" onClick={() => navigate("allTests")}>
                 All
               </Radio>
-              <Radio
+              {/* <Radio
                 value="availableTests"
                 onClick={() => navigate("availableTests")}
               >
                 Available
-              </Radio>
+              </Radio> */}
               <Radio
                 value="selectedTests"
                 onClick={() => navigate("selectedTests")}

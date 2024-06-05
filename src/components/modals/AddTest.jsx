@@ -30,6 +30,7 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
       testCode: testById?.payload?.testCode || "",
       price: testById?.payload?.price || "",
       type: testById?.payload?.type || "",
+      unit: testById?.payload?.unit || "",
     },
   });
 
@@ -37,11 +38,12 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
   useEffect(() => {
     const setDefaultValues = async () => {
       if (id && testById) {
-        const { description, testCode, price, type } = testById.payload;
+        const { description, testCode, price, type, unit } = testById.payload;
         setValue("description", description);
         setValue("testCode", testCode);
         setValue("price", price);
         setValue("type", type);
+        setValue("unit", unit);
       }
     };
     setDefaultValues();
@@ -196,17 +198,21 @@ function AddTest({ open, handleClose, headText, bodyText, btnText, id }) {
               justify="space-between"
               className="flex justify-between items-center"
             >
-              <FlexboxGrid.Item colspan={15}>
+              <FlexboxGrid.Item colspan={7}>
+                <Row>Unit</Row>
+                <Input name="unit" defaultValue="unit" {...register("unit")} />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={7}>
+                <Row>Type</Row>
+                <Input name="type" defaultValue="type" {...register("type")} />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={7}>
                 <Row>Amount</Row>
                 <Input
                   name="price"
                   defaultValue="price"
                   {...register("price")}
                 />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item colspan={7}>
-                <Row>Type</Row>
-                <Input name="type" defaultValue="type" {...register("type")} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </Row>

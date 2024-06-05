@@ -149,15 +149,6 @@ function SidebarComp() {
           </div>
           <div className="sidebar-link">
             <MenuItem
-              className={selectedMenuItem === "labList" ? "selected-menu-item" : ""}
-              icon={<FontAwesomeIcon icon={faFlaskVial} />}
-              onClick={() => handleMenuItemClick("labList")}
-            >
-              Lab
-            </MenuItem>
-          </div>
-          <div className="sidebar-link">
-            <MenuItem
               className={
                 selectedMenuItem === "miniLabList" ? "selected-menu-item" : ""
               }
@@ -167,6 +158,16 @@ function SidebarComp() {
               Mini-lab
             </MenuItem>
           </div>
+          <div className="sidebar-link">
+            <MenuItem
+              className={selectedMenuItem === "labList" ? "selected-menu-item" : ""}
+              icon={<FontAwesomeIcon icon={faFlaskVial} />}
+              onClick={() => handleMenuItemClick("labList")}
+            >
+              Lab
+            </MenuItem>
+          </div>
+          
           {/* <div to="test" className="sidebar-link">
             <MenuItem
               className={
