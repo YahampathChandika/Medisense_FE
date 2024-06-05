@@ -224,7 +224,7 @@ function LabList() {
                   style={{ cursor: "pointer" }}
                   onClick={() =>
                     navigate(
-                      `/home/cashier/${patient.customerId}/${patient.admissionId}`
+                      `/home/lab/${patient.customerId}/${patient.admissionId}`
                     )
                   }
                 >

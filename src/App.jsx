@@ -191,6 +191,15 @@ function App() {
           }
         />
         <Route
+          path="xray/:customerId/:admissionId"
+          element={
+            <ProtectedRoute
+              element={<Xray />}
+              requiredRoles={[ROLES.Admin, ROLES.Cashier]}
+            />
+          }
+        />
+        <Route
           path="users"
           element={
             <ProtectedRoute element={<Users />} requiredRoles={[ROLES.Admin]} />
@@ -220,6 +229,15 @@ function App() {
             <ProtectedRoute
               element={<LabList />}
               requiredRoles={[ROLES.Admin, ROLES.Lab]}
+            />
+          }
+        />
+        <Route
+          path="lab/:customerId/:admissionId"
+          element={
+            <ProtectedRoute
+              element={<Lab />}
+              requiredRoles={[ROLES.Admin, ROLES.Cashier]}
             />
           }
         />
