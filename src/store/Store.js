@@ -44,6 +44,7 @@ export const store = configureStore({
       testApi.middleware,
       cashierApi.middleware,
       minilabApi.middleware
-    );
+    );n
   },
 });
+ 

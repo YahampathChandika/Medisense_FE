@@ -36,7 +36,7 @@ import {
   useGetCustomerByIDQuery,
 } from "../store/api/customerApi";
 import { useParams } from "react-router-dom";
-import { useGetCustomerQuery } from "../store/api/cashier";
+import { useGetCustomerQuery } from "../store/api/cashierApi";
 
 function Gcc() {
   const { customerId } = useParams();
