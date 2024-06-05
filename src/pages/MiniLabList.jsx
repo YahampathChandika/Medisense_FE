@@ -12,10 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import dummyImg from "../assets/images/dummy.jpg";
 import { Table } from "react-bootstrap";
-import {
-  useGetCashierListMatricesQuery,
-  useGetCashierListQuery,
-} from "../store/api/cashierApi";
+import { useGetCashierListMatricesQuery } from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
 import { useGetMinilabListQuery } from "../store/api/minilabApi";
 
@@ -228,7 +225,7 @@ function MiniLabList() {
               sortedData().map((patient) => (
                 <tr
                   key={patient.customerId}
-                  style={{cursor: "pointer"}}
+                  style={{ cursor: "pointer" }}
                   onClick={() =>
                     navigate(
                       `/home/MinilabById/${patient.customerId}/${patient.admissionId}`

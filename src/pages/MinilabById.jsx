@@ -1,42 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetCustomerQuery } from "../store/api/cashierApi";
-import { useGetPaymentMethodsQuery } from "../store/api/dropdownsApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretDown,
   faCaretUp,
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  Container,
-  Divider,
-  Input,
-  Row,
-  FlexboxGrid,
-  SelectPicker,
-  DatePicker,
-} from "rsuite";
+import { Container, Divider, Row, FlexboxGrid, Checkbox } from "rsuite";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/Gcc.css";
+import {
+  useGetMinilabListQuery,
+  useUpdateMiniLabStatusMutation,
+} from "../store/api/minilabApi";
+import Swal from "sweetalert2";
 
 function MinilabById() {
   const { customerId, admissionId } = useParams();
-  const { data: paymentMethods } = useGetPaymentMethodsQuery();
   const [sorting, setSorting] = useState({
     column: null,
     order: null,
   });
-  console.log("id",customerId)
-  const {
-    data: customerData,
-    error,
-    isLoading,
-    isError,
-  } = useGetCustomerQuery({
+  const [isChecked, setIsChecked] = useState(false);
+  const [updateMiniLabStatus] = useUpdateMiniLabStatusMutation();
+  const { refetch } = useGetMinilabListQuery();
+  const navigate = useNavigate();
+
+  const { data: customerData } = useGetCustomerQuery({
     customerId: Number(customerId),
     admissionId: Number(admissionId),
   });
@@ -66,9 +60,45 @@ function MinilabById() {
     }));
   };
 
-  const onSubmit = (data) => {
-    console.log("registeeee", getValues("name"));
-    console.log("register", data.name);
+  const onSubmit = async (data) => {
+    console.log("onSubmit", data);
+    try {
+      const response = await updateMiniLabStatus({
+        customerId,
+        admissionId,
+        data: { miniLabStatusId: 1 },
+      });
+      console.log("response", response);
+
+      if (response.error) {
+        console.log("Mini-Lab Error", response);
+        Swal.fire({
+          title: "Oops...",
+          text: response?.error?.data?.payload?.name,
+          icon: "error",
+        });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Blood extracted",
+        });
+        refetch();
+        navigate("/home/miniLabList");
+      }
+    } catch (error) {
+      console.log("Update Error", error);
+    }
   };
 
   const sortedData = () => {
@@ -101,9 +131,6 @@ function MinilabById() {
     document.title = "MinilabById | Medisense";
   }, []);
 
-  console.log("paymentMethods", paymentMethods);
-  console.log("payment", getValues("payment"));
-
   return (
     <Container className="gcc-con">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -120,7 +147,11 @@ function MinilabById() {
           <FlexboxGrid.Item colspan={6}>
             <img
               className="w-40 h-40 rounded-full"
-              src="https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src={
+                customerData?.payload?.customer?.image
+                  ? `http://localhost:3002/${customerData?.payload?.customer?.image}`
+                  : "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
+              }
               alt=""
             />
           </FlexboxGrid.Item>
@@ -195,8 +226,7 @@ function MinilabById() {
             )}
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <div>Tests</div>
-        <Table className="mt-5" >
+        <Table className="mt-5">
           <thead className="cashier-table-head">
             <tr>
               <th>#</th>
@@ -244,7 +274,7 @@ function MinilabById() {
 
           <tbody className="selectedpackages-table-body">
             {sortedData().map((test, index) => (
-              <tr key={test.id}>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{test.code}</td>
                 <td>{test.description}</td>
@@ -264,26 +294,21 @@ function MinilabById() {
         <Divider />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11}>
-            <SelectPicker
-              menuMaxHeight={120}
-              searchable={false}
-              placeholder="Payment Method"
-              style={{ width: "100%" }}
-              data={
-                paymentMethods?.payload.map((item) => ({
-                  label: item.label,
-                  value: item.label,
-                })) || []
-              }
-              {...register("payment")}
-              onChange={(label) => setValue("payment", label)}
-            />
+            <Checkbox
+              checked={isChecked}
+              onChange={() => setIsChecked(!isChecked)}
+            >
+              Blood Extracted
+            </Checkbox>
           </FlexboxGrid.Item>
-         
         </FlexboxGrid>
 
         <FlexboxGrid justify="end">
-          <Button type="submit" className="w-40 h-10 text-white bg-blue-800">
+          <Button
+            type="submit"
+            className="w-40 h-10 text-white bg-blue-800"
+            disabled={!isChecked}
+          >
             Save
           </Button>
         </FlexboxGrid>
