@@ -30,7 +30,7 @@ function MiniLabList() {
   } = useGetMinilabListQuery();
 
   const { data: cashierMatrices, refetch: cashierMatricesrefetch } =
-  useGetCashierListMatricesQuery();
+    useGetCashierListMatricesQuery();
 
   const cashierData = Minilab?.payload;
 
@@ -123,7 +123,9 @@ function MiniLabList() {
           <span className="font-bold text-2xl">
             0{cashierMatrices?.payload.customersPaid || 0}
           </span>
-          <span className="text-md font-semibold">Customers Blood Extracted</span>
+          <span className="text-md font-semibold">
+            Customers Blood Extracted
+          </span>
         </Col>
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
           <FontAwesomeIcon icon={faCoins} className="h-12 w-12 py-1" />
@@ -224,7 +226,15 @@ function MiniLabList() {
               </tr>
             ) : (
               sortedData().map((patient) => (
-                <tr key={patient.customerId}>
+                <tr
+                  key={patient.customerId}
+                  style={{cursor: "pointer"}}
+                  onClick={() =>
+                    navigate(
+                      `/home/MinilabById/${patient.customerId}/${patient.admissionId}`
+                    )
+                  }
+                >
                   <td
                     className="patientf-table-data"
                     style={{ paddingLeft: "5%", borderStyle: "none" }}
@@ -257,15 +267,7 @@ function MiniLabList() {
                   <td className=" patient-table-data ">
                     {patient.medicalType}
                   </td>
-                  <td
-                    style={{ borderStyle: "none", cursor: "pointer" }}
-                    onClick={() =>
-                      navigate(
-                        `/home/cashier/${patient.customerId}/${patient.admissionId}`
-                        // '/home/cashier'
-                      )
-                    }
-                  >
+                  <td style={{ borderStyle: "none", cursor: "pointer" }}>
                     <FontAwesomeIcon
                       icon={faAngleRight}
                       style={{
