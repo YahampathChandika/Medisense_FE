@@ -68,7 +68,7 @@ function MinilabById() {
       const response = await updateMiniLabStatus({
         customerId,
         admissionId,
-        data: { miniLabStatusId: 1 },
+        data: { miniLabStatusId: 8 },
       });
       console.log("response", response);
 
