@@ -125,7 +125,6 @@ function UserRegistration({
       [field]: value,
     }));
 
-    // Clear validation error when the user types
     setValidationErrors((prev) => ({
       ...prev,
       [field]: "",
@@ -134,6 +133,7 @@ function UserRegistration({
 
   const isEditing = !!id;
   const isNewUser = !isEditing;
+  console.log("eeeeeeeeeee",updatedInputData)
 
   const handleSubmit = async (e) => {
     const errors = {};
@@ -141,13 +141,14 @@ function UserRegistration({
       errors.firstName = "Name is required*";
     }
 
-    // Check if there are any validation errors
     if (Object.keys(errors).length > 0) {
       setValidationErrors(errors);
       return;
     }
 
     if (isNewUser) {
+      const formData = new FormData();
+
       try {
         e.preventDefault();
         const response = await addUser(updatedInputData);
