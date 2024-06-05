@@ -33,9 +33,14 @@ import { useGetAllAgencyQuery } from "../store/api/agencyApi";
 import {
   useAddCustomerMutation,
   useGetAllCustomersQuery,
+  useGetCustomerByIDQuery,
 } from "../store/api/customerApi";
+import { useParams } from "react-router-dom";
+import { useGetCustomerQuery } from "../store/api/cashierApi";
 
 function Gcc() {
+  const { customerId } = useParams();
+  console.log("customerId", customerId);
   const location = useLocation();
   const [testType, setTestType] = useState(null);
   const [agencyOpen, setAgencyOpen] = useState(false);
@@ -55,19 +60,29 @@ function Gcc() {
   const handleJobClose = () => setJobOpen(false);
   const handleCountryOpen = () => setCountryOpen(true);
   const handleCountryClose = () => setCountryOpen(false);
+  const {
+    data: customerData,
+    error,
+    isLoading,
+    isError,
+  } = useGetCustomerByIDQuery(customerId, { skip: !customerId });
 
+  console.log("data", customerData);
+  console.log("res", customerData?.payload?.fullName);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const testTypeParam = params.get("testType");
 
-    if (testTypeParam !== null) {
+    if (customerId) {
+      document.title = "Update Customer | Medisense";
+    } else if (testTypeParam !== null) {
       const testTypeValue = testTypeParam === "true";
       setTestType(testTypeValue);
       document.title = testTypeValue
         ? "GCC | Medisense"
         : "Non GCC | Medisense";
     }
-  }, [location]);
+  }, [location, customerId]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -180,7 +195,11 @@ function Gcc() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item colspan={11} className="main-title">
-            {testType ? <p>GCC Register</p> : <p>Non GCC Register</p>}
+            {customerId ? (
+              <p>Update Customer</p>
+            ) : (
+              <p>{testType ? "GCC Register" : "Non GCC Register"}</p>
+            )}
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={11}>
             <InputGroup>
@@ -194,206 +213,261 @@ function Gcc() {
             </InputGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider className="border-t-2 border-gray-300" />
-        <Row>Full Name</Row>
-        <Input {...register("fullName")} />
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={11}>
-            <Row>Profile Photo</Row>
-            <label className=" w-40 h-40 flex justify-center items-center bg-gray-300 rounded-full ml-40 cursor-pointer mt-1 transition duration-500">
+        {isLoading ? (
+          <div>IsLoading</div>
+        ) : isError ? (
+          <div>Error..</div>
+        ) : (
+          <>
+            <Divider className="border-t-2 border-gray-300" />
+            <Row>Full Name</Row>
+            <Input
+              {...register("fullName")}
+              defaultValue={customerData?.payload?.fullName}
+            />
+            <FlexboxGrid justify="space-between">
+              <FlexboxGrid.Item colspan={11}>
+                <Row>Profile Photo</Row>
+                <label className="w-40 h-40 flex justify-center items-center bg-gray-300 rounded-full ml-40 cursor-pointer mt-1 transition duration-500">
+                  <input
+                    type="file"
+                    accept="image/jpeg, image/png, image/gif"
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
+                  {profilePic ? (
+                    <img
+                      src={URL.createObjectURL(profilePic)}
+                      alt="Profile"
+                      className="w-40 h-40 rounded-full"
+                    />
+                  ) : customerData?.payload?.image ? (
+                    <img
+                      src={`http://localhost:3002/${customerData?.payload?.image}`}
+                      alt="Profile"
+                      className="w-40 h-40 rounded-full"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCamera}
+                      style={{ width: 35, height: 50, color: "white" }}
+                    />
+                  )}
+                </label>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={11}>
+                <Row>Date of Birth</Row>
+                {customerId ? (
+                  <input
+                    {...register("dateOfBirth")}
+                    autoComplete="false"
+                    className="rs-input"
+                    defaultValue={customerData?.payload?.dateOfBirth}
+                  />
+                ) : (
+                  <DatePicker
+                    block
+                    oneTap
+                    format="MM-dd-yyyy"
+                    placeholder="MM-dd-yyyy"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    value={watch("dateOfBirth")}
+                    onChange={(value) => setValue("dateOfBirth", value)}
+                  />
+                )}
+                <Row>Sex</Row>
+                <SelectPicker
+                  searchable={false}
+                  style={{ width: "100%" }}
+                  data={["Male", "Female"].map((item) => ({
+                    label: item,
+                    value: item,
+                  }))}
+                  {...register("sex")}
+                  onChange={(value) => setValue("sex", value)}
+                />
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+            <Row>
+              <Row>Address</Row>
               <input
-                type="file"
-                accept="image/jpeg, image/png, image/gif"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
+                {...register("address")}
+                autoComplete="false"
+                className="rs-input"
               />
-              {profilePic ? (
-                <img
-                  src={URL.createObjectURL(profilePic)}
-                  alt="Profile"
-                  className="w-40 h-40 rounded-full"
+            </Row>
+            <FlexboxGrid justify="space-between">
+              <FlexboxGrid.Item colspan={11}>
+                <Row>Email</Row>
+                <input
+                  {...register("email")}
+                  placeholder="john@example.com"
+                  name="email"
+                  className="rs-input"
                 />
-              ) : (
-                <FontAwesomeIcon
-                  icon={faCamera}
-                  style={{ width: 35, height: 50, color: "white" }}
+                <Row>Civil Status</Row>
+                <SelectPicker
+                  searchable={false}
+                  style={{ width: "100%" }}
+                  data={["Married", "Single", "Divorced", "Widowed"].map(
+                    (item) => ({
+                      label: item,
+                      value: item,
+                    })
+                  )}
+                  {...register("civilStatus")}
+                  onChange={(value) => setValue("civilStatus", value)}
                 />
-              )}
-            </label>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={11}>
-            <Row>Date of Birth</Row>
-            <DatePicker
-              block
-              oneTap
-              format="MM-dd-yyyy"
-              placeholder="MM-dd-yyyy"
-              id="dateOfBirth"
-              name="dateOfBirth"
-              value={watch("dateOfBirth")}
-              onChange={(value) => setValue("dateOfBirth", value)}
-            />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={11}>
+                <Row>Mobile Number</Row>
+                <Input {...register("mobileNo")} />
+                <Row>NIC</Row>
+                <Input {...register("nic")} />
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+            <Divider />
+            <Row>
+              <Row>Passport Details</Row>
+              <FlexboxGrid justify="space-between">
+                <FlexboxGrid.Item colspan={7}>
+                  <Input
+                    {...register("passportId")}
+                    placeholder="Passport ID"
+                  />
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item colspan={7}>
+                  {customerId ? (
+                    <Input
+                      {...register("issuedDate")}
+                      defaultValue={customerData?.payload?.issuedDate}
+                    />
+                  ) : (
+                    <DatePicker
+                      block
+                      oneTap
+                      placeholder="Issued Date"
+                      id="issuedDate"
+                      name="issuedDate"
+                      value={watch("issuedDate")}
+                      onChange={(value) => setValue("issuedDate", value)}
+                    />
+                  )}
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item colspan={7}>
+                  <Input
+                    {...register("issuedPlace")}
+                    placeholder="Issued Place"
+                  />
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            </Row>
+            <FlexboxGrid justify="space-between">
+              <FlexboxGrid.Item colspan={7}>
+                <Row>Agency</Row>
+                <Row className="gcc-select">
+                  <SelectPicker
+                    menuMaxHeight={120}
+                    className="gcc-select-drop"
+                    style={{ width: "100%" }}
+                    data={agencyData?.payload.map((item) => ({
+                      label: item.name,
+                      value: item.id,
+                    }))}
+                    {...register("agencyId")}
+                    onChange={(value) => setValue("agencyId", value)}
+                  />
+                  <Button
+                    onClick={handleAgencyOpen}
+                    className="gcc-add-btn btn btn-outline-primary"
+                  >
+                    Add
+                  </Button>
+                </Row>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={7}>
+                <Row>Job</Row>
+                <Row className="gcc-select">
+                  <SelectPicker
+                    menuMaxHeight={120}
+                    className="gcc-select-drop"
+                    style={{
+                      width: "100%",
+                      maxHeight: "100px",
+                    }}
+                    data={jobData?.payload.map((item) => ({
+                      label: item.job,
+                      value: item.id,
+                    }))}
+                    {...register("jobId")}
+                    onChange={(value) => setValue("jobId", value)}
+                  />
+                  <Button
+                    onClick={handleJobOpen}
+                    className="gcc-add-btn btn btn-outline-primary"
+                  >
+                    Add
+                  </Button>
+                </Row>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={7}>
+                <Row>Country</Row>
+                <Row className="gcc-select">
+                  {customerId ? (
+                    <SelectPicker
+                      menuMaxHeight={120}
+                      className="gcc-select-drop"
+                      style={{ width: "100%" }}
+                      data={[
+                        ...(gccData?.payload || []),
+                        ...(nonGccData?.payload || []),
+                      ].map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))}
+                      {...register("countryId")}
+                      onChange={(value) => setValue("countryId", value)}
+                    />
+                  ) : testType ? (
+                    <SelectPicker
+                      menuMaxHeight={120}
+                      className="gcc-select-drop"
+                      style={{ width: "100%" }}
+                      data={gccData?.payload.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))}
+                      {...register("countryId")}
+                      onChange={(value) => setValue("countryId", value)}
+                    />
+                  ) : (
+                    <SelectPicker
+                      menuMaxHeight={100}
+                      className="gcc-select-drop"
+                      style={{ width: "100%" }}
+                      data={nonGccData?.payload.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))}
+                      {...register("countryId")}
+                      onChange={(value) => setValue("countryId", value)}
+                    />
+                  )}
 
-            <Row>Sex</Row>
-            <SelectPicker
-              searchable={false}
-              style={{ width: "100%" }}
-              data={["Male", "Female"].map((item) => ({
-                label: item,
-                value: item,
-              }))}
-              {...register("sex")}
-              onChange={(value) => setValue("sex", value)}
-            />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <Row>
-          <Row>Address</Row>
-          <input
-            {...register("address")}
-            autoComplete="false"
-            className="rs-input"
-          />
-        </Row>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={11}>
-            <Row>Email</Row>
-            <input
-              {...register("email")}
-              placeholder="john@example.com"
-              name="email"
-              className="rs-input"
-            />
-            <Row>Civil Status</Row>
-            <SelectPicker
-              searchable={false}
-              style={{ width: "100%" }}
-              data={["Married", "Single", "Divorced", "Widowed"].map(
-                (item) => ({
-                  label: item,
-                  value: item,
-                })
-              )}
-              {...register("civilStatus")}
-              onChange={(value) => setValue("civilStatus", value)}
-            />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={11}>
-            <Row>Mobile Number</Row>
-            <Input {...register("mobileNo")} />
-            <Row>NIC</Row>
-            <Input {...register("nic")} />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <Divider />
-        <Row>
-          <Row>Passport Details</Row>
-          <FlexboxGrid justify="space-between">
-            <FlexboxGrid.Item colspan={7}>
-              <Input {...register("passportId")} placeholder="Passport ID" />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={7}>
-              <DatePicker
-                block
-                oneTap
-                placeholder="Issued Date"
-                id="issuedDate"
-                name="issuedDate"
-                value={watch("issuedDate")}
-                onChange={(value) => setValue("issuedDate", value)}
-              />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={7}>
-              <Input {...register("issuedPlace")} placeholder="Issued Place" />
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-        </Row>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={7}>
-            <Row>Agency</Row>
-            <Row className="gcc-select">
-              <SelectPicker
-                menuMaxHeight={120}
-                className="gcc-select-drop"
-                style={{ width: "100%" }}
-                data={agencyData?.payload.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
-                {...register("agencyId")}
-                onChange={(value) => setValue("agencyId", value)}
-              />
-              <Button
-                onClick={handleAgencyOpen}
-                className="gcc-add-btn btn btn-outline-primary"
-              >
-                Add
-              </Button>
-            </Row>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={7}>
-            <Row>Job</Row>
-            <Row className="gcc-select">
-              <SelectPicker
-                menuMaxHeight={120}
-                className="gcc-select-drop"
-                style={{
-                  width: "100%",
-                  maxHeight: "100px",
-                }}
-                data={jobData?.payload.map((item) => ({
-                  label: item.job,
-                  value: item.id,
-                }))}
-                {...register("jobId")}
-                onChange={(value) => setValue("jobId", value)}
-              />
-              <Button
-                onClick={handleJobOpen}
-                className="gcc-add-btn btn btn-outline-primary"
-              >
-                Add
-              </Button>
-            </Row>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={7}>
-            <Row>Country</Row>
-            <Row className="gcc-select">
-              {testType ? (
-                <SelectPicker
-                  menuMaxHeight={120}
-                  className="gcc-select-drop"
-                  style={{ width: "100%" }}
-                  data={gccData?.payload.map((item) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))}
-                  {...register("countryId")}
-                  onChange={(value) => setValue("countryId", value)}
-                />
-              ) : (
-                <SelectPicker
-                  menuMaxHeight={100}
-                  className="gcc-select-drop"
-                  style={{ width: "100%" }}
-                  data={nonGccData?.payload.map((item) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))}
-                  {...register("countryId")}
-                  onChange={(value) => setValue("countryId", value)}
-                />
-              )}
-              <Button
-                onClick={handleCountryOpen}
-                className="gcc-add-btn btn btn-outline-primary"
-              >
-                Add
-              </Button>
-            </Row>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <Divider />
+                  <Button
+                    onClick={handleCountryOpen}
+                    className="gcc-add-btn btn btn-outline-primary"
+                  >
+                    Add
+                  </Button>
+                </Row>
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+            <Divider />
+          </>
+        )}
+
         <FlexboxGrid justify="end">
           <Button type="submit" className="w-40 h-10 btn btn-primary">
             Continue

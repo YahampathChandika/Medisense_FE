@@ -228,10 +228,10 @@ function MiniLabList() {
               sortedData().map((patient) => (
                 <tr
                   key={patient.customerId}
-                  style={{ cursor: "pointer" }}
+                  style={{cursor: "pointer"}}
                   onClick={() =>
                     navigate(
-                      `/home/cashier/${patient.customerId}/${patient.admissionId}`
+                      `/home/MinilabById/${patient.customerId}/${patient.admissionId}`
                     )
                   }
                 >

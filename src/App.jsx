@@ -30,6 +30,7 @@ import NotFound from "./components/common/NotFound";
 import MiniLabList from "./pages/MiniLabList";
 import LabList from "./pages/LabList";
 import XrayList from "./pages/XrayList";
+import MinilabById from "./pages/MinilabById";
 
 // function App() {
 //   return (
@@ -119,6 +120,15 @@ function App() {
             />
           }
         />
+         <Route
+          path="gcc/:customerId"
+          element={
+            <ProtectedRoute
+              element={<Gcc />}
+              requiredRoles={[ROLES.Admin, ROLES.Reception]}
+            />
+          }
+        />
         <Route
           path="opd"
           element={
@@ -201,6 +211,15 @@ function App() {
             <ProtectedRoute
               element={<MiniLabList />}
               requiredRoles={[ROLES.Admin, ROLES.MiniLAb]}
+            />
+          }
+        />
+         <Route
+          path="MinilabById/:customerId/:admissionId"
+          element={
+            <ProtectedRoute
+              element={<MinilabById />}
+              requiredRoles={[ROLES.Admin, ROLES.MinilabById]}
             />
           }
         />
