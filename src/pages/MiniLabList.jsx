@@ -19,12 +19,7 @@ import { useGetMinilabListQuery } from "../store/api/minilabApi";
 function MiniLabList() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
-  const {
-    data: Minilab,
-    isLoading,
-    isError,
-    refetch: Minilabrefetch,
-  } = useGetMinilabListQuery();
+  const { data: Minilab, isLoading } = useGetMinilabListQuery();
 
   const { data: cashierMatrices, refetch: cashierMatricesrefetch } =
     useGetCashierListMatricesQuery();

@@ -12,26 +12,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import dummyImg from "../assets/images/dummy.jpg";
 import { Table } from "react-bootstrap";
-import {
-  useGetCashierListMatricesQuery,
-  useGetCashierListQuery,
-} from "../store/api/cashierApi";
+import { useGetCashierListMatricesQuery } from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
+import { useGetLabListQuery } from "../store/api/labApi";
 
 function LabList() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
-  const {
-    data: cashierList,
-    isLoading,
-    isError,
-    refetch: cashierListrefetch,
-  } = useGetCashierListQuery();
+  const { data: Lab, isLoading } = useGetLabListQuery();
 
   const { data: cashierMatrices, refetch: cashierMatricesrefetch } =
     useGetCashierListMatricesQuery();
 
-  const cashierData = cashierList?.payload;
+  const cashierData = Lab?.payload;
 
   const navigate = useNavigate();
 

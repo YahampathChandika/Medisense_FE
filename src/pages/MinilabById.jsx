@@ -18,6 +18,7 @@ import {
   useUpdateMiniLabStatusMutation,
 } from "../store/api/minilabApi";
 import Swal from "sweetalert2";
+import { useGetLabListQuery } from "../store/api/labApi";
 
 function MinilabById() {
   const { customerId, admissionId } = useParams();
@@ -27,7 +28,8 @@ function MinilabById() {
   });
   const [isChecked, setIsChecked] = useState(false);
   const [updateMiniLabStatus] = useUpdateMiniLabStatusMutation();
-  const { refetch } = useGetMinilabListQuery();
+  const { refetch: MiniLabrefetch } = useGetMinilabListQuery();
+  const { refetch: Labrefetch } = useGetLabListQuery();
   const navigate = useNavigate();
 
   const { data: customerData } = useGetCustomerQuery({
@@ -93,7 +95,8 @@ function MinilabById() {
           icon: "success",
           title: "Blood extracted",
         });
-        refetch();
+        MiniLabrefetch();
+        Labrefetch();
         navigate("/home/miniLabList");
       }
     } catch (error) {

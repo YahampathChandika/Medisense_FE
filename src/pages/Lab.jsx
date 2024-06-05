@@ -4,28 +4,32 @@ import { mockData } from "../assets/mocks/mockData";
 import {
   Container,
   Divider,
-  Input,
-  InputGroup,
   Row,
   FlexboxGrid,
   SelectPicker,
   Table,
-  Button as RsuiteButton
+  Button as RsuiteButton,
 } from "rsuite";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
+import { useGetCustomerQuery } from "../store/api/cashierApi";
+import { useParams } from "react-router-dom";
 
 function Lab() {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(mockData(8));
+  const { customerId, admissionId } = useParams();
 
   const { Column, HeaderCell, Cell } = Table;
+
+  const { data: customerData } = useGetCustomerQuery({
+    customerId: Number(customerId),
+    admissionId: Number(admissionId),
+  });
 
   const CustomHeaderCell = ({ children, className, ...props }) => {
     const headerClasses = "text-black font-bold text-sm";
@@ -71,7 +75,7 @@ function Lab() {
   };
 
   const handleChange = (id, key, value) => {
-    const nextData = data.map(item => {
+    const nextData = data.map((item) => {
       if (item.id === id) {
         return { ...item, [key]: value };
       }
@@ -80,10 +84,10 @@ function Lab() {
     setData(nextData);
   };
 
-  const handleEditState = id => {
-    const nextData = data.map(item => {
+  const handleEditState = (id) => {
+    const nextData = data.map((item) => {
       if (item.id === id) {
-        return { ...item, status: item.status === 'EDIT' ? null : 'EDIT' };
+        return { ...item, status: item.status === "EDIT" ? null : "EDIT" };
       }
       return item;
     });
@@ -91,14 +95,14 @@ function Lab() {
   };
 
   const EditableCell = ({ rowData, dataKey, onChange, ...props }) => {
-    const editing = rowData.status === 'EDIT';
+    const editing = rowData.status === "EDIT";
     return (
-      <Cell {...props} className={editing ? 'table-content-editing' : ''}>
+      <Cell {...props} className={editing ? "table-content-editing" : ""}>
         {editing ? (
           <input
             className="rs-input"
             defaultValue={rowData[dataKey]}
-            onChange={event => {
+            onChange={(event) => {
               onChange && onChange(rowData.id, dataKey, event.target.value);
             }}
           />
@@ -111,14 +115,14 @@ function Lab() {
 
   const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
     return (
-      <Cell {...props} style={{ padding: '6px' }}>
+      <Cell {...props} style={{ padding: "6px" }}>
         <RsuiteButton
           appearance="link"
           onClick={() => {
             onClick(rowData.id);
           }}
         >
-          {rowData.status === 'EDIT' ? 'Save' : 'Edit'}
+          {rowData.status === "EDIT" ? "Save" : "Edit"}
         </RsuiteButton>
       </Cell>
     );
@@ -145,35 +149,92 @@ function Lab() {
           <FlexboxGrid.Item colspan={11} className="main-title">
             Lab
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={11}>
-            <InputGroup>
-              <Input
-                placeholder="Search by ID or name..."
-                style={{ margin: 0 }}
-              />
-              <InputGroup.Button>
-                <FontAwesomeIcon icon={faSearch} />
-              </InputGroup.Button>
-            </InputGroup>
-          </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider className="border-t-2 border-gray-300" />
         <FlexboxGrid
           justify="space-between"
           className="flex items-center justify-between"
         >
-          <FlexboxGrid.Item colspan={16}>
-            <Row>Full Name</Row>
-            <Input {...register("name")} />
-            <Row>ID</Row>
-            <Input {...register("id")} />
-          </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={6}>
             <img
-              className="h-40 w-40 rounded-full"
-              src="https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
+              className="w-40 h-40 rounded-full"
+              src={
+                customerData?.payload?.customer?.image
+                  ? `http://localhost:3002/${customerData?.payload?.customer?.image}`
+                  : "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
+              }
               alt=""
             />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={6}>
+            <Row className="text-base font-semibold text-black text-opacity-50">
+              Name
+            </Row>
+            <Row className="mb-2 text-lg font-medium text-black">
+              {customerData?.payload?.customer?.fullName}
+            </Row>
+            <Row className="text-base font-semibold text-black text-opacity-50">
+              Age
+            </Row>
+            <Row className="mb-2 text-lg font-medium text-black">
+              {customerData?.payload?.customer?.age}
+            </Row>
+            <Row className="text-base font-semibold text-black text-opacity-50">
+              Gender
+            </Row>
+            <Row className="mb-2 text-lg font-medium text-black">
+              {customerData?.payload?.customer?.gender}
+            </Row>
+          </FlexboxGrid.Item>
+          {customerData?.payload?.customer?.medicalType != "OPD" && (
+            <FlexboxGrid.Item colspan={6}>
+              <Row className="text-base font-semibold text-black text-opacity-50">
+                Agency
+              </Row>
+              <Row className="mb-2 text-lg font-medium text-black">
+                {customerData?.payload?.customer?.agency}
+              </Row>
+
+              <Row className="text-base font-semibold text-black text-opacity-50">
+                Country
+              </Row>
+              <Row className="mb-2 text-lg font-medium text-black">
+                {customerData?.payload?.customer?.country}
+              </Row>
+
+              <Row className="text-base font-semibold text-black text-opacity-50">
+                Job Title
+              </Row>
+              <Row className="mb-2 text-lg font-medium text-black">
+                {customerData?.payload?.customer?.job}
+              </Row>
+            </FlexboxGrid.Item>
+          )}
+          <FlexboxGrid.Item colspan={6}>
+            <Row className="text-base font-semibold text-black text-opacity-50">
+              Medical Type
+            </Row>
+            <Row className="mb-2 text-lg font-medium text-black">
+              {customerData?.payload?.customer?.medicalType}
+            </Row>
+
+            <Row className="text-base font-semibold text-black text-opacity-50">
+              NIC
+            </Row>
+            <Row className="mb-2 text-lg font-medium text-black">
+              {customerData?.payload?.customer?.nic}
+            </Row>
+            {customerData?.payload?.customer?.medicalType != "OPD" && (
+              <>
+                <Row className="text-base font-semibold text-black text-opacity-50">
+                  Passport
+                </Row>
+
+                <Row className="mb-2 text-lg font-medium text-black">
+                  {customerData?.payload?.customer?.passport}
+                </Row>
+              </>
+            )}
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Table
@@ -240,26 +301,14 @@ function Lab() {
               onChange={(value) => setValue("xrayResults", value)}
             />
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={7}>
+          <FlexboxGrid.Item colspan={3}>
             <Button
               type="submit"
-              className="w-full h-10 bg-blue-800 text-white"
+              className="w-48 h-10 mr-14 bg-blue-800 text-white"
             >
-              Mark Default
+              Save
             </Button>
           </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <Divider />
-        <FlexboxGrid justify="end">
-          <Button
-            type="submit"
-            className="w-32 h-10 mr-14 bg-blue-800 text-white"
-          >
-            Save
-          </Button>
-          <Button type="submit" className="w-32 h-10 bg-blue-800 text-white">
-            New
-          </Button>
         </FlexboxGrid>
       </form>
     </Container>
