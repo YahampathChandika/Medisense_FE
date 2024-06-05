@@ -44,6 +44,7 @@ function Users() {
     isError,
     refetch,
   } = useGetAllUsersQuery();
+  console.log("datas" , getAllUsers)
   const data = getAllUsers?.payload;
   const [deleteUser] = useDeleteUserMutation();
   const [searchQuery, setSearchQuery] = useState("");
@@ -73,7 +74,6 @@ function Users() {
     });
     return filtered;
   };
-
 
   const sortedData = () => {
     if (sortConfig.key) {
@@ -225,10 +225,19 @@ function Users() {
                           border: "none",
                         }}
                       >
-                        <img
+                        {/* <img
                           src={users.img || image}
                           alt="users"
                           className="users-image "
+                        /> */}
+                        <img
+                          src={
+                            users.image
+                              ? `http://localhost:3002/${users.image}`
+                              : image
+                          }
+                          alt="Patient"
+                          className="patient-image"
                         />
                         {users.firstName} {users.lastName}
                       </td>
@@ -275,7 +284,7 @@ function Users() {
           userTitle="Update User"
           buttonName="Update"
           id={updateOpen}
-          isUpdate={true} 
+          isUpdate={true}
         />
         <FailModal
           open={deleteOpen !== false}

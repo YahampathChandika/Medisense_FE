@@ -42,7 +42,6 @@ function UserRegistration({
   const [profilePic, setProfilePic] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
-  console.log("update", getUserById?.payload);
 
   useEffect(() => {
     if (getUserById) {
@@ -133,90 +132,160 @@ function UserRegistration({
 
   const isEditing = !!id;
   const isNewUser = !isEditing;
-  console.log("eeeeeeeeeee",updatedInputData)
 
+  // const handleSubmit = async (e) => {
+  //   const errors = {};
+  //   if (!inputData.firstName) {
+  //     errors.firstName = "Name is required*";
+  //   }
+
+  //   if (Object.keys(errors).length > 0) {
+  //     setValidationErrors(errors);
+  //     return;
+  //   }
+
+  //   if (isNewUser) {
+  //     const formData = new FormData();
+
+  //     try {
+  //       e.preventDefault();
+  //       const response = await addUser(updatedInputData);
+  //       if (response.data && !response.data.error) {
+  //         resetForm();
+  //         handleClose();
+  //         refetch();
+  //         const Toast = Swal.mixin({
+  //           toast: true,
+  //           position: "top-end",
+  //           showConfirmButton: false,
+  //           timer: 3000,
+  //           timerProgressBar: true,
+  //           didOpen: (toast) => {
+  //             toast.onmouseenter = Swal.stopTimer;
+  //             toast.onmouseleave = Swal.resumeTimer;
+  //           },
+  //         });
+  //         Toast.fire({
+  //           icon: "success",
+  //           title: "User Registered successfully",
+  //         });
+  //       } else {
+  //         console.log("User adding failed", response);
+  //         Swal.fire({
+  //           title: "Oops...",
+  //           text: response?.error?.data?.payload || response?.data?.payload,
+  //           icon: "error",
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.log("User Reg Error", error);
+  //     }
+  //   } else {
+  //     try {
+  //       const response = await updateUser({ id, inputData });
+  //       console.log("User update", inputData);
+
+  //       if (response.error) {
+  //         console.log("User update Error", response);
+  //         Swal.fire({
+  //           title: "Oops...",
+  //           text: response?.error?.data?.payload,
+  //           icon: "error",
+  //         });
+  //       } else {
+  //         console.log("Success");
+  //         const Toast = Swal.mixin({
+  //           toast: true,
+  //           position: "top-end",
+  //           showConfirmButton: false,
+  //           timer: 3000,
+  //           timerProgressBar: true,
+  //           didOpen: (toast) => {
+  //             toast.onmouseenter = Swal.stopTimer;
+  //             toast.onmouseleave = Swal.resumeTimer;
+  //           },
+  //         });
+  //         Toast.fire({
+  //           icon: "success",
+  //           title: "Test Updated",
+  //         });
+  //         await handleClose();
+  //         refetch();
+  //       }
+  //     } catch (error) {
+  //       console.log("Update Error", error);
+  //     }
+  //   }
+  // };
+
+  
   const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const formattedDate = formatDate(inputData.dob);
+    const updatedInputData = {
+      ...inputData,
+      dob: formattedDate,
+    };
+  
+    const formData = new FormData();
+  
+    formData.append("image", profilePic);
+    formData.append("firstName", updatedInputData.firstName);
+    formData.append("lastName", updatedInputData.lastName);
+    formData.append("dob", updatedInputData.dob);
+    formData.append("address", updatedInputData.address);
+    formData.append("email", updatedInputData.email);
+    formData.append("contactNo", updatedInputData.contactNo);
+    formData.append("username", updatedInputData.username);
+    formData.append("roleId", updatedInputData.roleId);
     const errors = {};
-    if (!inputData.firstName) {
-      errors.firstName = "Name is required*";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
-
-    if (isNewUser) {
-      const formData = new FormData();
-
-      try {
-        e.preventDefault();
-        const response = await addUser(updatedInputData);
-        if (response.data && !response.data.error) {
-          resetForm();
-          handleClose();
-          refetch();
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            },
-          });
-          Toast.fire({
-            icon: "success",
-            title: "User Registered successfully",
-          });
-        } else {
-          console.log("User adding failed", response);
-          Swal.fire({
-            title: "Oops...",
-            text: response?.error?.data?.payload || response?.data?.payload,
-            icon: "error",
-          });
-        }
-      } catch (error) {
-        console.log("User Reg Error", error);
+      if (!inputData.firstName) {
+        errors.firstName = "Name is required*";
       }
-    } else {
-      try {
-        const response = await updateUser({ id, inputData });
-        console.log("User update", inputData);
-
-        if (response.error) {
-          console.log("User update Error", response);
-          Swal.fire({
-            title: "Oops...",
-            text: response?.error?.data?.payload,
-            icon: "error",
-          });
-        } else {
-          console.log("Success");
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            },
-          });
-          Toast.fire({
-            icon: "success",
-            title: "Test Updated",
-          });
-          await handleClose();
-          refetch();
-        }
-      } catch (error) {
-        console.log("Update Error", error);
+  
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+        return;
       }
+  
+  
+    if (!isUpdate) {
+      formData.append("password", updatedInputData.password);
+    }
+  
+    try {
+      let response;
+      if (isUpdate) {
+        response = await updateUser({ id, formData });
+      } else {
+        response = await addUser(formData);
+      }
+  
+      if (!response.error) {
+        refetch();
+        Swal.fire({
+          icon: "success",
+          title: "User saved successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        handleClose();
+        resetForm();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.error.data.message,
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An unexpected error occurred. Please try again later.",
+      });
     }
   };
 
