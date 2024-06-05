@@ -18,6 +18,7 @@ import {
 } from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
 import { useGetMinilabListQuery } from "../store/api/minilabApi";
+import { useGetXrayListQuery } from "../store/api/xray";
 
 function XrayList() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -32,7 +33,12 @@ function XrayList() {
   const { data: cashierMatrices, refetch: cashierMatricesrefetch } =
     useGetCashierListMatricesQuery();
 
-  const cashierData = Minilab?.payload;
+  const { data: xrayList } = useGetXrayListQuery();
+  console.log("xraydata", xrayList);
+
+  const xrayData = xrayList?.payload ?? []; // Default to an empty array if payload is undefined
+
+  console.log("xraydata", xrayData);
 
   const navigate = useNavigate();
 
@@ -81,10 +87,10 @@ function XrayList() {
 
   const sortedData = () => {
     if (!sortConfig.key) {
-      return cashierData;
+      return xrayData;
     }
 
-    const sorted = [...cashierData].sort((a, b) => {
+    const sorted = [...xrayData].sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
 
@@ -280,7 +286,7 @@ function XrayList() {
                 </tr>
               ))
             )}
-            {cashierData?.length === 0 && (
+            {xrayData?.length === 0 && (
               <tr>
                 <td colSpan="6" className="text-center">
                   <p className="text-gray-500">No data to display.</p>

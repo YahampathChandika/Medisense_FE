@@ -12,6 +12,7 @@ import { dropdownApi } from "./api/dropdownsApi";
 import { cashierApi } from "./api/cashierApi";
 import { testApi } from "./api/testApi";
 import { minilabApi } from "./api/minilabApi";
+import { xrayApi } from "./api/xray";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     [cashierApi.reducerPath]: cashierApi.reducer,
     [testApi.reducerPath]: testApi.reducer,
     [minilabApi.reducerPath]: minilabApi.reducer,
+    [xrayApi.reducerPath]: xrayApi.reducer,
 
     selectedTests: selectedTestsReducer,
     selectPackage: selectedPackageReducer,
@@ -43,8 +45,9 @@ export const store = configureStore({
       dropdownApi.middleware,
       testApi.middleware,
       cashierApi.middleware,
-      minilabApi.middleware
-    );n
+      minilabApi.middleware,
+      xrayApi.middleware
+    );
   },
 });
  
