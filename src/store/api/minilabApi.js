@@ -14,8 +14,16 @@ export const minilabApi = api.injectEndpoints({
         body: data,
       }),
     }),
+
+    getMinilabgetCustomer: builder.query({
+      query: ({ customerId, admissionId }) => 
+        `xRay/getCustomer/${customerId}/${admissionId}`,
+    }),
   }),
 });
 
-export const { useGetMinilabListQuery, useUpdateMiniLabStatusMutation } =
-  minilabApi;
+export const {
+  useGetMinilabListQuery,
+  useUpdateMiniLabStatusMutation,
+  useGetMinilabgetCustomerQuery,
+} = minilabApi;

@@ -12,25 +12,17 @@ export const xrayApi = api.injectEndpoints({
     getRadioGraphers: builder.query({
       query: () => "dropdown/getRadioGraphers",
     }),
-    updateXrayStatus: builder.mutation({
-      query: ({ customerId, admissionId, data }) => {
-        // Log the variables
-        console.log(
-          "customerId:",
-          customerId,
-          "admissionId:",
-          admissionId,
-          "data:",
-          data
-        );
 
-        // Return the request configuration
-        return {
-          url: `xRay/updateXrayStatus/${customerId}/${admissionId}`,
-          method: "PATCH",
-          body: data,
-        };
-      },
+    updateXrayStatus: builder.mutation({
+      query: ({ data, customerId, admissionId }) => ({
+        url: `xRay/updateXrayStatus/${customerId}/${admissionId}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
+    getCustomerListXray: builder.query({
+      query: ({ customerId, admissionId }) =>
+        `xRay/getCustomer/${customerId}/${admissionId}`,
     }),
   }),
 });
@@ -39,5 +31,6 @@ export const {
   useGetXrayListQuery,
   useGetXrayDropdownQuery,
   useGetRadioGraphersQuery,
+  useGetCustomerListXrayQuery,
   useUpdateXrayStatusMutation,
 } = xrayApi;

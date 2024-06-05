@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/Gcc.css";
 import {
   useGetMinilabListQuery,
+  useGetMinilabgetCustomerQuery,
   useUpdateMiniLabStatusMutation,
 } from "../store/api/minilabApi";
 import Swal from "sweetalert2";
@@ -32,7 +33,7 @@ function MinilabById() {
   const { refetch: Labrefetch } = useGetLabListQuery();
   const navigate = useNavigate();
 
-  const { data: customerData } = useGetCustomerQuery({
+  const { data: minilabData } = useGetMinilabgetCustomerQuery({
     customerId: Number(customerId),
     admissionId: Number(admissionId),
   });
@@ -105,8 +106,8 @@ function MinilabById() {
   };
 
   const sortedData = () => {
-    if (sorting.column && customerData?.payload?.tests) {
-      const sorted = [...customerData.payload.tests];
+    if (sorting.column && minilabData?.payload?.tests) {
+      const sorted = [...minilabData.payload.tests];
       sorted.sort((a, b) => {
         const aValue =
           sorting.column === "price"
@@ -127,7 +128,7 @@ function MinilabById() {
       });
       return sorted;
     }
-    return customerData?.payload?.tests || [];
+    return minilabData?.payload?.tests || [];
   };
 
   useEffect(() => {
@@ -151,8 +152,8 @@ function MinilabById() {
             <img
               className="w-40 h-40 rounded-full"
               src={
-                customerData?.payload?.customer?.image
-                  ? `http://localhost:3002/${customerData?.payload?.customer?.image}`
+                minilabData?.payload?.customer?.image
+                  ? `http://localhost:3002/${minilabData?.payload?.customer?.image}`
                   : "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg?auto=compress&cs=tinysrgb&w=600"
               }
               alt=""
@@ -163,42 +164,42 @@ function MinilabById() {
               Name
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.fullName}
+              {minilabData?.payload?.customer?.fullName}
             </Row>
             <Row className="text-base font-semibold text-black text-opacity-50">
               Age
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.age}
+              {minilabData?.payload?.customer?.age}
             </Row>
             <Row className="text-base font-semibold text-black text-opacity-50">
               Gender
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.gender}
+              {minilabData?.payload?.customer?.gender}
             </Row>
           </FlexboxGrid.Item>
-          {customerData?.payload?.customer?.medicalType != "OPD" && (
+          {minilabData?.payload?.customer?.medicalType != "OPD" && (
             <FlexboxGrid.Item colspan={6}>
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Agency
               </Row>
               <Row className="mb-2 text-lg font-medium text-black">
-                {customerData?.payload?.customer?.agency}
+                {minilabData?.payload?.customer?.agency}
               </Row>
 
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Country
               </Row>
               <Row className="mb-2 text-lg font-medium text-black">
-                {customerData?.payload?.customer?.country}
+                {minilabData?.payload?.customer?.country}
               </Row>
 
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Job Title
               </Row>
               <Row className="mb-2 text-lg font-medium text-black">
-                {customerData?.payload?.customer?.job}
+                {minilabData?.payload?.customer?.job}
               </Row>
             </FlexboxGrid.Item>
           )}
@@ -207,23 +208,23 @@ function MinilabById() {
               Medical Type
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.medicalType}
+              {minilabData?.payload?.customer?.medicalType}
             </Row>
 
             <Row className="text-base font-semibold text-black text-opacity-50">
               NIC
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
-              {customerData?.payload?.customer?.nic}
+              {minilabData?.payload?.customer?.nic}
             </Row>
-            {customerData?.payload?.customer?.medicalType != "OPD" && (
+            {minilabData?.payload?.customer?.medicalType != "OPD" && (
               <>
                 <Row className="text-base font-semibold text-black text-opacity-50">
                   Passport
                 </Row>
 
                 <Row className="mb-2 text-lg font-medium text-black">
-                  {customerData?.payload?.customer?.passport}
+                  {minilabData?.payload?.customer?.passport}
                 </Row>
               </>
             )}
@@ -233,11 +234,11 @@ function MinilabById() {
           <thead className="cashier-table-head">
             <tr>
               <th>#</th>
-              <th onClick={() => handleSort("code")}>
+              <th onClick={() => handleSort("testCode")}>
                 Code
                 <FontAwesomeIcon
                   icon={
-                    sorting.column === "code"
+                    sorting.column === "testCode"
                       ? sorting.order === "asc"
                         ? faCaretUp
                         : faCaretDown
@@ -279,13 +280,13 @@ function MinilabById() {
             {sortedData().map((test, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{test.code}</td>
+                <td>{test.testCode}</td>
                 <td>{test.description}</td>
                 <td>{test.price}</td>
               </tr>
             ))}
 
-            {customerData?.payload?.tests?.length === 0 && (
+            {minilabData?.payload?.tests?.length === 0 && (
               <tr>
                 <td colSpan="5" className="text-center">
                   <p className="text-gray-500">No data to display.</p>
