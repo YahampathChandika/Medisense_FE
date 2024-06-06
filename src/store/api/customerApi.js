@@ -29,6 +29,10 @@ export const customerApi = api.injectEndpoints({
       query: (id) => `customer/getCustomerById/${id}`,
     }),
 
+    getCustomerMatrix: builder.query({
+      query: () => "customer/getCustomerMatrices",
+    }),
+
     deleteCustomer: builder.mutation({
       query: (customerId) => ({
         url: `customer/deleteCustomerById/${customerId}`,
@@ -52,6 +56,7 @@ export const customerApi = api.injectEndpoints({
 export const {
   useAddCustomerMutation,
   useAddPackageAndTestMutation,
+  useGetCustomerMatrixQuery,
   useGetAllCustomersQuery,
   useGetCustomerByIDQuery,
   useDeleteCustomerMutation,

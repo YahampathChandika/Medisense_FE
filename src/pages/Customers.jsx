@@ -20,10 +20,17 @@ import {
 import "../assets/css/Patients.css";
 import TablePatients from "../components/tables/customers/TablePatients";
 import { useNavigate } from "react-router";
-import { useGetAllCustomersQuery } from "../store/api/customerApi";
+import { useGetAllCustomersQuery, useGetCustomerMatrixQuery } from "../store/api/customerApi";
 
 function Customers() {
   const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();
+  const { data: matrixData } = useGetCustomerMatrixQuery();
+  const gccData = matrixData?.payload?.find(item => item.GCC);
+  const nonGccData = matrixData?.payload?.find(item => item["Non GCC"]);
+  const opd = matrixData?.payload?.find(item => item.OPD);
+
+
+  console.log("totalAmount:", nonGccData?.["Non GCC"]?.totalAmount);
   const [activeButton, setActiveButton] = useState("total");
   const navigate = useNavigate();
   const handleBtnSelect = (buttonId) => {
@@ -122,9 +129,10 @@ function Customers() {
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">120</h4>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl"> {gccData?.GCC?.count || 0}</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.85,125.00
+                Rs.{gccData?.GCC?.totalAmount || 0 }.00 
+             
               </h6>
             </button>
             <button
@@ -139,9 +147,9 @@ function Customers() {
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">110</h4>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">{nonGccData?.["Non GCC"]?.count}</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.185,125.00
+                Rs.{nonGccData?.["Non GCC"]?.totalAmount || 0}.00
               </h6>
             </button>
             <button
@@ -156,9 +164,9 @@ function Customers() {
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">170</h4>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">{opd?.OPD?.count || 0}</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.385,125.00
+                Rs.{opd?.OPD?.totalAmount || 0}.00
               </h6>
             </button>
           </div>
