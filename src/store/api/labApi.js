@@ -6,7 +6,25 @@ export const labApi = api.injectEndpoints({
     getLabList: builder.query({
       query: () => "lab/getLabList",
     }),
+
+    getLabCustomer: builder.query({
+      query: ({ customerId, admissionId }) =>
+        `lab/getCustomer/${customerId}/${admissionId}`,
+    }),
+
+    updateLabStatus: builder.mutation({
+      query: ({ customerId, admissionId, data }) => ({
+        url: `lab/updateLabResults/${customerId}/${admissionId}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
+    
   }),
 });
 
-export const { useGetLabListQuery } = labApi;
+export const {
+  useGetLabListQuery,
+  useGetLabCustomerQuery,
+  useUpdateLabStatusMutation,
+} = labApi;

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/Gcc.css";
-import { mockData } from "../assets/mocks/mockData";
 import {
   Container,
   Divider,
@@ -14,22 +13,33 @@ import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
-import { useGetCustomerQuery } from "../store/api/cashierApi";
 import { useParams } from "react-router-dom";
+import {
+  useGetLabCustomerQuery,
+  useUpdateLabStatusMutation,
+} from "../store/api/labApi";
 
 function Lab() {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(mockData(8));
   const { customerId, admissionId } = useParams();
+  const [updateLabStatus] = useUpdateLabStatusMutation();
 
   const { Column, HeaderCell, Cell } = Table;
 
-  const { data: customerData } = useGetCustomerQuery({
+  const { data: customerData } = useGetLabCustomerQuery({
     customerId: Number(customerId),
     admissionId: Number(admissionId),
   });
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (customerData) {
+      setData(customerData.payload.tests);
+    }
+  }, [customerData]);
 
   const CustomHeaderCell = ({ children, className, ...props }) => {
     const headerClasses = "text-black font-bold text-sm";
@@ -95,15 +105,20 @@ function Lab() {
   };
 
   const EditableCell = ({ rowData, dataKey, onChange, ...props }) => {
+    const [value, setValue] = useState(rowData[dataKey]);
     const editing = rowData.status === "EDIT";
+
     return (
       <Cell {...props} className={editing ? "table-content-editing" : ""}>
         {editing ? (
           <input
             className="rs-input"
-            defaultValue={rowData[dataKey]}
+            value={value}
             onChange={(event) => {
-              onChange && onChange(rowData.id, dataKey, event.target.value);
+              setValue(event.target.value);
+            }}
+            onBlur={() => {
+              onChange && onChange(rowData.id, dataKey, value);
             }}
           />
         ) : (
@@ -132,10 +147,28 @@ function Lab() {
     mode: "onTouched",
   });
 
-  const { register, handleSubmit, setValue } = form;
+  const { register, handleSubmit, setValue, getValues } = form;
 
-  const onSubmit = (formData) => {
-    console.log(formData);
+  const onSubmit = async (formData) => {
+    const xrayResults = getValues("xrayResults");
+    const labStatusId = xrayResults === 11 ? 11 : 12;
+
+    const resultData = data.map((item) => ({
+      id: item.id,
+      result: item.result,
+      status: item.status,
+      unit: item.unit,
+    }));
+
+    const submitData = {
+      testResults: resultData,
+      labStatusId: labStatusId,
+    };
+
+    console.log(submitData);
+    const response = await updateLabStatus({ customerId, admissionId, data:{submitData} });
+    console.log(response);
+
   };
 
   useEffect(() => {
@@ -186,7 +219,7 @@ function Lab() {
               {customerData?.payload?.customer?.gender}
             </Row>
           </FlexboxGrid.Item>
-          {customerData?.payload?.customer?.medicalType != "OPD" && (
+          {customerData?.payload?.customer?.medicalType !== "OPD" && (
             <FlexboxGrid.Item colspan={6}>
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Agency
@@ -194,14 +227,12 @@ function Lab() {
               <Row className="mb-2 text-lg font-medium text-black">
                 {customerData?.payload?.customer?.agency}
               </Row>
-
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Country
               </Row>
               <Row className="mb-2 text-lg font-medium text-black">
                 {customerData?.payload?.customer?.country}
               </Row>
-
               <Row className="text-base font-semibold text-black text-opacity-50">
                 Job Title
               </Row>
@@ -217,19 +248,17 @@ function Lab() {
             <Row className="mb-2 text-lg font-medium text-black">
               {customerData?.payload?.customer?.medicalType}
             </Row>
-
             <Row className="text-base font-semibold text-black text-opacity-50">
               NIC
             </Row>
             <Row className="mb-2 text-lg font-medium text-black">
               {customerData?.payload?.customer?.nic}
             </Row>
-            {customerData?.payload?.customer?.medicalType != "OPD" && (
+            {customerData?.payload?.customer?.medicalType !== "OPD" && (
               <>
                 <Row className="text-base font-semibold text-black text-opacity-50">
                   Passport
                 </Row>
-
                 <Row className="mb-2 text-lg font-medium text-black">
                   {customerData?.payload?.customer?.passport}
                 </Row>
@@ -250,16 +279,11 @@ function Lab() {
           style={{ margin: "25px 0 40px" }}
         >
           <Column sortable flexGrow>
-            <CustomHeaderCell>#</CustomHeaderCell>
-            <Cell dataKey="no" />
+            <CustomHeaderCell>Test Code</CustomHeaderCell>
+            <Cell dataKey="testCode" />
           </Column>
 
           <Column sortable flexGrow>
-            <CustomHeaderCell>Code</CustomHeaderCell>
-            <Cell dataKey="code" />
-          </Column>
-
-          <Column sortable flexGrow fullText>
             <CustomHeaderCell>Description</CustomHeaderCell>
             <Cell dataKey="description" />
           </Column>
@@ -293,10 +317,10 @@ function Lab() {
             <SelectPicker
               searchable={false}
               style={{ width: "100%" }}
-              data={["Pass", "Fail"].map((item) => ({
-                label: item,
-                value: item,
-              }))}
+              data={[
+                { label: "Pass", value: 11 },
+                { label: "Fail", value: 12 },
+              ]}
               {...register("xrayResults")}
               onChange={(value) => setValue("xrayResults", value)}
             />
