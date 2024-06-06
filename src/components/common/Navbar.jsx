@@ -3,6 +3,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useGetSignedUserQuery } from "../../store/api/userApi";
+import dummyImg from "../../assets/images/dummy.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleUser,
@@ -56,10 +57,19 @@ const Navbar = () => {
               <Menu.Button className="relative flex items-center max-w-xs text-sm rounded-full focus:outline-none">
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">Open user menu</span>
-                <img
+                {/* <img
                   className="w-10 h-10 rounded-full"
                   src={user.imageUrl}
                   alt=""
+                /> */}
+                <img
+                  src={
+                    signedUser?.payload?.image
+                      ? `http://localhost:3002/${signedUser?.payload?.image}`
+                      : dummyImg
+                  }
+                  alt="Patient"
+                  className="w-10 h-10 rounded-full"
                 />
                 <p className="ml-5 text-xl font-bold text-black">
                   {signedUser?.payload?.firstName}
