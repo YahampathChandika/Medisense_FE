@@ -19,11 +19,17 @@ export const minilabApi = api.injectEndpoints({
       query: ({ customerId, admissionId }) => 
         `miniLab/getCustomer/${customerId}/${admissionId}`,
     }),
+
+    getMinilabMatrix: builder.query({
+      query: () => "miniLab/getMatrices",
+    }),
+
   }),
 });
 
 export const {
   useGetMinilabListQuery,
+  useGetMinilabMatrixQuery,
   useUpdateMiniLabStatusMutation,
   useGetMinilabgetCustomerQuery,
 } = minilabApi;

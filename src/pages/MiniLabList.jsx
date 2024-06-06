@@ -14,12 +14,13 @@ import dummyImg from "../assets/images/dummy.jpg";
 import { Table } from "react-bootstrap";
 import { useGetCashierListMatricesQuery } from "../store/api/cashierApi";
 import { useNavigate } from "react-router-dom";
-import { useGetMinilabListQuery } from "../store/api/minilabApi";
+import { useGetMinilabListQuery, useGetMinilabMatrixQuery } from "../store/api/minilabApi";
 
 function MiniLabList() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sortConfig, setSortConfig] = useState({ key: null, order: "asc" });
   const { data: Minilab, isLoading } = useGetMinilabListQuery();
+  const { data: MinilabMtrix } = useGetMinilabMatrixQuery();
 
   const { data: cashierMatrices, refetch: cashierMatricesrefetch } =
     useGetCashierListMatricesQuery();
@@ -106,14 +107,14 @@ function MiniLabList() {
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
           <FontAwesomeIcon icon={faUserFriends} className="h-12 w-12 py-1" />
           <span className="font-bold text-2xl">
-            0{cashierMatrices?.payload.customersWaiting || 0}
+            0{MinilabMtrix?.payload?.customersWaiting || 0}
           </span>
           <span className="text-md font-semibold">Customers Waiting</span>
         </Col>
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4 mx-5">
           <FontAwesomeIcon icon={faCashRegister} className="h-12 w-12 py-1" />
           <span className="font-bold text-2xl">
-            0{cashierMatrices?.payload.customersPaid || 0}
+            0{MinilabMtrix?.payload.customersPaid || 0}
           </span>
           <span className="text-md font-semibold">
             Customers Blood Extracted
@@ -122,9 +123,9 @@ function MiniLabList() {
         <Col className="flex flex-col items-start w-1/5 h-auto rounded-lg text-blue-500 bg-blue-100 p-4">
           <FontAwesomeIcon icon={faCoins} className="h-12 w-12 py-1" />
           <span className="font-bold text-2xl">
-            Rs. {cashierMatrices?.payload.todaysIncome || 0}.00
+            0{MinilabMtrix?.payload.total || 0}
           </span>
-          <span className="text-md font-semibold">Today's Income</span>
+          <span className="text-md font-semibold">All Customers</span>
         </Col>
       </Row>
       <Row className="text-gray-700 text-2xl font-bold mt-5 mx-5">
