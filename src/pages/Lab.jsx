@@ -166,10 +166,13 @@ function Lab() {
     };
 
     console.log(submitData);
-    const response = await updateLabStatus({ customerId, admissionId, data:{submitData} });
+    const response = await updateLabStatus({
+      customerId,
+      admissionId,
+      data: submitData,
+    });
     console.log(response);
-
-  };
+  }
 
   useEffect(() => {
     document.title = "Lab | Medisense";
