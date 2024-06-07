@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import "rsuite/dist/rsuite-no-reset.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetLabCustomerQuery,
   useUpdateLabStatusMutation,
@@ -25,7 +25,7 @@ function Lab() {
   const [loading, setLoading] = useState(false);
   const { customerId, admissionId } = useParams();
   const [updateLabStatus] = useUpdateLabStatusMutation();
-
+  const navigate = useNavigate();
   const { Column, HeaderCell, Cell } = Table;
 
   const { data: customerData } = useGetLabCustomerQuery({
@@ -172,6 +172,8 @@ function Lab() {
       data: submitData,
     });
     console.log(response);
+    navigate("/home/labList")
+
   }
 
   useEffect(() => {

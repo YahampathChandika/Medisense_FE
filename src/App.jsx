@@ -31,6 +31,7 @@ import MiniLabList from "./pages/MiniLabList";
 import LabList from "./pages/LabList";
 import XrayList from "./pages/XrayList";
 import MinilabById from "./pages/MinilabById";
+import CustomerDetails from "./pages/CustomerDetails";
 
 // function App() {
 //   return (
@@ -120,7 +121,7 @@ function App() {
             />
           }
         />
-         <Route
+        <Route
           path="gcc/:customerId"
           element={
             <ProtectedRoute
@@ -179,6 +180,15 @@ function App() {
             />
           }
         />
+        <Route
+          path="customerDetails/:customerId/:admissionId"
+          element={
+            <ProtectedRoute
+              element={<CustomerDetails />}
+              requiredRoles={[ROLES.Admin, ROLES.Cashier]}
+            />
+          }
+        />
         <Route path="addAgency" element={<AddAgency />} />
         <Route path="agency" element={<Agency />} />
         <Route
@@ -214,12 +224,12 @@ function App() {
             />
           }
         />
-         <Route
+        <Route
           path="MinilabById/:customerId/:admissionId"
           element={
             <ProtectedRoute
               element={<MinilabById />}
-              requiredRoles={[ROLES.Admin, ROLES.MinilabById]}
+              requiredRoles={[ROLES.Admin, ROLES.MiniLAb]}
             />
           }
         />

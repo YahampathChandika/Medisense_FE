@@ -29,6 +29,11 @@ export const customerApi = api.injectEndpoints({
       query: (id) => `customer/getCustomerById/${id}`,
     }),
 
+    getCustomerResults: builder.query({
+      query: ({ customerId, admissionId }) => `customer/getCustomerResults/${customerId}/${admissionId}`,
+      // query: () => "customer/getCustomerResults/44/41",
+    }),
+
     getCustomerMatrix: builder.query({
       query: () => "customer/getCustomerMatrices",
     }),
@@ -59,6 +64,7 @@ export const {
   useGetCustomerMatrixQuery,
   useGetAllCustomersQuery,
   useGetCustomerByIDQuery,
+  useGetCustomerResultsQuery,
   useDeleteCustomerMutation,
   useUpdateCustomerMutation,
 } = customerApi;

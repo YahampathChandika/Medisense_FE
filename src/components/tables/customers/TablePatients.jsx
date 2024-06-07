@@ -139,11 +139,13 @@ function TablePatients({ data, activeButton }) {
               <tr key={patient.id}>
                 <td
                   className=" "
+                  onClick={() => navigate(`/home/customerDetails/${patient.customerId}/${patient.admissionId}`)}
                   style={{
                     display: "flex ",
                     flexDirection: "row",
                     paddingLeft: "20%",
                     border: "none",
+                    cursor: "pointer"
                   }}
                 >
                   <img

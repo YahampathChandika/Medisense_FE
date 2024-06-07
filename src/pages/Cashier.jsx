@@ -612,12 +612,12 @@ function Cashier() {
           </Container>
           <style>
             {`
-          @media print {
-            [style*="display: none"] {
-              display: block !important;
-            }
-          }
-        `}
+              @media print {
+                [style*="display: none"] {
+                  display: block !important;
+                }
+              }
+            `}
           </style>
         </div>
       </Container>

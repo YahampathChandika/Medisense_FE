@@ -48,7 +48,7 @@ function Test() {
       tests: testId,
     };
 
-    // console.log("Data to be sent:", data);
+    console.log("Data to be sent:", data);
 
     try {
       const response = await addPackage({ data, customerId, admissionId });
