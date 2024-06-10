@@ -29,14 +29,9 @@ import { useReactToPrint } from "react-to-print";
 function Customers() {
   const { data: customerData, isLoading, isError } = useGetAllCustomersQuery();
   const { data: matrixData } = useGetCustomerMatrixQuery();
-  const gccData = matrixData?.payload?.find((item) => item.GCC);
-  const nonGccData = matrixData?.payload?.find((item) => item["Non GCC"]);
-  const opd = matrixData?.payload?.find((item) => item.OPD);
-  const [sorting, setSorting] = useState({
-    column: null,
-    order: null,
-  });
- 
+  const gccData = matrixData?.payload?.find(item => item.GCC) || {};
+  const nonGccData = matrixData?.payload?.find(item => item["Non GCC"]) || {};
+  const opdData = matrixData?.payload?.find(item => item.OPD) || {};
 
   const [activeButton, setActiveButton] = useState("total");
   const navigate = useNavigate();
@@ -52,6 +47,9 @@ function Customers() {
   const handleDateRangeSelect = (selectedDates) => {
     console.log("Start Date:", selectedDates[0], "End Date", selectedDates[1]);
   };
+
+  const totalCustomers = (gccData.GCC?.count || 0) + (nonGccData["Non GCC"]?.count || 0) + (opdData.OPD?.count || 0);
+  const totalAmount = (gccData.GCC?.totalAmount || 0) + (nonGccData["Non GCC"]?.totalAmount || 0) + (opdData.OPD?.totalAmount || 0);
 
   return (
     <div style={{ width: "100%" }}>
@@ -120,9 +118,9 @@ function Customers() {
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">300</h4>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">{totalCustomers}</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.485,125.00
+                Rs.{totalAmount}.00
               </h6>
             </button>
             <button
@@ -137,12 +135,9 @@ function Customers() {
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">
-                {" "}
-                {gccData?.GCC?.count || "00"}
-              </h4>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">{gccData.GCC?.count || 0}</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.{gccData?.GCC?.totalAmount || "00"}.00
+                Rs.{gccData.GCC?.totalAmount || 0}.00
               </h6>
             </button>
             <button
@@ -157,11 +152,9 @@ function Customers() {
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">
-                {nonGccData?.["Non GCC"]?.count}
-              </h4>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">{nonGccData["Non GCC"]?.count || 0}</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.{nonGccData?.["Non GCC"]?.totalAmount || "00"}.00
+                Rs.{nonGccData["Non GCC"]?.totalAmount || 0}.00
               </h6>
             </button>
             <button
@@ -176,11 +169,9 @@ function Customers() {
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
-              <h4 className="md:text-lg lg:text-xl xl:text-2xl">
-                {opd?.OPD?.count || "00"}
-              </h4>
+              <h4 className="md:text-lg lg:text-xl xl:text-2xl">{opdData.OPD?.count || 0}</h4>
               <h6 className="md:text-lg lg:text-xl xl:text-2xl">
-                Rs.{opd?.OPD?.totalAmount || "00"}.00
+                Rs.{opdData.OPD?.totalAmount || 0}.00
               </h6>
             </button>
           </div>
